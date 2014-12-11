@@ -1,5 +1,6 @@
-<?php define( 'DONOTCACHEPAGE', True ); ?>
 <?php
+
+define( 'DONOTCACHEPAGE', True );
 if(isset( $_SERVER['REMOTE_USER'])) {
     $user = $_SERVER['REMOTE_USER'];
 } else if(isset($_SERVER['REDIRECT_REMOTE_USER'])) {
@@ -7,46 +8,49 @@ if(isset( $_SERVER['REMOTE_USER'])) {
 } else if(isset($_SERVER['PHP_AUTH_USER'])) {
     $user = $_SERVER['PHP_AUTH_USER'];
 }
-?>
-<?php
-    $error_flag = False;
-    $sn_num = get_query_var('ticketID');
-    if( $sn_num == '' ) {
-        $new_url = site_url() . '/myrequests/';
-        wp_redirect( $new_url );
-    }
-
-    //Handle submitting comments
-    if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
-        $comments = $_POST['comments'];
-        $comments_json = array(
-            'actor' => $user,
-            'record' => $sn_num,
-            'comment' => $comments,
+$error_flag = False;
+$sn_num = get_query_var('ticketID');
+if( $sn_num == '' ) {
+    $new_url = site_url() . '/my_requests/';
+    wp_redirect( $new_url );
+}
+//Handle submitting comments
+if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
+    $comments = $_POST['comments'];
+    $comments_json = array(
+        'actor' => $user,
+        'record' => $sn_num,
+        'comment' => $comments,
+    );
+    $comments_json = json_encode( $comments_json );
+    $comments_url = SN_URL . '/comment.do';
+    // If a POST and have comments - create a comment in SN
+    if( defined('SN_USER') && defined('SN_PASS') && defined('SN_URL') ) {
+        $args = array(
+            'headers' => array(
+            'Authorization' => 'Basic ' . base64_encode( SN_USER . ':' . SN_PASS ),
+            'Content-Type' => 'application/json',
+            ),
+        'body' => $comments_json,
         );
-        $comments_json = json_encode( $comments_json );
-        $comments_url = SN_URL . '/comment.do';
-
-        // If a POST and have comments - create a comment in SN
-        if( defined('SN_USER') && defined('SN_PASS') && defined('SN_URL') ) {
-            $args = array(
-                'headers' => array(
-                    'Authorization' => 'Basic ' . base64_encode( SN_USER . ':' . SN_PASS ),
-                    'Content-Type' => 'application/json',
-                ),
-                'body' => $comments_json,
-            );
-        }
-
-        $response = wp_remote_post( $comments_url, $args );
-        wp_redirect( $_SERVER['REQUEST_URI'] ); exit;
     }
-?>
+    $response = wp_remote_post( $comments_url, $args );
+        wp_redirect( $_SERVER['REQUEST_URI'] ); exit;
+}
 
-<?php get_header(); ?>
-          <div id="content" class="site-content">
-                <?php
-            //Handle errors posting comments
+get_header(); ?>
+
+
+<div id="main-content" class="main-content row">
+    <div id="secondary" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" role="complementary">
+      <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
+        <?php dynamic_sidebar('servicenow-sidebar'); ?>
+      </div>
+    </div>
+	<div id="primary" class="col-xs-8 col-xs-offset-1 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1 col-lg-8 col-lg-offset-1">
+		<div id="content" class="site-content" role="main">
+
+			<?php
             if(isset($user)) {
                 if( isset( $response ) ) {
                     $status = json_decode($response['body'], true);
@@ -172,6 +176,7 @@ if(isset( $_SERVER['REMOTE_USER'])) {
                         //Get attachments
                         $att_url = '/sys_attachment.do?JSONv2&sysparm_query=table_sys_id=' . $record->sys_id;
                         $attach_json = get_SN($att_url, $args);
+                        echo "<div class='row'>";
 
                         foreach( $attach_json->records as $attachment ) {
                             $attID = $attachment->sys_id;
@@ -180,6 +185,7 @@ if(isset( $_SERVER['REMOTE_USER'])) {
                             //attachment download link
                             $url = 'https://uweval.service-now.com/sys_attachment.do?sys_id=' . $attID;
 
+                            echo "<div class='col-lg-6'>";
                             //Check for mimetype and display related icon
                             if (strstr($content_type, "/", true) == "image") {
                             ?>
@@ -198,10 +204,12 @@ if(isset( $_SERVER['REMOTE_USER'])) {
                                 <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-o fa-2x"></i><p><?= $attName ?></p></div></a>
                             <?php
                             }
+                            echo "</div>"
                         ?>
                         <?php
                         }
 
+                        echo "</div>";
                         echo "</td></tr>";
                         echo "</table>";
                         echo "<h3 style='margin-top:2em;'>Description:</h3><div><pre>" . stripslashes($record->description) . " </pre></div>";
@@ -228,7 +236,7 @@ if(isset( $_SERVER['REMOTE_USER'])) {
                         echo "<h3 style='margin-top:2em;'>Additional comments:</h3>";
 
                         usort( $comments, 'sortByCreatedOnDesc' ); //comments sorted chronologically descending
-                        echo "<ol style='margin-left:0; list-style-type:none;'>";
+                        echo "<ol style='margin-left:0;'>";
 
                         $prevwatch = array();
                         foreach( $comments as $comment ) {
@@ -280,18 +288,12 @@ if(isset( $_SERVER['REMOTE_USER'])) {
                         } //end if else to see if incident/request number doesn't match
                       }
                    }
-                ?>
 
 
-				<footer class="entry-meta">
-					<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-meta -->
-      </div>
-    <script>
-$(document).ready(function(){
-    $("form").submit(function(){
-        $('button[type=submit], input[type=submit]').attr('disabled',true);
-    })
-});
-   </script>
-<?php get_footer(); ?>
+			?>
+		</div><!-- #content -->
+	</div><!-- #primary -->
+</div><!-- #main-content -->
+
+<?php
+get_footer();
