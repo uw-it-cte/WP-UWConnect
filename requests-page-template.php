@@ -1,5 +1,9 @@
-<?php define( 'DONOTCACHEPAGE', True ); ?>
 <?php
+/*
+ * The template for displaying all requests/incidents from SN
+ */
+
+define( 'DONOTCACHEPAGE', True );
 //Get the NETID logged in user
 if ( isset( $_SERVER['REMOTE_USER'] ) ) {
     $user = $_SERVER['REMOTE_USER'];
@@ -9,17 +13,38 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
     $user = $_SERVER['PHP_AUTH_USER'];
 }
 
-?>
-<?php
-//echo "DEBUG: ";
-//echo "<pre>";
-//var_dump($_SERVER);
-//echo "</pre>";
-?>
-<?php get_header(); ?>
-			<div id="content" class="site-content">
-      <?php if( isset( $user ) ) { ?>
-                <div class="user-logout">
+get_header(); ?>
+
+<?php while ( have_posts() ) : the_post(); ?>
+
+<div id="main-content" class="main-content row">
+    <div id="secondary" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" role="complementary">
+      <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
+        <?php dynamic_sidebar('servicenow-sidebar'); ?>
+      </div>
+    </div>
+    <div id="primary" class="col-xs-8 col-xs-offset-1 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1 col-lg-8 col-lg-offset-1">
+    <div id="content" class="site-content" role="main">
+      <h2>
+        <span id='overlay'></span>
+        <span class='category'>
+        <?php $ancestor_list = array_reverse(get_post_ancestors($post->ID));
+          $is_top = false;
+        if (sizeof($ancestor_list) > 0) {
+          $top_parent = get_page($ancestor_list[0]);
+          echo get_the_title($top_parent);
+        } else {
+          echo get_the_title();
+          $is_top = true;
+        }?>
+        </span>
+      </h2>
+
+
+			<?php
+        if(isset( $user ) ) {
+      ?>
+                    <div class="user-logout row" style="text-align:right;">
                     <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-mini" style="vertical-align:text-bottom;">LOGOUT</a>
                 </div>
                 <?php
@@ -82,11 +107,11 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
                     <?php if( $has_req || $has_inc ) { ?>
                     <h2 id="incident_header" class="assistive-text">Incidents</h2>
                     
-                    <div class="request-list request-list-header">
-                        <span id="col_head_num" class="request-list-number hidden-phone">Number</span>
-                        <span id="col_head_ser" class="request-list-service hidden-phone">Service</span>
-                        <span id="col_head_des" class="request-list-description">Description</span>
-                        <span id="col_head_sta" class="request-list-status">Status</span>
+                    <div class="request-list request-list-header row">
+                        <span id="col_head_num" class="col-lg-2 request-list-number hidden-phone">Number</span>
+                        <span id="col_head_ser" class="col-lg-3 request-list-service hidden-phone">Service</span>
+                        <span id="col_head_des" class="col-lg-5 request-list-description">Description</span>
+                        <span id="col_head_sta" class="col-lg-2 request-list-status">Status</span>
                     </div>
                     
                     
@@ -94,7 +119,7 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
 
 
                     <?php if( $has_inc ) { ?>
-                    <ol class="request-list" aria-labelledby="incident_header">
+                    <ol class="request-list" style="padding-left:0px;" aria-labelledby="incident_header">
                     
                     <?php
                     //Display incidents
@@ -107,28 +132,28 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
                         }
                             $detail_url = site_url() . '/my_request/' . $record->number;
                             if ($record->state == "Resolved" || $record->state == "Closed") {
-                                echo "<li class='resolved_ticket'><a href='$detail_url'>";
+                                echo "<li class='row resolved_ticket'><a href='$detail_url'>";
                             } else {
-                                echo "<li class='row_underline inner_row_underline'><a href='$detail_url'>";
+                                echo "<li class='row row_underline inner_row_underline'><a href='$detail_url'>";
                             }
                     ?>
-                            <span class="request-list-number hidden-phone whole_row_link" aria-labelledby="col_head_num">
+                            <span class="request-list-number hidden-phone whole_row_link col-lg-2" aria-labelledby="col_head_num">
                                 <?php
                                     echo "$record->number";
                                 ?>
                             </span>
-                            <span class="request-list-service hidden-phone  whole_row_link" aria-labelledby="col_head_ser">
+                            <span class="request-list-service hidden-phone whole_row_link col-lg-3" aria-labelledby="col_head_ser">
                                 <?php
                                 echo "$record->cmdb_ci";
                                 ?>
                             </span>
 
-                            <span class="request-list-description whole_row_link" aria-labelledby="col_head_des">
+                            <span class="request-list-description whole_row_link col-lg-5" aria-labelledby="col_head_des">
                                 <?php
                                 echo "$record->short_description";
                                 ?>
                             </span>
-                            <span class="request-list-status whole_row_link" aria-labelledby="col_head_sta">
+                            <span class="request-list-status whole_row_link col-lg-2" aria-labelledby="col_head_sta">
                                 <?php
                                     //get and display the state of the record
                                     if (array_key_exists($record->state, $states)) {
@@ -154,7 +179,7 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
                     <?php } ?>
 
                     <?php if( $has_req ) { ?>
-                    <ol class="request-list" aria-labelledby="request_header">
+                    <ol class="request-list" style="list-style-type:none; padding-left:0px;" aria-labelledby="request_header">
                     <?php
                     //Dispaly Requests
                     usort($req_json->records, 'sortByNumberDesc'); //order tickets by number descending
@@ -167,28 +192,28 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
                             }
                             $detail_url = site_url() . '/my_request/' . $record->number;
                             if ($record->state == "Resolved" || $record->state == "Closed") {
-                                echo "<li class='resolved_ticket'><a href='$detail_url'>";
+                                echo "<li class='row resolved_ticket'><a href='$detail_url'>";
                             }
                             else {
-                                echo "<li><a href='$detail_url'>";
+                                echo "<li class='row'><a href='$detail_url'>";
                             }
                     ?>
-                            <span class="request-list-number hidden-phone whole_row_link" aria-labelledby="col_head_num">
+                            <span class="request-list-number hidden-phone whole_row_link col-lg-2" aria-labelledby="col_head_num">
                                 <?php
                                 echo "$record->number";
                                 ?>
                             </span>
-                            <span class="request-list-service hidden-phone  whole_row_link" aria-labelledby="col_head_ser">
+                            <span class="request-list-service hidden-phone  whole_row_link col-lg-3" aria-labelledby="col_head_ser">
                                 <?php
                                 echo "$record->cmdb_ci";
                                 ?>
                             </span>
-                            <span class="request-list-description whole_row_link" aria-labelledby="col_head_des">
+                            <span class="request-list-description whole_row_link col-lg-5" aria-labelledby="col_head_des">
                                 <?php
                                 echo "$record->short_description";
                                 ?>
                             </span>
-                            <span class="request-list-status whole_row_link" aria-labelledby="col_head_sta">
+                            <span class="request-list-status whole_row_link col-lg-2" aria-labelledby="col_head_sta">
                                 <?php
                                     //Get and display state of the request
                                     if (array_key_exists($record->state, $states)) {
@@ -208,12 +233,11 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
                     }
                     ?>
                     </ol>
-
                     <?php } ?>
                     
                     <?php if( !$has_req && !$has_inc ) { ?>
                         <p>You have no current requests with UW-IT.</p>
-                    <?php }?>
+                    <?php } ?>
 
                 <?php } else {?>
                     <p>Whoops! Something went wrong, if this persists, please contact the Administrator.</p>
@@ -223,14 +247,13 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
                     echo "<p>Please log into your UW NETID to view your list of Requests and Incidents</p>";
                 }
                 ?>
-                                
-                <div style="margin-top:2em;">
-                    <p class="alert alert-info">Not seeing your request?  You may need to login as a different UW NetID.</p>
-                </div>
-				<footer class="entry-meta">
-					<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
-				</footer><!-- .entry-meta -->
-          </div>
+                        <p class="alert alert-info">Not seeing your request?  You may need to login as a different UW NetID.</p>
 
-        <div class="push"></div>
-<?php get_footer(); ?>
+              <?php endwhile; ?>
+                </div>
+		</div><!-- #content -->
+	</div><!-- #primary -->
+</div><!-- #main-content -->
+
+<?php
+get_footer();
