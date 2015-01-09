@@ -26,7 +26,6 @@ get_header(); ?>
     <div id="primary" class="col-xs-8 col-xs-offset-1 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1 col-lg-8 col-lg-offset-1">
     <div id="content" class="site-content" role="main">
       <h2>
-        <span id='overlay'></span>
         <span class='category'>
         <?php $ancestor_list = array_reverse(get_post_ancestors($post->ID));
           $is_top = false;
@@ -247,7 +246,7 @@ get_header(); ?>
                     echo "<p>Please log into your UW NETID to view your list of Requests and Incidents</p>";
                 }
                 ?>
-                        <p class="alert alert-info">Not seeing your request?  You may need to login as a different UW NetID.</p>
+                        <p class="alert alert-info" style="margin-top:10px;">Not seeing your request?  You may need to log in under a different UW NetID.</p>
 
               <?php endwhile; ?>
                 </div>
