@@ -246,7 +246,7 @@ get_header(); ?>
                     echo "<p>Please log into your UW NETID to view your list of Requests and Incidents</p>";
                 }
                 ?>
-                        <p class="alert alert-info" style="margin-top:10px;">Not seeing your request?  You may need to log in under a different UW NetID.</p>
+                        <p class="alert alert-info" style="margin-top:10px;">Not seeing your request?  You may need to log in using a different UW NetID.</p>
 
               <?php endwhile; ?>
                 </div>
