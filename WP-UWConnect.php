@@ -218,6 +218,63 @@ function request_page_template( $template ) {
 }
 add_filter( 'template_include', 'request_page_template');
 
+function service_status() {
+  $hash = base64_encode( SN_USER . ':' . SN_PASS );
+  $args = array(
+      'headers' => array(
+          'Authorization' => 'Basic ' . $hash,
+      ),
+      'timeout' => 25,
+  );
+  $JSON = get_SN('/incident_list.do?JSONv2&sysparm_query=active%3Dtrue%5EstateNOT%20IN6%2C7%5Eimpact%3D2%5EORimpact%3D1%5Eu_sectorNOT%20INK20%2CPNWGP%2CPWave%5EORu_sector%3D&displayvalue=true', $args); 
+      if(!$body) {
+          echo "<div class='alert alert-warning' style='margin-top:2em;'>We are currently experiencing problems retrieving the status of our services. Please try again in a few minutes.</div>";
+      }
+      elseif(empty($JSON->records)) {
+          echo "<div class='alert alert-warning' style='margin-top:2em;'>All services are operational.</div>";
+      }
+
+      if ( !empty( $JSON->records ) ) { 
+          $sn_data = array();
+          foreach( $JSON->records as $record ) {
+              if( !isset( $sn_data[$record->cmdb_ci] ) ) { 
+                  $sn_data[$record->cmdb_ci] = array();
+                  unset($first);
+              }
+              $create = $record->sys_created_on;
+              if( !isset( $first ) ) {
+                  $first = $create;
+              }
+              if($create < $first) {
+                  $first = $create;
+              }
+              $sn_data[$record->cmdb_ci][] = $record;
+              $sn_data[$record->cmdb_ci][] = $first;
+          }
+              echo "<h2 class='assistive-text' id='impact_headeing'>Impacted Services</h2>";
+              # put the services into a single ordered list
+              echo "<ol style='list-style:none;padding-left:0;margin-left:0;' aria-labelledby='impact_heading'>";
+              foreach( $sn_data as $ci) {
+                  $service = array_search($ci, $sn_data);
+                  // handle the case of blank services and switches who's 'name' is a sequence of 5 or more numbers
+                  if ( $service !== '' && !preg_match('/^\d{5,}$/', $service) ) { 
+                      $time = end($ci);
+                      echo "<li style='margin-top:10px;' class='clearfix'><span style='display:inline-block; max-width:50%;font-weight:bold;' class='pull-left'>$service</span><span style='color:#aaa;font-size:95%;' class='pull-right'> <span class='hidden-phone hidden-tablet'>Reported at</span> $time </span></li>";
+               }
+            }
+        echo "</ol>";
+      }
+  echo "<p class='alert alert-info' style='margin-top: 2em;'>Experiencing IT problems not listed on this page? Need more information about a service impact? Want to provide feedback about this page? <a href='/itconnect/help'>Get help.</a></p>";
+        die();
+}
+add_action( 'wp_ajax_service_status', 'service_status' );
+add_action( 'wp_ajax_nopriv_service_status', 'service_status' );
+
+function enable_ajax() {
+  wp_enqueue_script( 'function', plugin_dir_url( __FILE__ ) . 'service.js', 'jquery', true);
+  wp_localize_script( 'function', 'service_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+}
+
 //Builds a request to Service Now and returns results as a JSON object.
 function get_SN($url, $args) {
     $url = SN_URL . $url;
