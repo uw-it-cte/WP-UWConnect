@@ -30,6 +30,78 @@ function uw_connect_script_setup() {
 }
 add_action( 'wp_enqueue_scripts', 'uw_connect_script_setup');
 
+wp_register_script( 'jQuery','//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', array(), '1.7.2' );
+wp_enqueue_script( 'jQuery' );
+
+function uw_connect_menu() {
+  add_options_page( 'UW Connect Options', 'WP-UWConnect', 'manage_options', 'uw-connect-options', 'uw_connect_options' );
+}
+add_action( 'admin_menu', 'uw_connect_menu' );
+
+function uw_connect_options() {
+  $hidden_field_name = 'uwc_submit_hidden';
+  // variables for the field and option names
+  $url = 'uwc_SN_URL';
+  $data_url = 'uwc_SN_URL';
+  $user = 'uwc_SN_USER';
+  $data_user = 'uwc_SN_USER';
+  $pass = 'uwc_SN_PASS';
+  $data_pass = 'uwc_SN_PASS';
+
+  // Read in existing option value from database
+  $url_val = get_option( $url );
+  $user_val = get_option( $user );
+  $pass_val = get_option( $pass );
+
+  // See if the user has posted us some information
+  // If they did, this hidden field will be set to 'Y'
+  if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) { 
+      // Read their posted value
+      $url_val = $_POST[ $data_url ];
+      $user_val = $_POST[ $data_user ];
+      $pass_val = $_POST[ $data_pass ];
+
+      // Save the posted value in the database
+      update_option( $url, $url_val );
+      update_option( $user, $user_val );
+      update_option( $pass, $pass_val );
+
+?>
+<div class="updated"><p><strong><?php _e('settings saved.', 'menu' ); ?></strong></p></div>
+<?php
+  }
+  // Now display the settings editing screen
+  echo '<div class="wrap">';
+  // header
+  echo "<h2>" . __( 'UW Connect Plugin Settings', 'menu' ) . "</h2>";
+  // settings form
+  ?>
+
+<form name="form1" method="post" action="">
+<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
+
+<p><?php _e("ServiceNow URL:", 'menu' ); ?>^
+<input type="text" name="<?php echo $data_url; ?>" value="<?php echo $url_val; ?>" size="20">
+</p><hr />
+
+<p><?php _e("ServiceNow User:", 'menu' ); ?>^
+<input type="text" name="<?php echo $data_user; ?>" value="<?php echo $user_val; ?>" size="20">
+</p><hr />
+
+<p><?php _e("ServiceNow Pass:", 'menu' ); ?>^
+<input type="text" name="<?php echo $data_pass; ?>" value="<?php echo $pass_val; ?>" size="20">
+</p><hr />
+
+<p class="submit">
+<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
+</p>
+
+</form>
+</div>
+<?php
+}
+
+
 function get_page_by_slug($slug) {
     if ($pages = get_pages()) {
       foreach ($pages as $page) {
