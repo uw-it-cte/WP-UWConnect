@@ -171,40 +171,42 @@ get_header(); ?>
                         echo "<tr><td>Service:</td> <td>$record->cmdb_ci</td></tr>";
                         echo "<tr><td>Opened on:</td> <td>$record->opened_at</td></tr>";
                         echo "<tr><td>Last Updated:</td> <td>$record->sys_updated_on</td></tr>";
-                        echo "<tr><td>Attachments:</td> <td>";
 
                         //Get attachments
                         $att_url = '/sys_attachment.do?JSONv2&sysparm_query=table_sys_id=' . $record->sys_id;
                         $attach_json = get_SN($att_url, $args);
-                        echo "<div class='row'>";
+                        if (count($attach_json->records) > 0) {
+                            echo "<tr><td>Attachments:</td> <td>";
+                            echo "<div class='row'>";
 
-                        foreach( $attach_json->records as $attachment ) {
-                            $attID = $attachment->sys_id;
-                            $attName = $attachment->file_name;
-                            $content_type = $attachment->content_type;
-                            //attachment download link
-                            $url = 'https://uweval.service-now.com/sys_attachment.do?sys_id=' . $attID;
+                            foreach( $attach_json->records as $attachment ) {
+                                $attID = $attachment->sys_id;
+                                $attName = $attachment->file_name;
+                                $content_type = $attachment->content_type;
+                                //attachment download link
+                                $url = 'https://uweval.service-now.com/sys_attachment.do?sys_id=' . $attID;
 
-                            echo "<div class='col-lg-6'>";
-                            //Check for mimetype and display related icon
-                            if (strstr($content_type, "/", true) == "image") {
-                            ?>
-                                <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-image-o fa-2x"></i><p><?= $attName ?></p></div></a>
-                            <?php
-                            } else if (strstr($content_type, "/") == "/pdf" ) {
-                            ?>
-                                <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-pdf-o fa-2x"></i><p><?= $attName ?></p></div></a>
-                            <?php
-                            } else if ( strpos( strstr($content_type, "/"), "zip") ) {
-                            ?>
-                                <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-zip-o fa-2x"></i><p><?= $attName ?></p></div></a>
-                            <?php
-                            } else {
-                            ?>
-                                <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-o fa-2x"></i><p><?= $attName ?></p></div></a>
-                            <?php
+                                echo "<div class='col-lg-6'>";
+                                //Check for mimetype and display related icon
+                                if (strstr($content_type, "/", true) == "image") {
+                                ?>
+                                    <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-image-o fa-2x"></i><p><?= $attName ?></p></div></a>
+                                <?php
+                                } else if (strstr($content_type, "/") == "/pdf" ) {
+                                ?>
+                                    <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-pdf-o fa-2x"></i><p><?= $attName ?></p></div></a>
+                                <?php
+                                } else if ( strpos( strstr($content_type, "/"), "zip") ) {
+                                ?>
+                                    <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-zip-o fa-2x"></i><p><?= $attName ?></p></div></a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a href=<?= $url; ?> title="<?= $attName ?>"><div class="att_wrap"><i class="fa fa-file-o fa-2x"></i><p><?= $attName ?></p></div></a>
+                                <?php
+                                }
+                                echo "</div>";
                             }
-                            echo "</div>"
                         ?>
                         <?php
                         }
