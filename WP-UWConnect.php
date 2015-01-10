@@ -22,20 +22,25 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-function uw_connect_setup() {
+function uw_connect_script_setup() {
     wp_register_style( 'uwconnect_font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
     wp_register_style( 'uwconnect_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
     wp_enqueue_style( 'uwconnect_font-awesome' );
     wp_enqueue_style( 'uwconnect_bootstrap' );
 }
-add_action( 'wp_enqueue_scripts', 'uw_connect_setup');
+add_action( 'wp_enqueue_scripts', 'uw_connect_script_setup');
 
 function get_page_by_slug($slug) {
-    if ($pages = get_pages())
-        foreach ($pages as $page)
-            if ($slug === $page->post_name) return $page;
+    if ($pages = get_pages()) {
+      foreach ($pages as $page) {
+        if ($slug === $page->post_name) {
+          return $page;
+        }
+      }
+    }
     return false;
 }
+
 
 function add_query_vars($qvars) {
     $qvars[] = "ticketID";
@@ -44,18 +49,28 @@ function add_query_vars($qvars) {
 add_filter('query_vars', 'add_query_vars');
 
 function add_rewrite_rules($aRules) {
-    $aNewRules = array('my_request/([^/]+)/?$' => 'index.php?pagename=my_request&ticketID=$matches[1]');
+    $aNewRules = array('myrequest/([^/]+)/?$' => 'index.php?pagename=myrequest&ticketID=$matches[1]');
     $aRules = $aNewRules + $aRules;
     return $aRules;
 }
 add_filter('rewrite_rules_array', 'add_rewrite_rules');
+
+function get_page_by_name($pagename) {
+  $pages = get_pages();
+  foreach ($pages as $page) {
+    if ($page->post_name == $pagename) {
+      return $page;
+    }
+  }
+  return false;
+}
 
 function create_request_page() {
     $post = array(
           'comment_status' => 'open',
           'ping_status' =>  'closed' ,
           'post_date' => date('Y-m-d H:i:s'),
-          'post_name' => 'my_request',
+          'post_name' => 'myrequest',
           'post_status' => 'publish' ,
           'post_title' => 'My Request',
           'post_type' => 'page',
@@ -63,14 +78,16 @@ function create_request_page() {
     $newvalue = wp_insert_post( $post, false );
     update_option( 'mrpage', $newvalue );
 }
-register_activation_hook(__FILE__, 'create_request_page');
+if (!get_page_by_name('my_request')) {
+  register_activation_hook(__FILE__, 'create_request_page');
+}
 
 function create_requests_page() {
     $post = array(
           'comment_status' => 'open',
           'ping_status' =>  'closed' ,
           'post_date' => date('Y-m-d H:i:s'),
-          'post_name' => 'my_requests',
+          'post_name' => 'myrequests',
           'post_status' => 'publish' ,
           'post_title' => 'My Requests',
           'post_type' => 'page',
@@ -78,23 +95,53 @@ function create_requests_page() {
     $newvalue = wp_insert_post( $post, false );
     update_option( 'mrspage', $newvalue );
 }
-register_activation_hook(__FILE__, 'create_requests_page');
+if (!get_page_by_name('my_requests')) {
+  register_activation_hook(__FILE__, 'create_requests_page');
+}
+
+function create_servicestatus_page() {
+    $post = array(
+          'comment_status' => 'open',
+          'ping_status' =>  'closed' ,
+          'post_date' => date('Y-m-d H:i:s'),
+          'post_name' => 'servicestatus',
+          'post_status' => 'publish' ,
+          'post_title' => 'ServiceStatus',
+          'post_type' => 'page',
+    );
+    $newvalue = wp_insert_post( $post, false );
+    update_option( 'sspage', $newvalue );
+}
+if (!get_page_by_name('servicestatus')) {
+  register_activation_hook(__FILE__, 'create_servicestatus_page');
+}
 
 function request_page_template( $template ) {
 
-  if ( is_page( 'my_request' ) ) {
-    $new_template = dirname(__FILE__) . '/request-page-template.php';
-    if ( '' != $new_template ) {
-      return $new_template ;
+  if ( is_page( 'myrequest' ) ) {
+    if ( basename( get_page_template() ) == "page.php" ) {
+      $new_template = dirname(__FILE__) . '/request-page-template.php';
+      if ( '' != $new_template ) {
+        return $new_template ;
+      }
     }
   }
-  if ( is_page( 'my_requests' ) ) {
-    $new_template = dirname(__FILE__) . '/requests-page-template.php';
-    if ( '' != $new_template ) {
-      return $new_template ;
+  if ( is_page( 'myrequests' ) ) {
+    if ( basename( get_page_template() ) == "page.php" ) {
+      $new_template = dirname(__FILE__) . '/requests-page-template.php';
+      if ( '' != $new_template ) {
+        return $new_template ;
+      }
     }
   }
-
+  if ( is_page( 'servicestatus' ) ) {
+    if ( basename( get_page_template() ) == "page.php" ) {
+      $new_template = dirname(__FILE__) . '/servicestatus-page-template.php';
+      if ( '' != $new_template ) {
+        return $new_template ;
+      }
+    }
+  }
   return $template;
 }
 add_filter( 'template_include', 'request_page_template');
