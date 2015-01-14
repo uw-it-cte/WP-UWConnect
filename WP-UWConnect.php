@@ -227,7 +227,7 @@ function service_status() {
       'timeout' => 25,
   );
   $JSON = get_SN('/incident_list.do?JSONv2&sysparm_query=active%3Dtrue%5EstateNOT%20IN6%2C7%5Eimpact%3D2%5EORimpact%3D1%5Eu_sectorNOT%20INK20%2CPNWGP%2CPWave%5EORu_sector%3D&displayvalue=true', $args); 
-      if(!$body) {
+      if(!$JSON) {
           echo "<div class='alert alert-warning' style='margin-top:2em;'>We are currently experiencing problems retrieving the status of our services. Please try again in a few minutes.</div>";
       }
       elseif(empty($JSON->records)) {
@@ -274,6 +274,7 @@ function enable_ajax() {
   wp_enqueue_script( 'function', plugin_dir_url( __FILE__ ) . 'service.js', 'jquery', true);
   wp_localize_script( 'function', 'service_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
+add_action('template_redirect', 'enable_ajax');
 
 //Builds a request to Service Now and returns results as a JSON object.
 function get_SN($url, $args) {

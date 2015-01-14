@@ -49,14 +49,14 @@
                     <p id='feedback_prompt'><?php printf(__('<a href="%s">Log in</a> to leave feedback.'), wp_login_url( get_permalink() . '#document-feedback' ) ); ?></p>
                     <?php endif;?>
 				</div><!-- .entry-content -->
-        <div id="noscript" class="alert">
+                <div id="noscript" class="alert">
         JavaScript is required to view this content. Please enable JavaScript and try again.
         </div>
         <div id="spinner" style="width:150px; margin:auto; display: none; text-align:center; line-height:100px;">
             <img src="/itconnect/wp-admin/images/loading.gif" alt="Loading..." />
         </div>
         <div id="services"></div>
-                </div>
+        </div>
                 <footer class="entry-meta">
 					<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
 				</footer><!-- .entry-meta -->
@@ -70,5 +70,9 @@
 			</div><!-- #content -->
 		</div><!-- #primary -->
         <div class="push"></div>
-   </div><!-- #wrap -->
+   </div>
+   <script>
+     servicestatus();
+   </script>
+<!-- #wrap -->
 <?php get_footer(); ?>
