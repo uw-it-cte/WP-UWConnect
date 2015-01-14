@@ -129,7 +129,7 @@ get_header(); ?>
                         if ($record->state != "Resolved" && $record->state != "Awaiting User Info") {
                             $record->state = "Active";
                         }
-                            $detail_url = site_url() . '/my_request/' . $record->number;
+                            $detail_url = site_url() . '/myrequest/' . $record->number;
                             if ($record->state == "Resolved" || $record->state == "Closed") {
                                 echo "<li class='row resolved_ticket'><a href='$detail_url'>";
                             } else {
@@ -189,7 +189,7 @@ get_header(); ?>
                             if ($record->state != "Resolved" && $record->state != "Awaiting User Info") {
                                 $record->state = "Active";
                             }
-                            $detail_url = site_url() . '/my_request/' . $record->number;
+                            $detail_url = site_url() . '/myrequest/' . $record->number;
                             if ($record->state == "Resolved" || $record->state == "Closed") {
                                 echo "<li class='row resolved_ticket'><a href='$detail_url'>";
                             }
