@@ -40,15 +40,37 @@ if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
 
 get_header(); ?>
 
+<div id="wrap">
+        <div id="primary">
+      <div id="content" class="it_container">
 
-<div id="main-content" class="main-content row">
-    <div id="secondary" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" role="complementary">
-      <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
-        <?php dynamic_sidebar('servicenow-sidebar'); ?>
-      </div>
-    </div>
-	<div id="primary" class="col-xs-8 col-xs-offset-1 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1 col-lg-8 col-lg-offset-1">
-		<div id="content" class="site-content" role="main">
+
+      <div class="row row-offcanvas row-offcanvas-left">
+        <div id="secondary" class="span3 sidebar-offcanvas" role="complementary">
+          <div class="stripe-top"></div><div class="stripe-bottom"></div>
+                      <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
+                      <?php dynamic_sidebar('servicenow-sidebar'); ?>
+                      </div>
+        </div>
+          <?php while ( have_posts() ) : the_post(); ?>
+        <p id="mobile_image" class="span9 visible-phone" <?php custom_main_image();?>>
+                    <span id='overlay'></span>
+                    <span class='category'>
+                    <?php $ancestor_list = array_reverse(get_post_ancestors($post->ID));
+                    $is_top = false;
+                    if (sizeof($ancestor_list) > 0) {
+                        $top_parent = get_page($ancestor_list[0]);
+                        echo get_the_title($top_parent);
+                    }
+                    else {
+                        echo get_the_title();
+                        $is_top = true;
+                    }?>
+                    </span>
+                </p>
+
+<div id="main-content" class="main-content row" style="position:relative;" role="main">
+		<div id="content" class="site-content">
 
 			<?php
             if(isset($user)) {
@@ -62,7 +84,7 @@ get_header(); ?>
                     }
                 }
                 ?>
-                <div class="user-logout">
+                <div class="user-logout row" style="text-align:right;">
                     <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-mini" style="vertical-align:text-bottom;">LOGOUT</a>
                 </div>
                 <?php
@@ -291,11 +313,15 @@ get_header(); ?>
                       }
                    }
 
-
+        endwhile;
 			?>
+          </div>
+        </div>
+      </div>
 		</div><!-- #content -->
 	</div><!-- #primary -->
 </div><!-- #main-content -->
 
 <?php
 get_footer();
+?>
