@@ -12,50 +12,35 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
 } else if ( isset( $_SERVER['PHP_AUTH_USER'] ) ) {
     $user = $_SERVER['PHP_AUTH_USER'];
 }
+
 get_header(); ?>
-    <div id="wrap">
-        <div id="primary">
-      <div id="content" class="it_container">
+
+<?php while ( have_posts() ) : the_post(); ?>
+
+<div id="main-content" class="main-content row">
+    <div id="secondary" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" role="complementary">
+      <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
+        <?php dynamic_sidebar('servicenow-sidebar'); ?>
+      </div>
+    </div>
+    <div id="primary" class="col-xs-8 col-xs-offset-1 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1 col-lg-8 col-lg-offset-1">
+    <div id="content" class="site-content" role="main">
+      <h2>
+        <span class='category'>
+        <?php $ancestor_list = array_reverse(get_post_ancestors($post->ID));
+          $is_top = false;
+        if (sizeof($ancestor_list) > 0) {
+          $top_parent = get_page($ancestor_list[0]);
+          echo get_the_title($top_parent);
+        } else {
+          echo get_the_title();
+          $is_top = true;
+        }?>
+        </span>
+      </h2>
 
 
-      <div class="row row-offcanvas row-offcanvas-left">
-        <div id="secondary" class="span3 sidebar-offcanvas" role="complementary">
-          <div class="stripe-top"></div><div class="stripe-bottom"></div>
-                      <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
-                      <?php dynamic_sidebar('servicenow-sidebar'); ?>
-                      </div>
-        </div>
-          <?php while ( have_posts() ) : the_post(); ?>
-        <p id="mobile_image" class="span9 visible-phone" <?php custom_main_image();?>>
-                    <span id='overlay'></span>
-                    <span class='category'>
-                    <?php $ancestor_list = array_reverse(get_post_ancestors($post->ID));
-                    $is_top = false;
-                    if (sizeof($ancestor_list) > 0) {
-                        $top_parent = get_page($ancestor_list[0]);
-                        echo get_the_title($top_parent);
-                    }
-                    else {
-                        echo get_the_title();
-                        $is_top = true;
-                    }?>
-                    </span>
-                </p>
-                <p class="pull-left visible-phone"><a href="#sidebar" class="btn btn-primary btn-offcanvas" data-toggle="offcanvas"></a><span><?php if(!$is_top) { echo get_the_title(); }?></span></p>
-      <div id='tertiary' class="span9">
-
-      <span id="arrow-mark" <?php the_blogroll_banner_style(); ?> ></span>
-
-      <?php uw_breadcrumbs(); ?>
-        <div id="main_content" role="main" style="position:relative;">
-        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        <header class="entry-header">
-          <h1 class="entry-title hidden-phone"><?php apply_filters('italics', get_the_title()); ?></h1>
-        </header><!-- .entry-header -->
-        <div class="entry-content">
-        <?php the_content(); ?>
-        <?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) );
-
+			<?php
         if(isset( $user ) ) {
       ?>
                     <div class="user-logout row" style="text-align:right;">
@@ -122,10 +107,10 @@ get_header(); ?>
                     <h2 id="incident_header" class="assistive-text">Incidents</h2>
                     
                     <div class="request-list request-list-header row">
-                        <span class="request-list-number hidden-phone">Number</span>
-                        <span class="request-list-service hidden-phone">Service</span>
-                        <span class="request-list-description">Description</span>
-                        <span class="request-list">Status</span>
+                        <span id="col_head_num" class="col-lg-2 request-list-number hidden-phone">Number</span>
+                        <span id="col_head_ser" class="col-lg-3 request-list-service hidden-phone">Service</span>
+                        <span id="col_head_des" class="col-lg-5 request-list-description">Description</span>
+                        <span id="col_head_sta" class="col-lg-2 request-list-status">Status</span>
                     </div>
                     
                     
@@ -151,23 +136,23 @@ get_header(); ?>
                                 echo "<li class='row row_underline inner_row_underline'><a href='$detail_url'>";
                             }
                     ?>
-                            <span class="request-list-number hidden-phone whole_row_link" aria-labelledby="col_head_num">
+                            <span class="request-list-number hidden-phone whole_row_link col-lg-2" aria-labelledby="col_head_num">
                                 <?php
                                     echo "$record->number";
                                 ?>
                             </span>
-                            <span class="request-list-service hidden-phone whole_row_link" aria-labelledby="col_head_ser">
+                            <span class="request-list-service hidden-phone whole_row_link col-lg-3" aria-labelledby="col_head_ser">
                                 <?php
                                 echo "$record->cmdb_ci";
                                 ?>
                             </span>
 
-                            <span class="request-list-description whole_row_link" aria-labelledby="col_head_des">
+                            <span class="request-list-description whole_row_link col-lg-5" aria-labelledby="col_head_des">
                                 <?php
                                 echo "$record->short_description";
                                 ?>
                             </span>
-                            <span class="request-list-status whole_row_link" aria-labelledby="col_head_sta">
+                            <span class="request-list-status whole_row_link col-lg-2" aria-labelledby="col_head_sta">
                                 <?php
                                     //get and display the state of the record
                                     if (array_key_exists($record->state, $states)) {
@@ -212,22 +197,22 @@ get_header(); ?>
                                 echo "<li class='row'><a href='$detail_url'>";
                             }
                     ?>
-                            <span class="request-list-number hidden-phone whole_row_link" aria-labelledby="col_head_num">
+                            <span class="request-list-number hidden-phone whole_row_link col-lg-2" aria-labelledby="col_head_num">
                                 <?php
                                 echo "$record->number";
                                 ?>
                             </span>
-                            <span class="request-list-service hidden-phone whole_row_link" aria-labelledby="col_head_ser">
+                            <span class="request-list-service hidden-phone  whole_row_link col-lg-3" aria-labelledby="col_head_ser">
                                 <?php
                                 echo "$record->cmdb_ci";
                                 ?>
                             </span>
-                            <span class="request-list-description whole_row_link" aria-labelledby="col_head_des">
+                            <span class="request-list-description whole_row_link col-lg-5" aria-labelledby="col_head_des">
                                 <?php
                                 echo "$record->short_description";
                                 ?>
                             </span>
-                            <span class="request-list-status whole_row_link" aria-labelledby="col_head_sta">
+                            <span class="request-list-status whole_row_link col-lg-2" aria-labelledby="col_head_sta">
                                 <?php
                                     //Get and display state of the request
                                     if (array_key_exists($record->state, $states)) {
@@ -265,10 +250,6 @@ get_header(); ?>
 
               <?php endwhile; ?>
                 </div>
-            </div>
-          </article>
-        </div>
-      </div>
 		</div><!-- #content -->
 	</div><!-- #primary -->
 </div><!-- #main-content -->
