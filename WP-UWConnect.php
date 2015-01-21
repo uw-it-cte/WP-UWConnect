@@ -24,9 +24,9 @@
 */
 function uw_connect_script_setup() {
     wp_register_style( 'uwconnect_font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
-    wp_register_style( 'uwconnect_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
+    //wp_register_style( 'uwconnect_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
     wp_enqueue_style( 'uwconnect_font-awesome' );
-    wp_enqueue_style( 'uwconnect_bootstrap' );
+    //wp_enqueue_style( 'uwconnect_bootstrap' );
 }
 add_action( 'wp_enqueue_scripts', 'uw_connect_script_setup');
 
@@ -80,15 +80,15 @@ function uw_connect_options() {
 <form name="form1" method="post" action="">
 <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 
-<p><?php _e("ServiceNow URL:", 'menu' ); ?>^
+<p><?php _e("ServiceNow URL:", 'menu' ); ?>
 <input type="text" name="<?php echo $data_url; ?>" value="<?php echo $url_val; ?>" size="20">
 </p><hr />
 
-<p><?php _e("ServiceNow User:", 'menu' ); ?>^
+<p><?php _e("ServiceNow User:", 'menu' ); ?>
 <input type="text" name="<?php echo $data_user; ?>" value="<?php echo $user_val; ?>" size="20">
 </p><hr />
 
-<p><?php _e("ServiceNow Pass:", 'menu' ); ?>^
+<p><?php _e("ServiceNow Pass:", 'menu' ); ?>
 <input type="text" name="<?php echo $data_pass; ?>" value="<?php echo $pass_val; ?>" size="20">
 </p><hr />
 
@@ -227,12 +227,38 @@ function service_status() {
       'timeout' => 25,
   );
   $JSON = get_SN('/incident_list.do?JSONv2&sysparm_query=active%3Dtrue%5EstateNOT%20IN6%2C7%5Epriority%3D3%5EORpriority%3D2%5EORpriority%3D1%5Eu_sectorNOT%20INK20%2CPNWGP%2CPWave%5EORu_sector%3D&displayvalue=true', $args);
+  $IDJSON = get_SN('/incident_list.do?JSONv2&sysparm_query=active%3Dtrue%5EstateNOT%20IN6%2C7%5Epriority%3D3%5EORpriority%3D2%5EORpriority%3D1%5Eu_sectorNOT%20INK20%2CPNWGP%2CPWave%5EORu_sector%3D', $args);
       if(!$JSON) {
           echo "<div class='alert alert-warning' style='margin-top:2em;'>We are currently experiencing problems retrieving the status of our services. Please try again in a few minutes.</div>";
       }
       elseif(empty($JSON->records)) {
           echo "<div class='alert alert-warning' style='margin-top:2em;'>All services are operational.</div>";
       }
+      $sn_data = array();
+      foreach ( $IDJSON->records as $record ) {
+          if( !isset( $sn_data[$record->cmdb_ci] ) ) { 
+                  $sn_data[$record->cmdb_ci] = array();
+                  unset($first);
+              }
+              $create = $record->sys_created_on;
+              if( !isset( $first ) ) {
+                  $first = $create;
+              }
+              if($create < $first) {
+                  $first = $create;
+              }
+              $sn_data[$record->cmdb_ci][] = $record;
+              $sn_data[$record->cmdb_ci][] = $first;
+
+      }
+      $classes = array();
+      foreach ($sn_data as $ci) {
+        $serviceid = $ci[0]->cmdb_ci;
+        $servJSON = get_SN('/cmdb_ci_list.do?JSONv2&sysparm_query=u_active!%3Dfalse%5Esys_id%3D' . $serviceid . '&displayvalue=true', $args);
+        $class = $servJSON->records[0]->sys_class_name;
+        $classes[] = $class;
+      }
+
 
       if ( !empty( $JSON->records ) ) { 
           $sn_data = array();
@@ -254,13 +280,21 @@ function service_status() {
               echo "<h2 class='assistive-text' id='impact_headeing'>Impacted Services</h2>";
               # put the services into a single ordered list
               echo "<ol style='list-style:none;padding-left:0;margin-left:0;' aria-labelledby='impact_heading'>";
+              $i = 0;
               foreach( $sn_data as $ci) {
+                  $class = $classes[$i];
                   $service = array_search($ci, $sn_data);
                   // handle the case of blank services and switches who's 'name' is a sequence of 5 or more numbers
                   if ( $service !== '' && !preg_match('/^\d{5,}$/', $service) ) { 
                       $time = end($ci);
-                      echo "<li style='margin-top:10px;' class='clearfix'><span style='display:inline-block; max-width:50%;font-weight:bold;' class='pull-left'>$service</span><span style='color:#aaa;font-size:95%;' class='pull-right'><span class='hidden-phone hidden-tablet'>Reported at</span> $time </span></li>";
+                    echo "<div class='services'>";
+                      echo "<div class='service_name' style='font-weight:bold; display:inline-block; width:40%; margin-right:5px;'>$service</div>";
+                      echo "<div class='service_class' style='display:inline-block; width:20%; margin-right:5px;'>$class</div>";
+                      echo "<div class='service_time' style='color:#aaa; font-size:95%; display:inline-block; width:30%; margin-right:5px;'>Reported at $time</div>";
+                    echo "</div>";
+                    //echo "<li style='margin-top:10px;' class='clearfix'><span style='display:inline-block; max-width:50%;font-weight:bold;' class='pull-left'>$service</span><span>$class</span><span style='color:#aaa;font-size:95%;' class='pull-right'><span class='hidden-phone hidden-tablet'>Reported at</span> $time </span></li>";
                }
+               $i++;
             }
         echo "</ol>";
       }
