@@ -25,10 +25,10 @@ if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
     $comments_json = json_encode( $comments_json );
     $comments_url = SN_URL . '/comment.do';
     // If a POST and have comments - create a comment in SN
-    if( defined('SN_USER') && defined('SN_PASS') && defined('SN_URL') ) {
+    if( get_option('uwc_SN_USER') && get_option('uwc_SN_PASS') && get_option('uwc_SN_URL') ) {
         $args = array(
             'headers' => array(
-            'Authorization' => 'Basic ' . base64_encode( SN_USER . ':' . SN_PASS ),
+            'Authorization' => 'Basic ' . base64_encode( get_option('uwc_SN_USER') . ':' . get_option('uwc_SN_PASS') ),
             'Content-Type' => 'application/json',
             ),
         'body' => $comments_json,

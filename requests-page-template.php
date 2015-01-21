@@ -63,10 +63,10 @@ get_header(); ?>
                 </div>
                 <?php
                     // Only do this work if we have everything we need to get to ServiceNow.
-                    if ( defined('SN_USER') && defined('SN_PASS') && defined('SN_URL') ) {
+                    if ( get_option('uwc_SN_URL') && get_option('uwc_SN_PASS') && get_option('uwc_SN_URL') ) {
                         $args = array(
                             'headers' => array(
-                                'Authorization' => 'Basic ' . base64_encode( SN_USER . ':' . SN_PASS ),
+                                'Authorization' => 'Basic ' . base64_encode( get_option('uwc_SN_USER') . ':' . get_option('uwc_SN_PASS') ),
                             )
                         );
 

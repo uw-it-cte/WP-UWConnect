@@ -219,7 +219,7 @@ function request_page_template( $template ) {
 add_filter( 'template_include', 'request_page_template');
 
 function service_status() {
-  $hash = base64_encode( SN_USER . ':' . SN_PASS );
+  $hash = base64_encode( get_option('uwc_SN_USER') . ':' . get_option('uwc_SN_PASS') );
   $args = array(
       'headers' => array(
           'Authorization' => 'Basic ' . $hash,
@@ -312,7 +312,7 @@ add_action('template_redirect', 'enable_ajax');
 
 //Builds a request to Service Now and returns results as a JSON object.
 function get_SN($url, $args) {
-    $url = SN_URL . $url;
+    $url = get_option('uwc_SN_URL') . $url;
     $response = wp_remote_get( $url, $args );
     $body = wp_remote_retrieve_body( $response );
     $json = json_decode( $body );
