@@ -24,9 +24,11 @@
 */
 function uw_connect_script_setup() {
     wp_register_style( 'uwconnect_font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
-    //wp_register_style( 'uwconnect_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' );
+    wp_register_style( 'uwconnect_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' );
+    wp_register_style( 'uwconnect_style', plugin_dir_url(__FILE__) . 'css/style.css');
     wp_enqueue_style( 'uwconnect_font-awesome' );
-    //wp_enqueue_style( 'uwconnect_bootstrap' );
+    wp_enqueue_style( 'uwconnect_bootstrap' );
+    wp_enqueue_style( 'uwconnect_style' );
 }
 add_action( 'wp_enqueue_scripts', 'uw_connect_script_setup');
 
@@ -279,7 +281,7 @@ function service_status() {
           }
               echo "<h2 class='assistive-text' id='impact_headeing'>Impacted Services</h2>";
               # put the services into a single ordered list
-              echo "<ol style='list-style:none;padding-left:0;margin-left:0;' aria-labelledby='impact_heading'>";
+              echo "<div class='row' aria-labelledby='impact_heading'>";
               $i = 0;
               foreach( $sn_data as $ci) {
                   $class = $classes[$i];
@@ -287,16 +289,16 @@ function service_status() {
                   // handle the case of blank services and switches who's 'name' is a sequence of 5 or more numbers
                   if ( $service !== '' && !preg_match('/^\d{5,}$/', $service) ) { 
                       $time = end($ci);
-                    echo "<div class='services'>";
-                      echo "<div class='service_name' style='font-weight:bold; display:inline-block; width:40%; margin-right:5px;'>$service</div>";
-                      echo "<div class='service_class' style='display:inline-block; width:20%; margin-right:5px;'>$class</div>";
-                      echo "<div class='service_time' style='color:#aaa; font-size:95%; display:inline-block; width:30%; margin-right:5px;'>Reported at $time</div>";
+                    echo "<div class='services row'>";
+                      echo "<div class='service_name col-lg-5 col-md-5 col-sm-8 col-xs-8' style='font-weight:bold; display:inline-block;'>$service</div>";
+                      echo "<div class='service_class hidden-xs hidden-sm col-lg-2 col-md-2' style='display:inline-block; font-size:90%;'>$class</div>";
+                      echo "<div class='service_time col-lg-4 col-md-4 col-sm-4 col-xs-4' style='color:#aaa; font-size:95%; display:inline-block;'><span class='hidden-sm hidden-xs'>Reported at </span>$time</div>";
                     echo "</div>";
                     //echo "<li style='margin-top:10px;' class='clearfix'><span style='display:inline-block; max-width:50%;font-weight:bold;' class='pull-left'>$service</span><span>$class</span><span style='color:#aaa;font-size:95%;' class='pull-right'><span class='hidden-phone hidden-tablet'>Reported at</span> $time </span></li>";
                }
                $i++;
             }
-        echo "</ol>";
+        echo "</div>";
       }
   echo "<p class='alert alert-info' style='margin-top: 2em;'>Experiencing IT problems not listed on this page? Need more information about a service impact? Want to provide feedback about this page? <a href='/itconnect/help'>Get help.</a></p>";
         die();

@@ -42,12 +42,12 @@ get_header(); ?>
 
 
 <div id="main-content" class="main-content row">
-    <div id="secondary" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" role="complementary">
+    <div id="secondary" class="col-lg-2 col-lg-offset-1 col-md-3 hidden-sm hidden-xs" role="complementary">
       <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
         <?php dynamic_sidebar('servicenow-sidebar'); ?>
       </div>
     </div>
-	<div id="primary" class="col-xs-8 col-xs-offset-1 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1 col-lg-8 col-lg-offset-1">
+	<div id="primary" class="col-xs-10 col-sm-10 col-md-8 col-lg-8 itsm-primary">
 		<div id="content" class="site-content" role="main">
 
 			<?php
@@ -62,8 +62,8 @@ get_header(); ?>
                     }
                 }
                 ?>
-                <div class="user-logout">
-                    <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-mini" style="vertical-align:text-bottom;">LOGOUT</a>
+                <div class="user-logout row">
+                 <span style="float:right;"><span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-xs">LOGOUT</a></span>
                 </div>
                 <?php
                     //Only do this work if we have everything we need to get to ServiceNow

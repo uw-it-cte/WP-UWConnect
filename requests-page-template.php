@@ -18,13 +18,16 @@ get_header(); ?>
 <?php while ( have_posts() ) : the_post(); ?>
 
 <div id="main-content" class="main-content row">
-    <div id="secondary" class="col-lg-2 col-md-2 col-sm-2 col-xs-2" role="complementary">
+    <div id="secondary sidebar-offcanvas" class="col-lg-2 col-lg-offset-1 col-md-3 hidden-sm hidden-xs" role="complementary">
       <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
         <?php dynamic_sidebar('servicenow-sidebar'); ?>
       </div>
     </div>
-    <div id="primary" class="col-xs-8 col-xs-offset-1 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1 col-lg-8 col-lg-offset-1">
+    <div id="primary" class="col-xs-11 col-sm-11 col-md-9 col-lg-8 itsm-primary">
     <div id="content" class="site-content" role="main">
+        <div class="user-logout row">
+          <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-xs" style="vertical-align:text-bottom;">LOGOUT</a>
+        </div>
       <h2>
         <span class='category'>
         <?php $ancestor_list = array_reverse(get_post_ancestors($post->ID));
@@ -43,9 +46,6 @@ get_header(); ?>
 			<?php
         if(isset( $user ) ) {
       ?>
-                    <div class="user-logout row" style="text-align:right;">
-                    <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-mini" style="vertical-align:text-bottom;">LOGOUT</a>
-                </div>
                 <?php
                     // Only do this work if we have everything we need to get to ServiceNow.
                     if ( get_option('uwc_SN_URL') && get_option('uwc_SN_PASS') && get_option('uwc_SN_URL') ) {
@@ -107,10 +107,10 @@ get_header(); ?>
                     <h2 id="incident_header" class="assistive-text">Incidents</h2>
                     
                     <div class="request-list request-list-header row">
-                        <span id="col_head_num" class="col-lg-2 request-list-number hidden-phone">Number</span>
-                        <span id="col_head_ser" class="col-lg-3 request-list-service hidden-phone">Service</span>
-                        <span id="col_head_des" class="col-lg-5 request-list-description">Description</span>
-                        <span id="col_head_sta" class="col-lg-2 request-list-status">Status</span>
+                        <span id="col_head_num" class="col-lg-2 col-md-2 request-list-number hidden-sm hidden-xs">Number</span>
+                        <span id="col_head_ser" class="col-lg-3 col-md-3 request-list-service hidden-sm hidden-xs">Service</span>
+                        <span id="col_head_des" class="col-lg-4 col-md-6 col-sm-6 col-xs-4 request-list-description">Description</span>
+                        <span id="col_head_sta" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 request-list-status">Status</span>
                     </div>
                     
                     
@@ -136,23 +136,23 @@ get_header(); ?>
                                 echo "<li class='row row_underline inner_row_underline'><a href='$detail_url'>";
                             }
                     ?>
-                            <span class="request-list-number hidden-phone whole_row_link col-lg-2" aria-labelledby="col_head_num">
+                            <span class="request-list-number hidden-sm hidden-xs whole_row_link col-md-2 col-lg-2" aria-labelledby="col_head_num">
                                 <?php
                                     echo "$record->number";
                                 ?>
                             </span>
-                            <span class="request-list-service hidden-phone whole_row_link col-lg-3" aria-labelledby="col_head_ser">
+                            <span class="request-list-service hidden-sm hidden-xs whole_row_link col-lg-3 col-md-3" aria-labelledby="col_head_ser">
                                 <?php
                                 echo "$record->cmdb_ci";
                                 ?>
                             </span>
 
-                            <span class="request-list-description whole_row_link col-lg-5" aria-labelledby="col_head_des">
+                            <span class="request-list-description whole_row_link col-lg-4 col-md-6 col-sm-6 col-xs-4" aria-labelledby="col_head_des">
                                 <?php
                                 echo "$record->short_description";
                                 ?>
                             </span>
-                            <span class="request-list-status whole_row_link col-lg-2" aria-labelledby="col_head_sta">
+                            <span class="request-list-status whole_row_link col-lg-2 col-md-2 col-sm-2 col-xs-2" aria-labelledby="col_head_sta">
                                 <?php
                                     //get and display the state of the record
                                     if (array_key_exists($record->state, $states)) {
@@ -197,22 +197,22 @@ get_header(); ?>
                                 echo "<li class='row'><a href='$detail_url'>";
                             }
                     ?>
-                            <span class="request-list-number hidden-phone whole_row_link col-lg-2" aria-labelledby="col_head_num">
+                            <span class="request-list-number hidden-sm hidden-xs whole_row_link col-lg-2 col-md-2" aria-labelledby="col_head_num">
                                 <?php
                                 echo "$record->number";
                                 ?>
                             </span>
-                            <span class="request-list-service hidden-phone  whole_row_link col-lg-3" aria-labelledby="col_head_ser">
+                            <span class="request-list-service hidden-sm hidden-xs whole_row_link col-lg-3 col-md-3" aria-labelledby="col_head_ser">
                                 <?php
                                 echo "$record->cmdb_ci";
                                 ?>
                             </span>
-                            <span class="request-list-description whole_row_link col-lg-5" aria-labelledby="col_head_des">
+                            <span class="request-list-description whole_row_link col-lg-4 col-md-6 col-sm-6 col-xs-4" aria-labelledby="col_head_des">
                                 <?php
                                 echo "$record->short_description";
                                 ?>
                             </span>
-                            <span class="request-list-status whole_row_link col-lg-2" aria-labelledby="col_head_sta">
+                            <span class="request-list-status whole_row_link col-lg-2 col-md-2 col-sm-2 col-xs-2" aria-labelledby="col_head_sta">
                                 <?php
                                     //Get and display state of the request
                                     if (array_key_exists($record->state, $states)) {
