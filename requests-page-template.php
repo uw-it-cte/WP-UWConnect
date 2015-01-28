@@ -23,7 +23,7 @@ get_header(); ?>
         <?php dynamic_sidebar('servicenow-sidebar'); ?>
       </div>
     </div>
-    <div id="primary" class="col-xs-11 col-sm-11 col-md-9 col-lg-8 itsm-primary">
+    <div id="primary" class="col-xs-12 col-sm-12 col-md-9 col-lg-8 itsm-primary">
     <div id="content" class="site-content" role="main">
         <div class="user-logout row">
           <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-xs" style="vertical-align:text-bottom;">LOGOUT</a>
@@ -107,7 +107,7 @@ get_header(); ?>
                     <h2 id="incident_header" class="assistive-text">Incidents</h2>
                     
                     <div class="request-list request-list-header row">
-                        <span id="col_head_num" class="col-lg-2 col-md-2 request-list-number hidden-sm hidden-xs">Number</span>
+                        <span id="col_head_num" class="col-lg-2 col-md-2 col-sm-2 request-list-number hidden-xs">Number</span>
                         <span id="col_head_ser" class="col-lg-3 col-md-3 request-list-service hidden-sm hidden-xs">Service</span>
                         <span id="col_head_des" class="col-lg-4 col-md-6 col-sm-6 col-xs-4 request-list-description">Description</span>
                         <span id="col_head_sta" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 request-list-status">Status</span>
@@ -136,7 +136,7 @@ get_header(); ?>
                                 echo "<li class='row row_underline inner_row_underline'><a href='$detail_url'>";
                             }
                     ?>
-                            <span class="request-list-number hidden-sm hidden-xs whole_row_link col-md-2 col-lg-2" aria-labelledby="col_head_num">
+                            <span class="request-list-number hidden-xs whole_row_link col-md-2 col-lg-2 col-sm-2" aria-labelledby="col_head_num">
                                 <?php
                                     echo "$record->number";
                                 ?>
@@ -197,7 +197,7 @@ get_header(); ?>
                                 echo "<li class='row'><a href='$detail_url'>";
                             }
                     ?>
-                            <span class="request-list-number hidden-sm hidden-xs whole_row_link col-lg-2 col-md-2" aria-labelledby="col_head_num">
+                            <span class="request-list-number hidden-xs whole_row_link col-lg-2 col-md-2 col-sm-2" aria-labelledby="col_head_num">
                                 <?php
                                 echo "$record->number";
                                 ?>

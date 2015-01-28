@@ -47,7 +47,7 @@ get_header(); ?>
         <?php dynamic_sidebar('servicenow-sidebar'); ?>
       </div>
     </div>
-	<div id="primary" class="col-xs-10 col-sm-10 col-md-8 col-lg-8 itsm-primary">
+	<div id="primary" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 itsm-primary">
 		<div id="content" class="site-content" role="main">
 
 			<?php
