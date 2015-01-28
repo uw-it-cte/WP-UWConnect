@@ -24,8 +24,8 @@
 */
 function uw_connect_script_setup() {
     wp_register_style( 'uwconnect_font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
-    wp_register_style( 'uwconnect_bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' );
-    wp_register_style( 'uwconnect_style', plugin_dir_url(__FILE__) . 'css/style.css');
+    wp_register_style( 'uwconnect_bootstrap', plugin_dir_url(__FILE__) . 'styles/bootstrap-3.1.1/css/bootstrap-3.1.1.min.css' );
+    wp_register_style( 'uwconnect_style', plugin_dir_url(__FILE__) . 'styles/style.css');
     wp_enqueue_style( 'uwconnect_font-awesome' );
     wp_enqueue_style( 'uwconnect_bootstrap' );
     wp_enqueue_style( 'uwconnect_style' );
@@ -294,7 +294,6 @@ function service_status() {
                       echo "<div class='service_class hidden-xs hidden-sm col-lg-2 col-md-2' style='display:inline-block; font-size:90%;'>$class</div>";
                       echo "<div class='service_time col-lg-4 col-md-4 col-sm-4 col-xs-4' style='color:#aaa; font-size:95%; display:inline-block;'><span class='hidden-sm hidden-xs'>Reported at </span>$time</div>";
                     echo "</div>";
-                    //echo "<li style='margin-top:10px;' class='clearfix'><span style='display:inline-block; max-width:50%;font-weight:bold;' class='pull-left'>$service</span><span>$class</span><span style='color:#aaa;font-size:95%;' class='pull-right'><span class='hidden-phone hidden-tablet'>Reported at</span> $time </span></li>";
                }
                $i++;
             }
