@@ -152,7 +152,7 @@ function create_request_page() {
     $newvalue = wp_insert_post( $post, false );
     update_option( 'mrpage', $newvalue );
 }
-if (!get_page_by_name('my_request')) {
+if (!get_page_by_name('myrequest')) {
   register_activation_hook(__FILE__, 'create_request_page');
 }
 
@@ -169,7 +169,7 @@ function create_requests_page() {
     $newvalue = wp_insert_post( $post, false );
     update_option( 'mrspage', $newvalue );
 }
-if (!get_page_by_name('my_requests')) {
+if (!get_page_by_name('myrequests')) {
   register_activation_hook(__FILE__, 'create_requests_page');
 }
 
