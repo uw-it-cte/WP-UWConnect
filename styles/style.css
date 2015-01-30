@@ -47,7 +47,7 @@
 
 .comment-timestamp .create-date { color: #aaa; display: inline-block; margin-left: 15px; }
 
-.services {
+.servicecontent {
     margin-bottom: 10px;
     vertical-align: bottom;
 }
@@ -65,3 +65,11 @@
     font-size: 12px;
 }
 
+.relatedincidents {
+    list-style-type: none;
+    padding-left: 5%;
+}
+
+.servicename{
+    line-height: 30px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
