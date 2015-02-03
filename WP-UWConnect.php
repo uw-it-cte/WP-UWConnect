@@ -143,9 +143,8 @@ function create_request_page() {
     $post = array(
           'comment_status' => 'open',
           'ping_status' =>  'closed' ,
-          'post_date' => date('Y-m-d H:i:s'),
           'post_name' => 'myrequest',
-          'post_status' => 'publish' ,
+          'post_status' => 'publish',
           'post_title' => 'My Request',
           'post_type' => 'page',
     );
@@ -160,9 +159,8 @@ function create_requests_page() {
     $post = array(
           'comment_status' => 'open',
           'ping_status' =>  'closed' ,
-          'post_date' => date('Y-m-d H:i:s'),
           'post_name' => 'myrequests',
-          'post_status' => 'publish' ,
+          'post_status' => 'publish',
           'post_title' => 'My Requests',
           'post_type' => 'page',
     );
@@ -177,9 +175,8 @@ function create_servicestatus_page() {
     $post = array(
           'comment_status' => 'open',
           'ping_status' =>  'closed' ,
-          'post_date' => date('Y-m-d H:i:s'),
           'post_name' => 'servicestatus',
-          'post_status' => 'publish' ,
+          'post_status' => 'publish',
           'post_title' => 'ServiceStatus',
           'post_type' => 'page',
     );
