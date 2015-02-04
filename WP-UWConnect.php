@@ -286,10 +286,27 @@ function service_status() {
                   // handle the case of blank services and switches who's 'name' is a sequence of 5 or more numbers
                   if ( $service !== '' && !preg_match('/^\d{5,}$/', $service) ) { 
                       $time = end($ci);
-                    echo "<div class='services row'>";
-                      echo "<div class='service_name col-lg-5 col-md-5 col-sm-8 col-xs-8' style='font-weight:bold; display:inline-block;'>$service</div>";
-                      echo "<div class='service_class hidden-xs hidden-sm col-lg-2 col-md-2' style='display:inline-block; font-size:90%;'>$class</div>";
-                      echo "<div class='service_time col-lg-4 col-md-4 col-sm-4 col-xs-4' style='color:#aaa; font-size:95%; display:inline-block;'><span class='hidden-sm hidden-xs'>Reported at </span>$time</div>";
+                    echo "<div class='servicecontent row'>";
+                      echo "<div class='servicewrap row'>";
+                        echo "<div class='glyphicon glyphicon-chevron-right switch' style='display:inline-block;float:left;cursor:pointer;'><a></a></div>";
+                        echo "<div class='service_name col-lg-5 col-md-5 col-sm-7 col-xs-7' style='font-weight:bold; display:inline-block;'>$service</div>";
+                        echo "<div class='service_class hidden-xs hidden-sm col-lg-2 col-md-2' style='display:inline-block; font-size:90%;'>$class</div>";
+                        echo "<div class='service_time col-lg-4 col-md-4 col-sm-4 col-xs-4' style='color:#aaa; font-size:95%; display:inline-block;'><span class='hidden-sm hidden-xs'>Reported at </span>$time</div>";
+                      echo "</div>";
+                      echo "<ul class='relatedincidents'>";
+                      echo "<li class='incident-head row'>";
+                          echo "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'>Incident Number</div>";
+                          echo "<div class='col-lg-9 col-md-9 col-sm-9 col-xs-9'>Description</div>"; 
+                      echo "</li>";
+                          foreach( $ci as $incident ) {
+                            if (!is_string($incident)) {
+                              echo "<li class='incident row'>";
+                                  echo "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'>" . $incident->number . "</div>";
+                                  echo "<div class='col-lg-9 col-md-9 col-sm-9 col-xs-9'>" . $incident->short_description . "</div>";
+                              echo "</li>";
+                            }
+                          }
+                      echo "</ul>";
                     echo "</div>";
                }
                $i++;
@@ -303,8 +320,8 @@ add_action( 'wp_ajax_service_status', 'service_status' );
 add_action( 'wp_ajax_nopriv_service_status', 'service_status' );
 
 function enable_ajax() {
-  wp_enqueue_script( 'function', plugin_dir_url( __FILE__ ) . 'service.js', 'jquery', true);
-  wp_localize_script( 'function', 'service_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+  wp_enqueue_script( 'services', plugin_dir_url( __FILE__ ) . 'service.js', 'jquery', true);
+  wp_localize_script( 'services', 'service_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 add_action('template_redirect', 'enable_ajax');
 
