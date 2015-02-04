@@ -73,3 +73,14 @@
 .servicename{
     line-height: 30px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
+
+.incident-head.row {
+    font-weight: bold;
+    margin: 10px 0px;
+    border-bottom: 1px grey solid;
+}
+
+.incident.row {
+    margin: 2px 0px;
+}
+
