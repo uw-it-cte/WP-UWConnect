@@ -142,7 +142,7 @@ function get_page_by_name($pagename) {
 function create_request_page() {
     $post = array(
           'comment_status' => 'open',
-          'ping_status' =>  'closed' ,
+          'ping_status' =>  'closed',
           'post_name' => 'myrequest',
           'post_status' => 'publish',
           'post_title' => 'My Request',
@@ -158,7 +158,7 @@ if (!get_page_by_name('myrequest')) {
 function create_requests_page() {
     $post = array(
           'comment_status' => 'open',
-          'ping_status' =>  'closed' ,
+          'ping_status' =>  'closed',
           'post_name' => 'myrequests',
           'post_status' => 'publish',
           'post_title' => 'My Requests',
@@ -174,7 +174,7 @@ if (!get_page_by_name('myrequests')) {
 function create_servicestatus_page() {
     $post = array(
           'comment_status' => 'open',
-          'ping_status' =>  'closed' ,
+          'ping_status' =>  'closed',
           'post_name' => 'servicestatus',
           'post_status' => 'publish',
           'post_title' => 'ServiceStatus',
