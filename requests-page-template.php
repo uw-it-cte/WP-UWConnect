@@ -18,13 +18,13 @@ get_header(); ?>
 <?php while ( have_posts() ) : the_post(); ?>
 
 <div id="main-content" class="main-content row">
-    <div id="secondary sidebar-offcanvas" class="col-lg-2 col-lg-offset-1 col-md-3 hidden-sm hidden-xs" role="complementary">
-      <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
-        <?php dynamic_sidebar('servicenow-sidebar'); ?>
-      </div>
+    <div id="content" class="it_container" role="main">
+    <div id="secondary sidebar-offcanvas" class="col-lg-2 col-md-2 hidden-sm hidden-xs" role="complementary">
+          <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
+          <?php dynamic_sidebar('servicenow-sidebar'); ?>
+        </div>
     </div>
-    <div id="primary" class="col-xs-12 col-sm-12 col-md-9 col-lg-8 itsm-primary">
-    <div id="content" class="site-content" role="main">
+    <div id="primary" class="col-xs-12 col-sm-12 col-md-10 col-lg-10 itsm-primary">
         <div class="user-logout row">
           <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-xs" style="vertical-align:text-bottom;">LOGOUT</a>
         </div>
@@ -129,7 +129,7 @@ get_header(); ?>
                         if ($record->state != "Resolved" && $record->state != "Awaiting User Info") {
                             $record->state = "Active";
                         }
-                            $detail_url = site_url() . '/myrequest/' . $record->number;
+                            $detail_url = site_url() . '/myrequest/' . $record->number . '/';
                             if ($record->state == "Resolved" || $record->state == "Closed") {
                                 echo "<li class='row resolved_ticket'><a href='$detail_url'>";
                             } else {
@@ -189,7 +189,7 @@ get_header(); ?>
                             if ($record->state != "Resolved" && $record->state != "Awaiting User Info") {
                                 $record->state = "Active";
                             }
-                            $detail_url = site_url() . '/myrequest/' . $record->number;
+                            $detail_url = site_url() . '/myrequest/' . $record->number . '/';
                             if ($record->state == "Resolved" || $record->state == "Closed") {
                                 echo "<li class='row resolved_ticket'><a href='$detail_url'>";
                             }
