@@ -4,15 +4,15 @@
 
 <div id="main_content" role="main">
 
-				<div id="secondary" class="col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 hidden-sm hidden-xs" role="complementary">
+
+			<div id="content" class="it_container">
+				<div id="secondary" class="col-lg-2 col-md-2 hidden-sm hidden-xs" role="complementary">
 					<div class="stripe-top"></div><div class="stripe-bottom"></div>
                       <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
                       <?php dynamic_sidebar('servicenow-sidebar'); ?>
                       </div>
 				</div>
-        <div id="primary" class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-			<div id="content" class="it_container">
-
+        <div id="primary" class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 			<?php while ( have_posts() ) : the_post(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
