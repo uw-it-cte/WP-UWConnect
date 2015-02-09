@@ -123,8 +123,9 @@ function add_query_vars($qvars) {
 add_filter('query_vars', 'add_query_vars');
 
 function add_rewrite_rules($aRules) {
-    $aNewRules = array('myrequest/([^/]+)/?$' => 'index.php?pagename=myrequest&ticketID=$matches[1]');
-    $aRules = $aNewRules + $aRules;
+    $aNewRules = array('incident/([^/]+)/?$' => 'index.php?pagename=incident&ticketID=$matches[1]');
+    $bNewRules = array('myrequest/([^/]+)/?$' => 'index.php?pagename=myrequest&ticketID=$matches[1]');
+    $aRules = $bNewRules + $aNewRules + $aRules;
     return $aRules;
 }
 add_filter('rewrite_rules_array', 'add_rewrite_rules');
@@ -137,6 +138,22 @@ function get_page_by_name($pagename) {
     }
   }
   return false;
+}
+
+function create_incident_page() {
+    $post = array(
+          'comment_status' => 'open',
+          'ping_status' =>  'closed',
+          'post_name' => 'incident',
+          'post_status' => 'publish',
+          'post_title' => 'Incident',
+          'post_type' => 'page',
+    );
+    $newvalue = wp_insert_post( $post, false );
+    update_option( 'incpage', $newvalue );
+}
+if (!get_page_by_name('incident')) {
+  register_activation_hook(__FILE__, 'create_incident_page');
 }
 
 function create_request_page() {
@@ -200,6 +217,14 @@ function request_page_template( $template ) {
   if ( is_page( 'myrequests' ) ) {
     if ( basename( get_page_template() ) == "page.php" ) {
       $new_template = dirname(__FILE__) . '/requests-page-template.php';
+      if ( '' != $new_template ) {
+        return $new_template ;
+      }
+    }
+  }
+  if ( is_page( 'incident' ) ) {
+    if ( basename( get_page_template() ) == "page.php" ) {
+      $new_template = dirname(__FILE__) . '/incident-page-template.php';
       if ( '' != $new_template ) {
         return $new_template ;
       }
@@ -303,7 +328,7 @@ function service_status() {
                       echo "</li>";
                           foreach( $ci as $incident ) {
                             if (!is_string($incident)) {
-                              echo "<a href='myrequest/$incident->number'><li class='incident row'>";
+                              echo "<a href='/itconnect/incident/$incident->number'><li class='incident row'>";
                                   echo "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3 inc_num'>" . $incident->number . "</div>";
                                   echo "<div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 inc_sdesc'>" . $incident->short_description . "</div>";
                               echo "</li></a>";
