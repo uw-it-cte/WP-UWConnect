@@ -22,14 +22,14 @@ function servicestatus (){
 }
 
 function dropdowns() {
-    jQuery('.switch').click(function(e) {
+    jQuery('.servicewrap').click(function(e) {
         target = jQuery(e.target);
-        if( target.hasClass('glyphicon-chevron-right') ) {
-            target.removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
-            target.parent('.servicewrap').parent('.servicecontent').children('.relatedincidents').show(600);
+        if( target.children('.switch').hasClass('glyphicon-chevron-right') ) {
+            target.children('.switch').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
+            target.parent('.servicecontent').children('.relatedincidents').show(600);
         } else {
-            target.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
-            target.parent('.servicewrap').parent('.servicecontent').children('.relatedincidents').hide(600);
+            target.children('.switch').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
+            target.parent('.servicecontent').children('.relatedincidents').hide(600);
         }
     });
 }
