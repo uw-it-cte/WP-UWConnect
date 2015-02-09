@@ -288,10 +288,10 @@ function service_status() {
                       $time = end($ci);
                     echo "<div class='servicecontent row'>";
                       echo "<div class='servicewrap row'>";
-                        echo "<div class='glyphicon glyphicon-chevron-right switch' style='display:inline-block;float:left;cursor:pointer;'><a></a></div>";
-                        echo "<div class='service_name col-lg-5 col-md-5 col-sm-7 col-xs-7' style='font-weight:bold; display:inline-block;'>$service</div>";
-                        echo "<div class='service_class hidden-xs hidden-sm col-lg-2 col-md-2' style='display:inline-block; font-size:90%;'>$class</div>";
-                        echo "<div class='service_time col-lg-4 col-md-4 col-sm-4 col-xs-4' style='color:#aaa; font-size:95%; display:inline-block;'><span class='hidden-sm hidden-xs'>Reported at </span>$time</div>";
+                        echo "<span class='glyphicon glyphicon-chevron-right switch' style='display:inline-block;float:left;'></span>";
+                        echo "<span class='service_name col-lg-5 col-md-5 col-sm-7 col-xs-7' style='font-weight:bold; display:inline-block;'>$service</span>";
+                        echo "<span class='service_class hidden-xs hidden-sm col-lg-2 col-md-2' style='display:inline-block; font-size:90%;'>$class</span>";
+                        echo "<span class='service_time col-lg-4 col-md-4 col-sm-4 col-xs-4' style='color:#aaa; font-size:95%; display:inline-block;'><span class='hidden-sm hidden-xs'>Reported at </span>$time</span>";
                       echo "</div>";
                       echo "<ul class='relatedincidents'>";
                       echo "<li class='incident-head row'>";
@@ -300,10 +300,10 @@ function service_status() {
                       echo "</li>";
                           foreach( $ci as $incident ) {
                             if (!is_string($incident)) {
-                              echo "<li class='incident row'>";
-                                  echo "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3'>" . $incident->number . "</div>";
-                                  echo "<div class='col-lg-9 col-md-9 col-sm-9 col-xs-9'>" . $incident->short_description . "</div>";
-                              echo "</li>";
+                              echo "<a href='myrequest/$incident->number'><li class='incident row'>";
+                                  echo "<div class='col-lg-3 col-md-3 col-sm-3 col-xs-3 inc_num'>" . $incident->number . "</div>";
+                                  echo "<div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 inc_sdesc'>" . $incident->short_description . "</div>";
+                              echo "</li></a>";
                             }
                           }
                       echo "</ul>";
