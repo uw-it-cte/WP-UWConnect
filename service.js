@@ -12,7 +12,9 @@ function servicestatus (){
       },
       success: function(response, textStatus, jqXHR) {
         jQuery('#services').html(response);
-        jQuery('.relatedincidents').hide();
+        if ('pointer-events' in document.body.style) {
+          jQuery('.relatedincidents').hide();
+        }
         dropdowns();
       },
       error: function() {
