@@ -129,7 +129,7 @@ get_header(); ?>
                             echo "<div class='alert alert-danger'>$sn_num is not one of your current requests.</div>";
                             $error_flag = True;
                         } else  {
-                            echo "<h2 style='margin-top:0;'>$record->short_description&nbsp;&nbsp;<span style='color:#999;'>($record->number)</span></h2>";
+                            echo "<h2 id='short-descr' style='margin-top:0;'>$record->short_description&nbsp;&nbsp;<span style='color:#999;'>($record->number)</span></h2>";
                             echo "<h3 class='assistive-text'>Details:</h3>";
                             echo "<table class='table'>";
                         if( !empty( $record->caller_id ) ) {
