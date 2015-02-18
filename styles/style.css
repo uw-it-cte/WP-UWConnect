@@ -23,7 +23,14 @@
 .request-list-number { }
 
 .itsm-primary {
-    margin-top: 38px;
+    padding-top: 38px;
+}
+
+@media (max-width: 764px) {
+    .itsm-primary {
+        margin-top: 38px;
+        padding-top: 0px;
+    }
 }
 
 .request-list-service {
