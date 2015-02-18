@@ -105,4 +105,8 @@
     #short-descr {
         font-size: 20px;
     }
+
+    #short-descr span {
+        display: block;
+    }
 }
