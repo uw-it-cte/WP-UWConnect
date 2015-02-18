@@ -37,7 +37,7 @@ get_header(); ?>
               $record = $ticket_json->records[0];
               $priority = substr($record->priority, 0, 1);
 
-              if ( (int)$priority > 2 ) {
+              if ( (int)$priority < 2 ) {
                  echo "<p class='alert bg-danger'>The requested incident is not public. If you filed this incident please view it's details at it's <a href='itconnect/myrequest/$record->number'>My Request</a> page.</p>";
               } else {
 
