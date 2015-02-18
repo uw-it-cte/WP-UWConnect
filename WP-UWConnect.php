@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: UW Connect for Wordpress
- * Description: A brief description of the plugin.
+ * Description: A plugin for interfacing WP sites with a Service Now installation.
  * Version: 1.0.0
  * Author: UW IT ACA
  * Author URI: https://github.com/uw-it-aca
