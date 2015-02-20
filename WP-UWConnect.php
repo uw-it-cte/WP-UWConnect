@@ -40,6 +40,27 @@ function uw_connect_menu() {
 }
 add_action( 'admin_menu', 'uw_connect_menu' );
 
+function get_page_by_slug($slug) {
+    if ($pages = get_pages()) {
+      foreach ($pages as $page) {
+        if ($slug === $page->post_name) {
+          return $page;
+        }
+      }
+    }
+    return false;
+}
+
+function get_page_by_name($pagename) {
+  $pages = get_pages();
+  foreach ($pages as $page) {
+    if ($page->post_name == $pagename) {
+      return $page;
+    }
+  }
+  return false;
+}
+
 function uw_connect_options() {
   $hidden_field_name = 'uwc_submit_hidden';
   // variables for the field and option names
@@ -49,11 +70,17 @@ function uw_connect_options() {
   $data_user = 'uwc_SN_USER';
   $pass = 'uwc_SN_PASS';
   $data_pass = 'uwc_SN_PASS';
+  $myreq = 'uwc_MYREQ';
+  $data_myreq = 'uwc_MYREQ';
+  $servstat = 'uwc_SERVSTAT';
+  $data_servstat = 'uwc_SERVSTAT';
 
   // Read in existing option value from database
   $url_val = get_option( $url );
   $user_val = get_option( $user );
   $pass_val = get_option( $pass );
+  $myreq_val = get_option( $myreq );
+  $servstat_val = get_option( $servstat );
 
   // See if the user has posted us some information
   // If they did, this hidden field will be set to 'Y'
@@ -62,11 +89,41 @@ function uw_connect_options() {
       $url_val = $_POST[ $data_url ];
       $user_val = $_POST[ $data_user ];
       $pass_val = $_POST[ $data_pass ];
+      $myreq_val = $_POST[ $data_myreq ];
+      $servstat_val = $_POST[ $data_servstat ];
+
+      $prevmyreq = get_option( $myreq );
+      $prevservstat = get_option( $servstat );
 
       // Save the posted value in the database
       update_option( $url, $url_val );
       update_option( $user, $user_val );
       update_option( $pass, $pass_val );
+      update_option( $myreq, $myreq_val );
+      update_option( $servstat, $servstat_val );
+
+      if ( $myreq_val == 'on' && $prevmyreq == 'off') {
+          create_request_page();
+          create_requests_page();
+      } else if ($myreq_val == 'off' && $prevmyreq == 'on' ) {
+          $myreqpage = get_page_by_name('myrequest');
+          $myreqspage = get_page_by_name('myrequests');
+          wp_delete_post( $myreqpage->ID, true );
+          wp_delete_post( $myreqspage->ID, true );
+      } else {
+      }
+
+      if ( $servstat_val == 'on' && $prevservstat == 'off' ) {
+          create_incident_page();
+          create_servicestatus_page();
+      } else if ( $servstat_val == 'off' && $prevservstat == 'on' ) {
+          $sspage = get_page_by_name('servicestatus');
+          $incpage = get_page_by_name('incident');
+          wp_delete_post( $sspage->ID, true );
+          wp_delete_post( $incpage->ID, true );
+      } else {
+      }
+
 
 ?>
 <div class="updated"><p><strong><?php _e('settings saved.', 'menu' ); ?></strong></p></div>
@@ -94,6 +151,20 @@ function uw_connect_options() {
 <input type="text" name="<?php echo $data_pass; ?>" value="<?php echo $pass_val; ?>" size="20">
 </p><hr />
 
+<h2>Enable Portals</h2>
+
+<p><?php _e("ServiceNow My Requests Portal:", 'menu' );
+
+?>
+<input type="radio" name="<?php echo $data_myreq; ?>" value="on" <?php echo ($myreq_val=='on')?'checked':'' ?>>ON
+<input type="radio" name="<?php echo $data_myreq; ?>" value="off" <?php echo ($myreq_val=='off')?'checked':''?>>OFF
+</p><hr />
+
+<p><?php _e("ServiceNow Service Status Portal:", 'menu' ); ?>
+<input type="radio" name="<?php echo $data_servstat; ?>" value="on" <?php echo ($servstat_val=='on')?'checked':'' ?>>ON
+<input type="radio" name="<?php echo $data_servstat; ?>" value="off" <?php echo ($servstat_val=='off')?'checked':'' ?>>OFF
+</p><hr />
+
 <p class="submit">
 <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
 </p>
@@ -102,19 +173,6 @@ function uw_connect_options() {
 </div>
 <?php
 }
-
-
-function get_page_by_slug($slug) {
-    if ($pages = get_pages()) {
-      foreach ($pages as $page) {
-        if ($slug === $page->post_name) {
-          return $page;
-        }
-      }
-    }
-    return false;
-}
-
 
 function add_query_vars($qvars) {
     $qvars[] = "ticketID";
@@ -129,16 +187,6 @@ function add_rewrite_rules($aRules) {
     return $aRules;
 }
 add_filter('rewrite_rules_array', 'add_rewrite_rules');
-
-function get_page_by_name($pagename) {
-  $pages = get_pages();
-  foreach ($pages as $page) {
-    if ($page->post_name == $pagename) {
-      return $page;
-    }
-  }
-  return false;
-}
 
 function create_incident_page() {
     $post = array(
@@ -203,6 +251,9 @@ function create_servicestatus_page() {
 if (!get_page_by_name('servicestatus')) {
   register_activation_hook(__FILE__, 'create_servicestatus_page');
 }
+
+
+
 
 function request_page_template( $template ) {
 
