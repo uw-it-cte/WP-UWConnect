@@ -128,7 +128,7 @@ get_header(); ?>
                             echo "<div class='alert alert-danger'>$sn_num is not one of your current requests.</div>";
                             $error_flag = True;
                         } else  {
-                            echo "<h2 id='short-descr' style='margin-top:0;'>$record->short_description&nbsp;&nbsp;<span style='color:#999;'>($record->number)</span></h2>";
+                            echo "<h2 style='margin-top:0;'>$record->short_description&nbsp;&nbsp;<span style='color:#999;'>($record->number)</span></h2>";
                             echo "<h3 class='assistive-text'>Details:</h3>";
                             echo "<table class='table'>";
                         if( !empty( $record->caller_id ) ) {
@@ -172,6 +172,7 @@ get_header(); ?>
                         echo "<tr><td>Last Updated:</td> <td>$record->sys_updated_on</td></tr>";
 
                         //Get attachments
+                        /*
                         $att_url = '/sys_attachment.do?JSONv2&sysparm_query=table_sys_id=' . $record->sys_id;
                         $attach_json = get_SN($att_url, $args);
                         if (count($attach_json->records) > 0) {
@@ -209,7 +210,7 @@ get_header(); ?>
                         ?>
                         <?php
                         }
-
+                        */
                         echo "</div>";
                         echo "</td></tr>";
                         echo "</table>";
