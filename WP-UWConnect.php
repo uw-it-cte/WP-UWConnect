@@ -124,7 +124,6 @@ function uw_connect_options() {
       } else {
       }
 
-
 ?>
 <div class="updated"><p><strong><?php _e('settings saved.', 'menu' ); ?></strong></p></div>
 <?php
@@ -148,7 +147,7 @@ function uw_connect_options() {
 </p><hr />
 
 <p><?php _e("ServiceNow Pass:", 'menu' ); ?>
-<input type="text" name="<?php echo $data_pass; ?>" value="<?php echo $pass_val; ?>" size="20">
+<input type="password" name="<?php echo $data_pass; ?>" value="<?php echo $pass_val; ?>" size="20">
 </p><hr />
 
 <h2>Enable Portals</h2>
