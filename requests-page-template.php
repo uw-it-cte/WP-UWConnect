@@ -101,9 +101,21 @@ get_header(); ?>
                             $inc_urlwl = '/incident.do?JSONv2&sysparm_action=getRecords&sysparm_query=active=true^state!=14^caller_id.user_name=' . $user. '^ORwatch_listLIKE' . $user_id;
                             $inc_jsonwl = get_SN($inc_urlwl, $args);
                         }
+
+                        // Problems
+                        $prb_url = '/problem.do?JSONv2&displayvalue=true&sysparm_action=getRecords&sysparm_query=active=true^watch_listLIKE' . $user_id;
+                        $prb_json = get_SN($prb_url, $args);
+                        $has_prb = FALSE;
+                        if ( !empty( $prb_json->records) ) {
+                            $has_prb = TRUE;
+                        }
+                        if ($has_prb) {
+                            $prb_urlwl = '/problem.do?JSONv2&sysparm_action=getRecords&sysparm_query=active=true^watch_listLIKE' . $user_id;
+                            $prb_jsonwl = get_SN($prb_urlwl, $args);
+                        }
                 ?>
 
-                    <?php if( $has_req || $has_inc ) { ?>
+                    <?php if( $has_req || $has_inc || $has_prb ) { ?>
                     <h2 id="incident_header" class="assistive-text">Incidents</h2>
                     
                     <div class="request-list request-list-header row">
