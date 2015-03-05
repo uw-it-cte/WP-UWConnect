@@ -98,10 +98,6 @@ function service_content($object, $box) {
         <h4><label for='next_review'><?php _e('Next Review Date:', 'services'); ?></label></h4><br />
         <input type='text' name='next_review' id='next_review' value='<?php echo esc_attr(get_post_meta($object->ID, 'next_review', true)); ?>' size='70' /><br />
         <span>Format: 03/03/2015<br />Scheduled date for next review of the catalog entry for accuracy by the service representative.</span>
-
-        <h3><label for='keywords'><?php _e('Keywords:', 'services'); ?></label></h3><br />
-        <textarea name='keywords' id='keywords' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'keywords', true); ?></textarea><br />
-        <span>Search terms customers might use to find the service catalog entry. Each keyword should be separated by a comma.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -126,7 +122,6 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'service_rep');
     update_service($post_id, 'service_form', 'last_review');
     update_service($post_id, 'service_form', 'next_review');
-    update_service($post_id, 'service_form', 'keywords');
 }
 
 function verify_save ($nonce_name, $post_id) {
