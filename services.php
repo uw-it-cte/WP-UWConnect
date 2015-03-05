@@ -79,6 +79,10 @@ function service_content($object, $box) {
         <h3><label for='support_info'><?php _e('Support Information', 'services'); ?></label></h3><br />
         <textarea name='support_info' id='support_info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'support_info', true); ?></textarea><br />
         <span>Contact information for getting help witht he service. This should include the contacts' hours of availability. If during certain hours the contact information is different, include the additional contact information and the respective hours of availabilty.</span>
+
+        <h3><label for='customer_ref'><?php _e('Customer References:', 'services'); ?></label></h3><br />
+        <textarea name='customer_ref' id='customer_ref' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'customer_ref', true); ?></textarea><br />
+        <span>List of contacts for current customers of the service who have agreed to discuss the service with prospective customers.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -97,6 +101,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'price');
     update_service($post_id, 'service_form', 'additional_info');
     update_service($post_id, 'service_form', 'level_descr');
+    update_service($post_id, 'service_form', 'customer_ref');
     update_service($post_id, 'service_form', 'support_info');
 }
 
