@@ -83,6 +83,10 @@ function service_content($object, $box) {
         <h3><label for='customer_ref'><?php _e('Customer References:', 'services'); ?></label></h3><br />
         <textarea name='customer_ref' id='customer_ref' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'customer_ref', true); ?></textarea><br />
         <span>List of contacts for current customers of the service who have agreed to discuss the service with prospective customers.</span>
+
+        <h3><label for='more_info'><?php _e('Contact for More Information:', 'services'); ?></label></h3><br />
+        <textarea name='more_info' id='more_info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'more_info', true); ?></textarea><br />
+        <span>Contact (phone and/or email address) to whom questions about service may be directed. This may or may not differ from the contacts listed.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -101,8 +105,9 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'price');
     update_service($post_id, 'service_form', 'additional_info');
     update_service($post_id, 'service_form', 'level_descr');
-    update_service($post_id, 'service_form', 'customer_ref');
     update_service($post_id, 'service_form', 'support_info');
+    update_service($post_id, 'service_form', 'customer_ref');
+    update_service($post_id, 'service_form', 'more_info');
 }
 
 function verify_save ($nonce_name, $post_id) {
