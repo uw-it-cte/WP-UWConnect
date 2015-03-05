@@ -110,6 +110,10 @@ function service_content($object, $box) {
         <h3><label for='extra_notes'><?php _e('Notes:', 'services'); ?></label></h3><br />
         <textarea name='extra_notes' id='extra_notes' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'extra_notes', true); ?></textarea><br />
         <span>Placeholder for information not captured elsewhere.</span>
+
+        <h3><label for='teams'><?php _e('Internal Teams:', 'services'); ?></label></h3><br />
+        <textarea name='teams' id='teams' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'teams', true); ?></textarea><br />
+        <span>A list of internal UW Technology teams that are involved in providing this service.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -137,6 +141,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'keywords');
     update_service($post_id, 'service_form', 'cost');
     update_service($post_id, 'service_form', 'extra_notes');
+    update_service($post_id, 'service_form', 'teams');
 }
 
 function verify_save ($nonce_name, $post_id) {
