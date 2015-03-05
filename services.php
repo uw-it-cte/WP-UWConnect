@@ -21,7 +21,7 @@ function service_post_type() {
         'public' => true,
         'capability_type' => 'page',
         'menu_position' => 5,
-        'register_meta_box_cb' => '',
+        'register_meta_box_cb' => 'service_info',
         'supports' => array('title'),
         'has_archive' => false,
         'hierarchical' => true
@@ -40,10 +40,13 @@ function service_info() {
 function service_content($object, $box) {
     wp_nonce_field(basename(__FILE__), 'service_details_nonce'); ?>
 
-    <p>
-        <label for='description'><?php _e('Short Description', 'services'); ?></label>
-        <input type='text' name='short-description' id='short-description' value="<?php echo esc_attr(get_post_meta($object->ID, 'short-description', true)); ?>" size="90" />
-    </p>
+        <h3><label for='short-description'><?php _e('Brief Service Description:', 'services'); ?></label></h3><br />
+        <input type='text' name='short-description' id='short-description' value="<?php echo esc_attr(get_post_meta($object->ID, 'short-description', true)); ?>" size="90" /><br />
+        <span>The "one-liner", high-level description of the service.</span>
+
+        <h3><label for='description'><?php _e('Service Description', 'services'); ?></label></h3><br />
+        <textarea name='description' id='description' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'description', true); ?></textarea><br />
+        <span>A summary of the service that is meaningful to the customer. This might include business applications the service supports, benefits the service offers the customer, and features of the service.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -53,7 +56,8 @@ function save_service_form($post_id, $post) {
     if (!verify_save('service_details_nonce', $post_id))
         return $post_id;
 
-    update_service($post_id, 'service_form', 'short-description', sanitize_post_field('short-description', $_POST['short-description'], $post_id, 'display'));
+    update_service($post_id, 'service_form', 'short-description');
+    update_service($post_id, 'service_form', 'description');
 }
 
 function verify_save ($nonce_name, $post_id) {
