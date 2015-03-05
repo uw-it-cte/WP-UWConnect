@@ -51,6 +51,10 @@ function service_content($object, $box) {
         <h3><label for='option_text'><?php _e('Service Options:', 'services'); ?></label></h3><br />
         <textarea name='options_text' id='options_text' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'options_text', true); ?></textarea><br />
         <span>Placeholder for subcatagories of the service; if none, state "none", if "multiple flavors" are available, what are the features of each option? Include price and eligibility data if present.</span>
+
+        <h3><label for='eligibility'><?php _e('Eligibility', 'services'); ?></label></h3><br />
+        <textarea name='eligibility' id='eligibility' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'eligibility', true); ?></textarea><br />
+        <span>Groupings of people who may obtain the service.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -63,6 +67,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'short-description');
     update_service($post_id, 'service_form', 'description');
     update_service($post_id, 'service_form', 'options_text');
+    update_service($post_id, 'service_form', 'eligibility');
 }
 
 function verify_save ($nonce_name, $post_id) {
