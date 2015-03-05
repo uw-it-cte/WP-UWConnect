@@ -75,6 +75,10 @@ function service_content($object, $box) {
         <h3><label for='level_descr'><?php _e('Service Level Description', 'services'); ?></label></h3><br />
         <textarea name='level_descr' id='level_descr' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'level_descr', true); ?></textarea><br />
         <span>A summary of what the customer can expect if they were to obtain the service. This might include commitments about reliability, quality, typical time to respond to service requests, or uptime.</span>
+
+        <h3><label for='support_info'><?php _e('Support Information', 'services'); ?></label></h3><br />
+        <textarea name='support_info' id='support_info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'support_info', true); ?></textarea><br />
+        <span>Contact information for getting help witht he service. This should include the contacts' hours of availability. If during certain hours the contact information is different, include the additional contact information and the respective hours of availabilty.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -93,6 +97,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'price');
     update_service($post_id, 'service_form', 'additional_info');
     update_service($post_id, 'service_form', 'level_descr');
+    update_service($post_id, 'service_form', 'support_info');
 }
 
 function verify_save ($nonce_name, $post_id) {
