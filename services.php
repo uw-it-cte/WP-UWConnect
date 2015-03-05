@@ -59,6 +59,10 @@ function service_content($object, $box) {
         <h3><label for='ordering'><?php _e('How to Order:', 'services'); ?></label></h3><br />
         <textarea name='ordering' id='ordering' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'ordering', true); ?></textarea><br />
         <span>Contact information (email, phone or web link) to use to obtain the service.</span>
+
+        <h3><label for='availability'><?php _e('Availabiliy:', 'services'); ?></label></h3><br />
+        <textarea name='availability' id='availability' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'availability', true); ?></textarea><br />
+        <span>State when and where service is available. Include restrictions of time, location or capacity that limit access to the service.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -73,6 +77,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'options_text');
     update_service($post_id, 'service_form', 'eligibility');
     update_service($post_id, 'service_form', 'ordering');
+    update_service($post_id, 'service_form', 'availability');
 }
 
 function verify_save ($nonce_name, $post_id) {
