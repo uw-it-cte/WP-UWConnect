@@ -102,6 +102,10 @@ function service_content($object, $box) {
         <h3><label for='keywords'><?php _e('Keywords:', 'services'); ?></label></h3><br />
         <textarea name='keywords' id='keywords' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'keywords', true); ?></textarea><br />
         <span>Search terms customers might use to find the service catalog entry. Each keyword should be separated by a comma.</span>
+
+        <h3><label for='cost'><?php _e('Cost', 'services'); ?></label></h3><br />
+        <textarea name='cost' id='cost' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'cost', true); ?></textarea><br />
+        <span>Placeholder for unit measures and total resource allocation required to deliver the service.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -127,6 +131,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'last_review');
     update_service($post_id, 'service_form', 'next_review');
     update_service($post_id, 'service_form', 'keywords');
+    update_service($post_id, 'service_form', 'cost');
 }
 
 function verify_save ($nonce_name, $post_id) {
