@@ -87,6 +87,17 @@ function service_content($object, $box) {
         <h3><label for='more_info'><?php _e('Contact for More Information:', 'services'); ?></label></h3><br />
         <textarea name='more_info' id='more_info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'more_info', true); ?></textarea><br />
         <span>Contact (phone and/or email address) to whom questions about service may be directed. This may or may not differ from the contacts listed.</span>
+
+        <h3><label for='service_rep'><?php _e('Maintainance:', 'services'); ?></label></h3><br />
+        <h4><label for='service_rep'><?php _e('Service Representative:', 'services'); ?></label></h4><br />
+        <input type='text' name='service_rep' id='service_rep' value='<?php echo esc_attr(get_post_meta($object->ID, 'service_rep', true)); ?>' size='70' /><br />
+        <span>Peron assigned to the Service Representative role. See Roles and Responsibilities.</span>
+        <h4><label for='last_review'><?php _e('Last Review Date:', 'services'); ?></label></h4><br />
+        <input type='text' name='last_review' id='last_review' value='<?php echo esc_attr(get_post_meta($object->ID, 'last_review', true)); ?>' size='70' /><br />
+        <span>Format: 03/03/2015<br />Last date the service representative verified the data int eh service catalog entry for accuracy.</span>
+        <h4><label for='next_review'><?php _e('Next Review Date:', 'services'); ?></label></h4><br />
+        <input type='text' name='next_review' id='next_review' value='<?php echo esc_attr(get_post_meta($object->ID, 'next_review', true)); ?>' size='70' /><br />
+        <span>Format: 03/03/2015<br />Scheduled date for next review of the catalog entry for accuracy by the service representative.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -108,6 +119,9 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'support_info');
     update_service($post_id, 'service_form', 'customer_ref');
     update_service($post_id, 'service_form', 'more_info');
+    update_service($post_id, 'service_form', 'service_rep');
+    update_service($post_id, 'service_form', 'last_review');
+    update_service($post_id, 'service_form', 'next_review');
 }
 
 function verify_save ($nonce_name, $post_id) {
