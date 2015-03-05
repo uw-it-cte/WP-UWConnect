@@ -71,6 +71,10 @@ function service_content($object, $box) {
         <h3><label for='additional_info'><?php _e('Additional Information:', 'services'); ?></label></h3><br />
         <textarea name='additional_info' id='additional_info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'additional_info', true); ?></textarea><br />
         <span>Link for more information, other data not captured elsewhere in record.</span>
+
+        <h3><label for='level_descr'><?php _e('Service Level Description', 'services'); ?></label></h3><br />
+        <textarea name='level_descr' id='level_descr' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'level_descr', true); ?></textarea><br />
+        <span>A summary of what the customer can expect if they were to obtain the service. This might include commitments about reliability, quality, typical time to respond to service requests, or uptime.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -88,6 +92,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'availability');
     update_service($post_id, 'service_form', 'price');
     update_service($post_id, 'service_form', 'additional_info');
+    update_service($post_id, 'service_form', 'level_descr');
 }
 
 function verify_save ($nonce_name, $post_id) {
