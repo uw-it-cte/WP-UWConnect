@@ -55,6 +55,10 @@ function service_content($object, $box) {
         <h3><label for='eligibility'><?php _e('Eligibility', 'services'); ?></label></h3><br />
         <textarea name='eligibility' id='eligibility' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'eligibility', true); ?></textarea><br />
         <span>Groupings of people who may obtain the service.</span>
+
+        <h3><label for='ordering'><?php _e('How to Order:', 'services'); ?></label></h3><br />
+        <textarea name='ordering' id='ordering' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'ordering', true); ?></textarea><br />
+        <span>Contact information (email, phone or web link) to use to obtain the service.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -68,6 +72,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'description');
     update_service($post_id, 'service_form', 'options_text');
     update_service($post_id, 'service_form', 'eligibility');
+    update_service($post_id, 'service_form', 'ordering');
 }
 
 function verify_save ($nonce_name, $post_id) {
