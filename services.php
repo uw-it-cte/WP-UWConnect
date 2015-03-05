@@ -106,6 +106,10 @@ function service_content($object, $box) {
         <h3><label for='cost'><?php _e('Cost', 'services'); ?></label></h3><br />
         <textarea name='cost' id='cost' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'cost', true); ?></textarea><br />
         <span>Placeholder for unit measures and total resource allocation required to deliver the service.</span>
+
+        <h3><label for='extra_notes'><?php _e('Notes:', 'services'); ?></label></h3><br />
+        <textarea name='extra_notes' id='extra_notes' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'extra_notes', true); ?></textarea><br />
+        <span>Placeholder for information not captured elsewhere.</span>
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
@@ -132,6 +136,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'next_review');
     update_service($post_id, 'service_form', 'keywords');
     update_service($post_id, 'service_form', 'cost');
+    update_service($post_id, 'service_form', 'extra_notes');
 }
 
 function verify_save ($nonce_name, $post_id) {
