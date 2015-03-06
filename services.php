@@ -52,6 +52,10 @@ function service_content($object, $box) {
         <textarea name='options_text' id='options_text' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'options_text', true); ?></textarea><br />
         <span>Placeholder for subcatagories of the service; if none, state "none", if "multiple flavors" are available, what are the features of each option? Include price and eligibility data if present.</span>
 
+        <h3><label for='options_list'><? _e('Service Options (simple):', 'services'); ?></label></h3><br />
+        <textarea name='options_list' id='options_list' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'options_list', true); ?></textarea><br />
+        <span>Used for extracting service options for consumption in external applications (RT andFYI). Enter each service separated by columns.</span>
+
         <h3><label for='eligibility'><?php _e('Eligibility', 'services'); ?></label></h3><br />
         <textarea name='eligibility' id='eligibility' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'eligibility', true); ?></textarea><br />
         <span>Groupings of people who may obtain the service.</span>
@@ -126,6 +130,7 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'short-description');
     update_service($post_id, 'service_form', 'description');
     update_service($post_id, 'service_form', 'options_text');
+    update_service($post_id, 'service_form', 'options_list');
     update_service($post_id, 'service_form', 'eligibility');
     update_service($post_id, 'service_form', 'ordering');
     update_service($post_id, 'service_form', 'availability');
