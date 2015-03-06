@@ -172,4 +172,23 @@ function update_service($post_id, $service_form, $detail_name) {
     elseif ('' == $new_meta_value && $meta_value)
         delete_post_meta($post_id, $meta_key, $meta_value);
 }
+
+add_action('init', 'catagory_taxonomy', 0);
+
+function catagory_taxonomy() {
+    register_taxonomy(
+        'service_catagory',
+        'service',
+        array(
+            'labels' => array (
+                'name' => 'Service Catagory',
+                'add_new_item' => 'Add New Service Catagory',
+                'new_item_name' => 'New Service Catagory'
+            ),
+            'show_ui' => true,
+            'show_tagcloud' => true,
+            'hierarchical' => true
+        )
+    );
+}
 ?>
