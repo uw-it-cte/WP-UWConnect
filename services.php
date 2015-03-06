@@ -174,6 +174,7 @@ function update_service($post_id, $service_form, $detail_name) {
 }
 
 add_action('init', 'catagory_taxonomy', 0);
+add_action('init', 'views_taxonomy', 0);
 
 function catagory_taxonomy() {
     register_taxonomy(
@@ -191,4 +192,22 @@ function catagory_taxonomy() {
         )
     );
 }
+
+function views_taxonomy() {
+    register_taxonomy(
+        'service_views',
+        'service',
+        array (
+            'labels' => array (
+                'name' => 'Views',
+                'add_new_item' => 'Add New View',
+                'new_item_name' => 'New View'
+            ),
+            'show_ui' => true,
+            'show_tagcloud' => true,
+            'hierarchical' => true
+        )
+    );
+}
+
 ?>
