@@ -215,4 +215,16 @@ function views_taxonomy() {
     );
 }
 
+add_filter('template_include', 'service_page_template', 1);
+
+function service_page_template($template) {
+    global $post;
+    if ( $post->post_type == 'service' && basename( get_page_template() ) == "page.php" ) {
+        $new_template = dirname(__FILE__) . '/single-service.php';
+        if ( '' != $new_template ) {
+            return $new_template;
+        }
+    }
+    return $template;
+}
 ?>
