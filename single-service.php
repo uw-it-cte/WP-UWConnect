@@ -1,7 +1,7 @@
                     <?php get_header(); ?>
                     <?php while (have_posts()) : the_post(); ?>
-                    <?php global $post; $id = $post->ID;?>
-                    <pre>Dump: <?php echo $id; ?></pre>
+                    <?php global $post;
+                    $id = $post->ID;?>
                     <h1><?php the_title(); ?></h1>
                     <h2>Service Description:</h2>
                     <p><?php echo get_post_meta($id, 'description', true); ?></p>
