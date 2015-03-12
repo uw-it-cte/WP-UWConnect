@@ -50,7 +50,7 @@ function service_content($object, $box) {
 
         <h3><label for='option_text'><?php _e('Service Options:', 'services'); ?></label></h3><br />
         <textarea name='options_text' id='options_text' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'options_text', true); ?></textarea><br />
-        <span>Placeholder for subcatagories of the service; if none, state "none", if "multiple flavors" are available, what are the features of each option? Include price and eligibility data if present.</span>
+        <span>Placeholder for subcategories of the service; if none, state "none", if "multiple flavors" are available, what are the features of each option? Include price and eligibility data if present.</span>
 
         <h3><label for='options_list'><? _e('Service Options (simple):', 'services'); ?></label></h3><br />
         <textarea name='options_list' id='options_list' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'options_list', true); ?></textarea><br />
@@ -178,18 +178,18 @@ function update_service($post_id, $service_form, $detail_name) {
         delete_post_meta($post_id, $meta_key, $meta_value);
 }
 
-add_action('init', 'catagory_taxonomy', 0);
+add_action('init', 'category_taxonomy', 0);
 add_action('init', 'views_taxonomy', 0);
 
-function catagory_taxonomy() {
+function category_taxonomy() {
     register_taxonomy(
-        'service_catagory',
+        'service_category',
         'service',
         array(
             'labels' => array (
-                'name' => 'Service Catagory',
-                'add_new_item' => 'Add New Service Catagory',
-                'new_item_name' => 'New Service Catagory'
+                'name' => 'Service Category',
+                'add_new_item' => 'Add New Service Category',
+                'new_item_name' => 'New Service Category'
             ),
             'show_ui' => true,
             'show_tagcloud' => true,
