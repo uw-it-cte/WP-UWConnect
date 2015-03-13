@@ -40,83 +40,83 @@ function service_info() {
 function service_content($object, $box) {
     wp_nonce_field(basename(__FILE__), 'service_details_nonce'); ?>
 
-        <h3><label for='short-description'><?php _e('Brief Service Description:', 'services'); ?></label></h3><br />
-        <input type='text' name='short-description' id='short-description' value="<?php echo esc_attr(get_post_meta($object->ID, 'short-description', true)); ?>" size="90" /><br />
+        <h3><label for='uwc-short-description'><?php _e('Brief Service Description:', 'services'); ?></label></h3><br />
+        <input type='text' name='uwc-short-description' id='uwc-short-description' value="<?php echo esc_attr(get_post_meta($object->ID, 'uwc-short-description', true)); ?>" size="90" /><br />
         <span>The "one-liner", high-level description of the service.</span>
 
-        <h3><label for='description'><?php _e('Service Description', 'services'); ?></label></h3><br />
-        <textarea name='description' id='description' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'description', true); ?></textarea><br />
+        <h3><label for='uwc-description'><?php _e('Service Description', 'services'); ?></label></h3><br />
+        <textarea name='uwc-description' id='uwc-description' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-description', true); ?></textarea><br />
         <span>A summary of the service that is meaningful to the customer. This might include business applications the service supports, benefits the service offers the customer, and features of the service.</span>
 
-        <h3><label for='option_text'><?php _e('Service Options:', 'services'); ?></label></h3><br />
-        <textarea name='options_text' id='options_text' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'options_text', true); ?></textarea><br />
+        <h3><label for='uwc-options-text'><?php _e('Service Options:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-options-text' id='uwc-options-text' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-options-text', true); ?></textarea><br />
         <span>Placeholder for subcatagories of the service; if none, state "none", if "multiple flavors" are available, what are the features of each option? Include price and eligibility data if present.</span>
 
-        <h3><label for='options_list'><? _e('Service Options (simple):', 'services'); ?></label></h3><br />
-        <textarea name='options_list' id='options_list' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'options_list', true); ?></textarea><br />
+        <h3><label for='uwc-options-list'><? _e('Service Options (simple):', 'services'); ?></label></h3><br />
+        <textarea name='uwc-options-list' id='uwc-options-list' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-options-list', true); ?></textarea><br />
         <span>Used for extracting service options for consumption in external applications (RT andFYI). Enter each service separated by columns.</span>
 
-        <h3><label for='eligibility'><?php _e('Eligibility', 'services'); ?></label></h3><br />
-        <textarea name='eligibility' id='eligibility' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'eligibility', true); ?></textarea><br />
+        <h3><label for='uwc-eligibility'><?php _e('Eligibility', 'services'); ?></label></h3><br />
+        <textarea name='uwc-eligibility' id='uwc-eligibility' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-eligibility', true); ?></textarea><br />
         <span>Groupings of people who may obtain the service.</span>
 
-        <h3><label for='ordering'><?php _e('How to Order:', 'services'); ?></label></h3><br />
-        <textarea name='ordering' id='ordering' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'ordering', true); ?></textarea><br />
+        <h3><label for='uwc-ordering'><?php _e('How to Order:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-ordering' id='uwc-ordering' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-ordering', true); ?></textarea><br />
         <span>Contact information (email, phone or web link) to use to obtain the service.</span>
 
-        <h3><label for='availability'><?php _e('Availabiliy:', 'services'); ?></label></h3><br />
-        <textarea name='availability' id='availability' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'availability', true); ?></textarea><br />
+        <h3><label for='uwc-availability'><?php _e('Availabiliy:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-availability' id='uwc-availability' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-availability', true); ?></textarea><br />
         <span>State when and where service is available. Include restrictions of time, location or capacity that limit access to the service.</span>
 
-        <h3><label for='price'><?php _e('Price:', 'services'); ?></label></h3><br />
-        <textarea name='price' id='price' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'price', true); ?></textarea><br />
+        <h3><label for='uwc-price'><?php _e('Price:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-price' id='uwc-price' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-price', true); ?></textarea><br />
         <span>The amount paid by the customer to obtain and use the service. If no charge, state "no charge".</span>
 
-        <h3><label for='additional_info'><?php _e('Additional Information:', 'services'); ?></label></h3><br />
-        <textarea name='additional_info' id='additional_info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'additional_info', true); ?></textarea><br />
+        <h3><label for='uwc-additional-info'><?php _e('Additional Information:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-additional-info' id='uwc-additional-info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-additional-info', true); ?></textarea><br />
         <span>Link for more information, other data not captured elsewhere in record.</span>
 
-        <h3><label for='level_descr'><?php _e('Service Level Description', 'services'); ?></label></h3><br />
-        <textarea name='level_descr' id='level_descr' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'level_descr', true); ?></textarea><br />
+        <h3><label for='uwc-level-descr'><?php _e('Service Level Description', 'services'); ?></label></h3><br />
+        <textarea name='uwc-level-descr' id='uwc-level-descr' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-level-descr', true); ?></textarea><br />
         <span>A summary of what the customer can expect if they were to obtain the service. This might include commitments about reliability, quality, typical time to respond to service requests, or uptime.</span>
 
-        <h3><label for='support_info'><?php _e('Support Information', 'services'); ?></label></h3><br />
-        <textarea name='support_info' id='support_info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'support_info', true); ?></textarea><br />
+        <h3><label for='uwc-support-info'><?php _e('Support Information', 'services'); ?></label></h3><br />
+        <textarea name='uwc-support-info' id='uwc-support-info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-support-info', true); ?></textarea><br />
         <span>Contact information for getting help witht he service. This should include the contacts' hours of availability. If during certain hours the contact information is different, include the additional contact information and the respective hours of availabilty.</span>
 
-        <h3><label for='customer_ref'><?php _e('Customer References:', 'services'); ?></label></h3><br />
-        <textarea name='customer_ref' id='customer_ref' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'customer_ref', true); ?></textarea><br />
+        <h3><label for='uwc-customer-ref'><?php _e('Customer References:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-customer-ref' id='uwc-customer-ref' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-customer-ref', true); ?></textarea><br />
         <span>List of contacts for current customers of the service who have agreed to discuss the service with prospective customers.</span>
 
-        <h3><label for='more_info'><?php _e('Contact for More Information:', 'services'); ?></label></h3><br />
-        <textarea name='more_info' id='more_info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'more_info', true); ?></textarea><br />
+        <h3><label for='uwc-more-info'><?php _e('Contact for More Information:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-more-info' id='uwc-more-info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-more-info', true); ?></textarea><br />
         <span>Contact (phone and/or email address) to whom questions about service may be directed. This may or may not differ from the contacts listed.</span>
 
-        <h3><label for='service_rep'><?php _e('Maintainance:', 'services'); ?></label></h3><br />
-        <h4><label for='service_rep'><?php _e('Service Representative:', 'services'); ?></label></h4><br />
-        <input type='text' name='service_rep' id='service_rep' value='<?php echo esc_attr(get_post_meta($object->ID, 'service_rep', true)); ?>' size='70' /><br />
+        <h3><label for='uwc-service-rep'><?php _e('Maintainance:', 'services'); ?></label></h3><br />
+        <h4><label for='uwc-service-rep'><?php _e('Service Representative:', 'services'); ?></label></h4><br />
+        <input type='text' name='uwc-service-rep' id='uwc-service-rep' value='<?php echo esc_attr(get_post_meta($object->ID, 'uwc-service-rep', true)); ?>' size='70' /><br />
         <span>Peron assigned to the Service Representative role. See Roles and Responsibilities.</span>
-        <h4><label for='last_review'><?php _e('Last Review Date:', 'services'); ?></label></h4><br />
-        <input type='text' name='last_review' id='last_review' value='<?php echo esc_attr(get_post_meta($object->ID, 'last_review', true)); ?>' size='70' /><br />
+        <h4><label for='uwc-last-review'><?php _e('Last Review Date:', 'services'); ?></label></h4><br />
+        <input type='text' name='uwc-last-review' id='uwc-last-review' value='<?php echo esc_attr(get_post_meta($object->ID, 'uwc-last-review', true)); ?>' size='70' /><br />
         <span>Format: 03/03/2015<br />Last date the service representative verified the data int eh service catalog entry for accuracy.</span>
-        <h4><label for='next_review'><?php _e('Next Review Date:', 'services'); ?></label></h4><br />
-        <input type='text' name='next_review' id='next_review' value='<?php echo esc_attr(get_post_meta($object->ID, 'next_review', true)); ?>' size='70' /><br />
+        <h4><label for='uwc-next-review'><?php _e('Next Review Date:', 'services'); ?></label></h4><br />
+        <input type='text' name='uwc-next-review' id='uwc-next-review' value='<?php echo esc_attr(get_post_meta($object->ID, 'uwc-next-review', true)); ?>' size='70' /><br />
         <span>Format: 03/03/2015<br />Scheduled date for next review of the catalog entry for accuracy by the service representative.</span>
 
-        <h3><label for='keywords'><?php _e('Keywords:', 'services'); ?></label></h3><br />
-        <textarea name='keywords' id='keywords' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'keywords', true); ?></textarea><br />
+        <h3><label for='uwc-keywords'><?php _e('Keywords:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-keywords' id='uwc-keywords' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-keywords', true); ?></textarea><br />
         <span>Search terms customers might use to find the service catalog entry. Each keyword should be separated by a comma.</span>
 
-        <h3><label for='cost'><?php _e('Cost', 'services'); ?></label></h3><br />
-        <textarea name='cost' id='cost' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'cost', true); ?></textarea><br />
+        <h3><label for='uwc-cost'><?php _e('Cost', 'services'); ?></label></h3><br />
+        <textarea name='uwc-cost' id='uwc-cost' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-cost', true); ?></textarea><br />
         <span>Placeholder for unit measures and total resource allocation required to deliver the service.</span>
 
-        <h3><label for='extra_notes'><?php _e('Notes:', 'services'); ?></label></h3><br />
-        <textarea name='extra_notes' id='extra_notes' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'extra_notes', true); ?></textarea><br />
+        <h3><label for='uwc-extra-notes'><?php _e('Notes:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-extra-notes' id='uwc-extra-notes' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-extra-notes', true); ?></textarea><br />
         <span>Placeholder for information not captured elsewhere.</span>
 
-        <h3><label for='teams'><?php _e('Internal Teams:', 'services'); ?></label></h3><br />
-        <textarea name='teams' id='teams' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'teams', true); ?></textarea><br />
+        <h3><label for='uwc-teams'><?php _e('Internal Teams:', 'services'); ?></label></h3><br />
+        <textarea name='uwc-teams' id='uwc-teams' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-teams', true); ?></textarea><br />
         <span>A list of internal UW Technology teams that are involved in providing this service.</span>
 <?php }
 
@@ -127,26 +127,26 @@ function save_service_form($post_id, $post) {
     if (!verify_save('service_details_nonce', $post_id))
         return $post_id;
 
-    update_service($post_id, 'service_form', 'short-description');
-    update_service($post_id, 'service_form', 'description');
-    update_service($post_id, 'service_form', 'options_text');
-    update_service($post_id, 'service_form', 'options_list');
-    update_service($post_id, 'service_form', 'eligibility');
-    update_service($post_id, 'service_form', 'ordering');
-    update_service($post_id, 'service_form', 'availability');
-    update_service($post_id, 'service_form', 'price');
-    update_service($post_id, 'service_form', 'additional_info');
-    update_service($post_id, 'service_form', 'level_descr');
-    update_service($post_id, 'service_form', 'support_info');
-    update_service($post_id, 'service_form', 'customer_ref');
-    update_service($post_id, 'service_form', 'more_info');
-    update_service($post_id, 'service_form', 'service_rep');
-    update_service($post_id, 'service_form', 'last_review');
-    update_service($post_id, 'service_form', 'next_review');
-    update_service($post_id, 'service_form', 'keywords');
-    update_service($post_id, 'service_form', 'cost');
-    update_service($post_id, 'service_form', 'extra_notes');
-    update_service($post_id, 'service_form', 'teams');
+    update_service($post_id, 'service_form', 'uwc-short-description');
+    update_service($post_id, 'service_form', 'uwc-description');
+    update_service($post_id, 'service_form', 'uwc-options-text');
+    update_service($post_id, 'service_form', 'uwc-options-list');
+    update_service($post_id, 'service_form', 'uwc-eligibility');
+    update_service($post_id, 'service_form', 'uwc-ordering');
+    update_service($post_id, 'service_form', 'uwc-availability');
+    update_service($post_id, 'service_form', 'uwc-price');
+    update_service($post_id, 'service_form', 'uwc-additional-info');
+    update_service($post_id, 'service_form', 'uwc-level-descr');
+    update_service($post_id, 'service_form', 'uwc-support-info');
+    update_service($post_id, 'service_form', 'uwc-customer-ref');
+    update_service($post_id, 'service_form', 'uwc-more-info');
+    update_service($post_id, 'service_form', 'uwc-service-rep');
+    update_service($post_id, 'service_form', 'uwc-last-review');
+    update_service($post_id, 'service_form', 'uwc-next-review');
+    update_service($post_id, 'service_form', 'uwc-keywords');
+    update_service($post_id, 'service_form', 'uwc-cost');
+    update_service($post_id, 'service_form', 'uwc-extra-notes');
+    update_service($post_id, 'service_form', 'uwc-teams');
 }
 
 function verify_save ($nonce_name, $post_id) {
