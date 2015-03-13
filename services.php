@@ -147,6 +147,8 @@ function save_service_form($post_id, $post) {
     update_service($post_id, 'service_form', 'uwc-cost');
     update_service($post_id, 'service_form', 'uwc-extra-notes');
     update_service($post_id, 'service_form', 'uwc-teams');
+
+    flush_rewrite_rules();
 }
 
 function verify_save ($nonce_name, $post_id) {
