@@ -181,6 +181,7 @@ function update_service($post_id, $service_form, $detail_name) {
 }
 
 add_action('init', 'category_taxonomy', 0);
+add_action('init', 'views_taxonomy', 0);
 
 function category_taxonomy() {
     register_taxonomy(
@@ -191,6 +192,23 @@ function category_taxonomy() {
                 'name' => 'Service Category',
                 'add_new_item' => 'Add New Service Category',
                 'new_item_name' => 'New Service Category'
+            ),
+            'show_ui' => true,
+            'show_tagcloud' => true,
+            'hierarchical' => true
+        )
+    );
+}
+
+function views_taxonomy() {
+    register_taxonomy(
+        'service_views',
+        'service',
+        array (
+            'labels' => array (
+                'name' => 'Views',
+                'add_new_item' => 'Add New View',
+                'new_item_name' => 'New View'
             ),
             'show_ui' => true,
             'show_tagcloud' => true,
