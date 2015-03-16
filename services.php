@@ -185,7 +185,7 @@ add_action('init', 'views_taxonomy', 0);
 
 function category_taxonomy() {
     register_taxonomy(
-        'service_category',
+        'servicecategory',
         'service',
         array(
             'labels' => array (
@@ -202,7 +202,7 @@ function category_taxonomy() {
 
 function views_taxonomy() {
     register_taxonomy(
-        'service_views',
+        'views',
         'service',
         array (
             'labels' => array (
@@ -221,7 +221,7 @@ add_filter('template_include', 'service_page_template', 1);
 
 function service_page_template($template) {
     global $post;
-    if ( $post->post_type == 'service' && basename( get_page_template() ) == "page.php" ) {
+    if ( $post->post_type == 'service' && basename( $template ) == "single.php" ) {
         $new_template = dirname(__FILE__) . '/single-service.php';
         if ( '' != $new_template ) {
             return $new_template;
@@ -229,4 +229,5 @@ function service_page_template($template) {
     }
     return $template;
 }
+
 ?>
