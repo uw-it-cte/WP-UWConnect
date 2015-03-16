@@ -4,13 +4,14 @@ get_header(); ?>
         <div id='content' class='site-content it_container' role='main'>
             <div id='secondary' class='col-lg-2 col-md-2 hidden-sm hidden-xs' role='complementary'>
                 <div id='sidebar' role='navigation' aria-label='Sidebar Menu'>
-                    <?php dynamic_sidebar('servicenow-sidebar'); ?>
+                    <?php dynamic_sidebar('ServiceCatalog-sidebar'); ?>
                 </div> <!-- #sidebar -->
             </div> <!-- #secondary -->
             <div id='primary' class='col-xs-12 col-sm-12 col-md-10 col-lg-10 itsm-primary'>
                 <?php while (have_posts()) : the_post();
                 global $post;
                 $id = $post->ID;?>
+
                 <h1><?php the_title(); ?></h1>
                 <h2>Service Description:</h2>
                 <p><?php echo get_post_meta($id, 'uwc-description', true); ?></p>
