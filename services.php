@@ -226,6 +226,16 @@ function service_page_template($template) {
         if ( '' != $new_template ) {
             return $new_template;
         }
+    } else if ( $post->post_type == 'service' && basename( $template ) == "archive.php" && is_tax('servicecategory')) {
+        $new_template = dirname(__FILE__) . '/taxonomy-servicecategory.php';
+        if ( '' != $new_template ) { 
+            return $new_template;
+        }
+    } else if ( $post->post_type == 'service' && basename( $template ) == "archive.php" && is_tax('views')) {
+        $new_template = dirname(__FILE__) . '/taxonomy-views.php';
+        if ( '' != $new_template ) { 
+            return $new_template;
+        }
     }
     return $template;
 }
