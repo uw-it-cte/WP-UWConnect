@@ -221,7 +221,7 @@ function servicecatalog_widgets_init() {
 
   register_sidebar( array(
     'name'          => 'Service Catalog Sidebar',
-    'id'            => 'ServiceCatalog-sidebar',
+    'id'            => 'Service-Catalog-Sidebar',
     'before_widget' => '<div>',
     'after_widget'  => '</div>',
     'before_title'  => '<h2 class="rounded">',
@@ -231,6 +231,20 @@ function servicecatalog_widgets_init() {
 }
 add_action( 'widgets_init', 'servicecatalog_widgets_init' );
 
+function taxonomy_list_shortcode($atts) {
+    $tax = $atts['tax'];
+    $terms = get_terms($tax);
+    $output = '<h4>' . ucfirst($tax) . '</h4><ul>';
+    foreach ($terms as $term) {
+        $output .= '<a href="/itconnect/' . $tax .  '/' . $term->slug . '"><li>' . $term->name . '</li></a>';
+    }
+    $output .= '</ul>';
+    return $output;
+}
+function register_tax_shortcodes() {
+    add_shortcode( 'taxtermlist', 'taxonomy_list_shortcode' );
+}
+add_action( 'init', 'register_tax_shortcodes' );
 
 add_filter('template_include', 'service_page_template', 1);
 

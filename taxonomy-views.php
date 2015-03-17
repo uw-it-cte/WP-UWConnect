@@ -6,7 +6,7 @@ $term = $wp_query->queried_object;
         <div id='content' class='site-content it_container' role='main'>
             <div id='secondary' class='col-lg-2 col-md-2 hidden-sm hidden-xs' role='complementary'>
                 <div id='sidebar' role='navigation' aria-label='Sidebar Menu'>
-                    <?php dynamic_sidebar('ServiceCatalog-sidebar'); ?>
+                    <?php dynamic_sidebar('Service-Catalog-Sidebar'); ?>
                 </div> <!-- #sidebar -->
             </div> <!-- #secondary -->
             <div id='primary' class='col-xs-12 col-sm-12 col-md-10 col-lg-10 itsm-primary'>
