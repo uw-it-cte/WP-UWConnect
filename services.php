@@ -217,6 +217,21 @@ function views_taxonomy() {
     );
 }
 
+function servicecatalog_widgets_init() {
+
+  register_sidebar( array(
+    'name'          => 'Service Catalog Sidebar',
+    'id'            => 'ServiceCatalog-sidebar',
+    'before_widget' => '<div>',
+    'after_widget'  => '</div>',
+    'before_title'  => '<h2 class="rounded">',
+    'after_title'   => '</h2>',
+  ) );
+
+}
+add_action( 'widgets_init', 'servicecatalog_widgets_init' );
+
+
 add_filter('template_include', 'service_page_template', 1);
 
 function service_page_template($template) {
