@@ -117,3 +117,21 @@
         display: block;
     }
 }
+
+.service-attr {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.service-subattr {
+    font-size: 1.25em;
+    margin-left: 10px;
+}
+
+.attr-text {
+    margin-left: 20px;
+}
+
+.attr-wrap {
+    margin-bottom: 10px;
+}
