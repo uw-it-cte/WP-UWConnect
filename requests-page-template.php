@@ -26,7 +26,7 @@ get_header(); ?>
     </div>
     <div id="primary" class="col-xs-12 col-sm-12 col-md-10 col-lg-10 itsm-primary">
         <div class="user-logout row">
-          <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-xs" style="vertical-align:text-bottom;">LOGOUT</a>
+          <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="buttonesque" style="vertical-align:text-bottom;">LOGOUT</a>
         </div>
       <h2>
         <span class='category'>

@@ -64,7 +64,7 @@ get_header(); ?>
                 }
                 ?>
                 <div class="user-logout row">
-                 <span style="float:right;"><span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="btn btn-xs">LOGOUT</a></span>
+                 <span style="float:right;"><span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="buttonesque">LOGOUT</a></span>
                 </div>
                 <?php
                         $args = array(
