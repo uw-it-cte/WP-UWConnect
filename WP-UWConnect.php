@@ -123,6 +123,7 @@ function uw_connect_options() {
           wp_delete_post( $incpage->ID, true );
       } else {
       }
+      flush_rewrite_rules();
 
 ?>
 <div class="updated"><p><strong><?php _e('settings saved.', 'menu' ); ?></strong></p></div>
@@ -251,7 +252,10 @@ if (!get_page_by_name('servicestatus')) {
   register_activation_hook(__FILE__, 'create_servicestatus_page');
 }
 
-
+function flush_rewrite() {
+  flush_rewrite_rules();
+}
+register_activation_hood(__FILE__, 'flush_rewrite');
 
 
 function request_page_template( $template ) {
