@@ -13,49 +13,73 @@ get_header(); ?>
                 $id = $post->ID;?>
 
                 <h1><?php the_title(); ?></h1>
-                <div class='attr-wrap'>
-                  <h2 class='service-attr'>Service Description</h2>
-                  <p class='attr-text'><?php echo get_post_meta($id, 'uwc-description', true); ?></p>
-                </div>
+                <?php if (get_post_meta($id, 'uwc-description', true)) { ?>
+                  <div class='attr-wrap'>
+                    <h2 class='service-attr'>Service Description</h2>
+                    <p class='attr-text'><?php echo get_post_meta($id, 'uwc-description', true); ?></p>
+                  </div>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-options-text', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Service Options</h2>
-                  <p class='attr-text'><?php echo get_post_meta($id, 'uwc-options_text', true); ?></p>
+                  <p class='attr-text'><?php echo get_post_meta($id, 'uwc-options-text', true); ?></p>
                 </div>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-eligibility', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Eligibility</h2>
                   <p class='attr-text'><?php echo get_post_meta($id, 'uwc-eligibility', true); ?></p>
                 </div>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-ordering', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>How to Order</h2>
                   <p class='attr-text'><?php echo get_post_meta($id, 'uwc-ordering', true); ?></p>
                 </div>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-availability', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Availability</h2>
                   <p class='attr-text'><?php echo get_post_meta($id, 'uwc-availability', true); ?></p>
                 </div>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-price', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Price</h2>
                   <p class='attr-text'><?php echo get_post_meta($id, 'uwc-price', true); ?></p>
                 </div>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-additional-info', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Additional Information</h2>
                   <p class='attr-text'><?php echo get_post_meta($id, 'uwc-additional-info', true); ?></p>
                 </div>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-support-info', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Support Information</h2>
                   <p class='attr-text'><?php echo get_post_meta($id, 'uwc-support-info', true); ?></p>
                 </div>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-customer-ref', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Contact for More Information</h2>
                   <p class='attr-text'><?php echo get_post_meta($id, 'uwc-customer-ref', true); ?></p>
                 </div>
-                <div class='attr-wrap'>
+                <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-last-review', true)) { ?>
+                <div class='superattr-wrap'>
                   <h2 class='service-attr'>Maintainance</h2>
-                  <h3 class='service-subattr'>Last Review Date</h3>
-                  <p class='attr-text'><?php echo get_post_meta($id, 'uwc-last-review', true); ?></p>
-                  <h3 class='service-subattr'>Next Review Date</h3>
-                  <p class='attr-text'><?php echo get_post_meta($id, 'uwc-next-review', true); ?></p>
+                  <div class='subattr-wrap'>
+                    <h3 class='service-subattr'>Last Review Date</h3>
+                    <p class='attr-text'><?php echo get_post_meta($id, 'uwc-last-review', true); ?></p>
+                  </div>
+                  <div class='subattr-wrap'>
+                    <h3 class='service-subattr'>Next Review Date</h3>
+                    <p class='attr-text'><?php echo get_post_meta($id, 'uwc-next-review', true); ?></p>
+                  </div>
                 </div>
+                <?php } ?>
                 <?php endwhile; ?>
             </div> <!-- #primary -->
         </div> <!-- #content -->

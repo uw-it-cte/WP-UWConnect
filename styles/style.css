@@ -125,7 +125,6 @@
 
 .service-subattr {
     font-size: 1.25em;
-    margin-left: 10px;
 }
 
 .attr-text {
@@ -134,4 +133,15 @@
 
 .attr-wrap {
     margin-bottom: 10px;
+}
+
+.subattr-wrap {
+    margin: 10px;
+}
+
+.superattr-wrap {
+}
+
+.tax-head {
+    font-size: 1em;
 }

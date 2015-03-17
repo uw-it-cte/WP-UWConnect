@@ -234,7 +234,7 @@ add_action( 'widgets_init', 'servicecatalog_widgets_init' );
 function taxonomy_list_shortcode($atts) {
     $tax = $atts['tax'];
     $terms = get_terms($tax);
-    $output = '<h4>' . ucfirst($tax) . '</h4><ul>';
+    $output = '<h4 class="tax-head">' . ucfirst($tax) . '</h4><ul>';
     foreach ($terms as $term) {
         $output .= '<a href="/itconnect/' . $tax .  '/' . $term->slug . '"><li>' . $term->name . '</li></a>';
     }
