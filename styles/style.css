@@ -117,6 +117,15 @@
         display: block;
     }
 }
+.service-link {
+    font-size: 1.25em;
+    margin-bottom: 5px;
+}
+
+.service-short-desc {
+    list-style-type: none;
+    padding-left: 20px;
+}
 
 .service-attr {
     font-size: 1.4em;
@@ -144,4 +153,14 @@
 
 .tax-head {
     font-size: 1em;
+}
+
+.service-list {
+    list-style-type: none;
+    margin-left: 5px;
+    padding: 0px;
+}
+
+.service {
+    margin-bottom: 10px;
 }
