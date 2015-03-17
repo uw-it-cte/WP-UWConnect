@@ -26,16 +26,16 @@ get_header(); ?>
                 <h2>Price:</h2>
                 <p><?php echo get_post_meta($id, 'uwc-price', true); ?></p>
                 <h2>Additional Information:</h2>
-                <p><?php echo get_post_meta($id, 'uwc-additional_info', true); ?></p>
+                <p><?php echo get_post_meta($id, 'uwc-additional-info', true); ?></p>
                 <h2>Support Information:</h2>
-                <p><?php echo get_post_meta($id, 'uwc-support_info', true); ?></p>
+                <p><?php echo get_post_meta($id, 'uwc-support-info', true); ?></p>
                 <h2>Contact for More Information:</h2>
-                <p><?php echo get_post_meta($id, 'uwc-customer_ref', true); ?></p>
+                <p><?php echo get_post_meta($id, 'uwc-customer-ref', true); ?></p>
                 <h2>Maintainance:</h2>
                 <h3>Last Review Date:</h3>
-                <p><?php echo get_post_meta($id, 'uwc-last_review', true); ?></p>
+                <p><?php echo get_post_meta($id, 'uwc-last-review', true); ?></p>
                 <h3>Next Review Date:</h3>
-                <p><?php echo get_post_meta($id, 'uwc-next_review', true); ?></p>
+                <p><?php echo get_post_meta($id, 'uwc-next-review', true); ?></p>
                 <?php endwhile; ?>
             </div> <!-- #primary -->
         </div> <!-- #content -->
