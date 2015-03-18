@@ -255,7 +255,7 @@ if (!get_page_by_name('servicestatus')) {
 function flush_rewrite() {
   flush_rewrite_rules();
 }
-register_activation_hood(__FILE__, 'flush_rewrite');
+register_activation_hook(__FILE__, 'flush_rewrite');
 
 
 function request_page_template( $template ) {
