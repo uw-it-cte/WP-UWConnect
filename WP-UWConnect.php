@@ -197,7 +197,7 @@ function create_incident_page() {
     $newvalue = wp_insert_post( $post, false );
     update_option( 'incpage', $newvalue );
 }
-if (!get_page_by_name('incident')) {
+if (!get_page_by_name('incident') && get_option('servstat') == 'on') {
   register_activation_hook(__FILE__, 'create_incident_page');
 }
 
@@ -213,7 +213,7 @@ function create_request_page() {
     $newvalue = wp_insert_post( $post, false );
     update_option( 'mrpage', $newvalue );
 }
-if (!get_page_by_name('myrequest')) {
+if (!get_page_by_name('myrequest') && get_option('myreq') == 'on') {
   register_activation_hook(__FILE__, 'create_request_page');
 }
 
@@ -229,7 +229,7 @@ function create_requests_page() {
     $newvalue = wp_insert_post( $post, false );
     update_option( 'mrspage', $newvalue );
 }
-if (!get_page_by_name('myrequests')) {
+if (!get_page_by_name('myrequests') && get_option('myreq') == 'on') {
   register_activation_hook(__FILE__, 'create_requests_page');
 }
 
@@ -245,7 +245,7 @@ function create_servicestatus_page() {
     $newvalue = wp_insert_post( $post, false );
     update_option( 'sspage', $newvalue );
 }
-if (!get_page_by_name('servicestatus')) {
+if (!get_page_by_name('servicestatus') && get_option('servstat') == 'on') {
   register_activation_hook(__FILE__, 'create_servicestatus_page');
 }
 
