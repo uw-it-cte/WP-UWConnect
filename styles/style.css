@@ -121,17 +121,19 @@
 .buttonesque {
     border-radius: 3px;
     background-color: #606060;
-    font-size: 11px;
-    padding: 3px;
+    font-size: 10pt;
+    padding: 1px 3px;
     color: white;
     text-decoration: none;
 }
 
 .buttonesque:hover {
     border: 1.5px solid white;
-    padding: 2px;
+    border-radius: 3px;
+    padding: 0px 2px;
 }
 
 .buttonesque:hover, .buttonesque:visited{
     color: white;
+    text-decoration: none;
 }
