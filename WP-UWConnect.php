@@ -40,17 +40,6 @@ function uw_connect_menu() {
 }
 add_action( 'admin_menu', 'uw_connect_menu' );
 
-function get_page_by_slug($slug) {
-    if ($pages = get_pages()) {
-      foreach ($pages as $page) {
-        if ($slug === $page->post_name) {
-          return $page;
-        }
-      }
-    }
-    return false;
-}
-
 function get_page_by_name($pagename) {
   $pages = get_pages();
   foreach ($pages as $page) {
@@ -103,8 +92,12 @@ function uw_connect_options() {
       update_option( $servstat, $servstat_val );
 
       if ( $myreq_val == 'on' && $prevmyreq == 'off') {
-          create_request_page();
-          create_requests_page();
+          if (!get_page_by_name('myrequest')) {
+              create_request_page();
+          }
+          if (!get_page_by_name('myrequests')) {
+              create_requests_page();
+          }
       } else if ($myreq_val == 'off' && $prevmyreq == 'on' ) {
           $myreqpage = get_page_by_name('myrequest');
           $myreqspage = get_page_by_name('myrequests');
@@ -114,8 +107,12 @@ function uw_connect_options() {
       }
 
       if ( $servstat_val == 'on' && $prevservstat == 'off' ) {
-          create_incident_page();
-          create_servicestatus_page();
+          if (!get_page_by_name('incident')) {
+              create_incident_page();
+          }
+          if (!get_page_by_name('servicestatus')) {
+              create_servicestatus_page();
+          }
       } else if ( $servstat_val == 'off' && $prevservstat == 'on' ) {
           $sspage = get_page_by_name('servicestatus');
           $incpage = get_page_by_name('incident');
