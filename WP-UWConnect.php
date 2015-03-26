@@ -28,12 +28,12 @@ function uw_connect_script_setup() {
     wp_register_style( 'uwconnect_style', plugin_dir_url(__FILE__) . 'styles/style.css');
     wp_enqueue_style( 'uwconnect_font-awesome' );
     wp_enqueue_style( 'uwconnect_bootstrap' );
+    wp_register_script( 'jQuery','//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', array(), '1.7.2' );
+    wp_enqueue_script( 'jQuery' );
     wp_enqueue_style( 'uwconnect_style' );
 }
 add_action( 'wp_enqueue_scripts', 'uw_connect_script_setup');
 
-wp_register_script( 'jQuery','//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', array(), '1.7.2' );
-wp_enqueue_script( 'jQuery' );
 
 function uw_connect_menu() {
   add_options_page( 'UW Connect Options', 'WP-UWConnect', 'manage_options', 'uw-connect-options', 'uw_connect_options' );
@@ -186,68 +186,71 @@ function add_rewrite_rules($aRules) {
 add_filter('rewrite_rules_array', 'add_rewrite_rules');
 
 function create_incident_page() {
-    $post = array(
-          'comment_status' => 'open',
-          'ping_status' =>  'closed',
-          'post_name' => 'incident',
-          'post_status' => 'publish',
-          'post_title' => 'Incident',
-          'post_type' => 'page',
-    );
-    $newvalue = wp_insert_post( $post, false );
-    update_option( 'incpage', $newvalue );
+
+    if (!get_page_by_name('incident') && get_option('servstat') == 'on') {
+      $post = array(
+            'comment_status' => 'open',
+            'ping_status' =>  'closed',
+            'post_name' => 'incident',
+            'post_status' => 'publish',
+            'post_title' => 'Incident',
+            'post_type' => 'page',
+      );
+      $newvalue = wp_insert_post( $post, false );
+      update_option( 'incpage', $newvalue );
+    }
 }
-if (!get_page_by_name('incident') && get_option('servstat') == 'on') {
-  register_activation_hook(__FILE__, 'create_incident_page');
-}
+register_activation_hook(__FILE__, 'create_incident_page');
 
 function create_request_page() {
-    $post = array(
-          'comment_status' => 'open',
-          'ping_status' =>  'closed',
-          'post_name' => 'myrequest',
-          'post_status' => 'publish',
-          'post_title' => 'My Request',
-          'post_type' => 'page',
-    );
-    $newvalue = wp_insert_post( $post, false );
-    update_option( 'mrpage', $newvalue );
+    if (!get_page_by_name('myrequest') && get_option('myreq') == 'on') {
+      $post = array(
+            'comment_status' => 'open',
+            'ping_status' =>  'closed',
+            'post_name' => 'myrequest',
+            'post_status' => 'publish',
+            'post_title' => 'My Request',
+            'post_type' => 'page',
+      );
+      $newvalue = wp_insert_post( $post, false );
+      update_option( 'mrpage', $newvalue );
+    }
 }
-if (!get_page_by_name('myrequest') && get_option('myreq') == 'on') {
-  register_activation_hook(__FILE__, 'create_request_page');
-}
+register_activation_hook(__FILE__, 'create_request_page');
 
 function create_requests_page() {
-    $post = array(
-          'comment_status' => 'open',
-          'ping_status' =>  'closed',
-          'post_name' => 'myrequests',
-          'post_status' => 'publish',
-          'post_title' => 'My Requests',
-          'post_type' => 'page',
-    );
-    $newvalue = wp_insert_post( $post, false );
-    update_option( 'mrspage', $newvalue );
+    if (!get_page_by_name('myrequests') && get_option('myreq') == 'on') {
+      $post = array(
+            'comment_status' => 'open',
+            'ping_status' =>  'closed',
+            'post_name' => 'myrequests',
+            'post_status' => 'publish',
+            'post_title' => 'My Requests',
+            'post_type' => 'page',
+      );
+      $newvalue = wp_insert_post( $post, false );
+      update_option( 'mrspage', $newvalue );
+    }
 }
-if (!get_page_by_name('myrequests') && get_option('myreq') == 'on') {
-  register_activation_hook(__FILE__, 'create_requests_page');
-}
+register_activation_hook(__FILE__, 'create_requests_page');
+
 
 function create_servicestatus_page() {
-    $post = array(
-          'comment_status' => 'open',
-          'ping_status' =>  'closed',
-          'post_name' => 'servicestatus',
-          'post_status' => 'publish',
-          'post_title' => 'ServiceStatus',
-          'post_type' => 'page',
-    );
-    $newvalue = wp_insert_post( $post, false );
-    update_option( 'sspage', $newvalue );
+    if (!get_page_by_name('servicestatus') && get_option('servstat') == 'on') {
+      $post = array(
+            'comment_status' => 'open',
+            'ping_status' =>  'closed',
+            'post_name' => 'servicestatus',
+            'post_status' => 'publish',
+            'post_title' => 'ServiceStatus',
+            'post_type' => 'page',
+      );
+      $newvalue = wp_insert_post( $post, false );
+      update_option( 'sspage', $newvalue );
+    }
 }
-if (!get_page_by_name('servicestatus') && get_option('servstat') == 'on') {
-  register_activation_hook(__FILE__, 'create_servicestatus_page');
-}
+register_activation_hook(__FILE__, 'create_servicestatus_page');
+
 
 function flush_rewrite() {
   flush_rewrite_rules();
