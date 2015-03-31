@@ -185,9 +185,15 @@ function add_rewrite_rules($aRules) {
 }
 add_filter('rewrite_rules_array', 'add_rewrite_rules');
 
+function options_setup() {
+    update_option('uwc_MYREQ', 'on');
+    update_option('uwc_SERVSTAT', 'on');
+}
+register_activation_hook(__FILE__, 'options_setup');
+
 function create_incident_page() {
 
-    if (!get_page_by_name('incident') && get_option('servstat') == 'on') {
+    if (!get_page_by_name('incident') && get_option('uwc_SERVSTAT') == 'on') {
       $post = array(
             'comment_status' => 'open',
             'ping_status' =>  'closed',
@@ -203,7 +209,7 @@ function create_incident_page() {
 register_activation_hook(__FILE__, 'create_incident_page');
 
 function create_request_page() {
-    if (!get_page_by_name('myrequest') && get_option('myreq') == 'on') {
+    if (!get_page_by_name('myrequest') && get_option('uwc_MYREQ') == 'on') {
       $post = array(
             'comment_status' => 'open',
             'ping_status' =>  'closed',
@@ -219,7 +225,7 @@ function create_request_page() {
 register_activation_hook(__FILE__, 'create_request_page');
 
 function create_requests_page() {
-    if (!get_page_by_name('myrequests') && get_option('myreq') == 'on') {
+    if (!get_page_by_name('myrequests') && get_option('uwc_MYREQ') == 'on') {
       $post = array(
             'comment_status' => 'open',
             'ping_status' =>  'closed',
@@ -236,7 +242,7 @@ register_activation_hook(__FILE__, 'create_requests_page');
 
 
 function create_servicestatus_page() {
-    if (!get_page_by_name('servicestatus') && get_option('servstat') == 'on') {
+    if (!get_page_by_name('servicestatus') && get_option('uwc_SERVSTAT') == 'on') {
       $post = array(
             'comment_status' => 'open',
             'ping_status' =>  'closed',
