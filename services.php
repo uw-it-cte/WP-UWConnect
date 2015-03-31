@@ -45,51 +45,51 @@ function service_content($object, $box) {
         <span>The "one-liner", high-level description of the service.</span>
 
         <h3><label for='uwc-description'><?php _e('Service Description', 'services'); ?></label></h3><br />
-        <textarea name='uwc-description' id='uwc-description' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-description', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-description', true), 'uwc-description'); ?><br />
         <span>A summary of the service that is meaningful to the customer. This might include business applications the service supports, benefits the service offers the customer, and features of the service.</span>
 
         <h3><label for='uwc-options-text'><?php _e('Service Options:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-options-text' id='uwc-options-text' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-options-text', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-options-text', true), 'uwc-options-text'); ?><br />
         <span>Placeholder for subcatagories of the service; if none, state "none", if "multiple flavors" are available, what are the features of each option? Include price and eligibility data if present.</span>
 
         <h3><label for='uwc-options-list'><? _e('Service Options (simple):', 'services'); ?></label></h3><br />
-        <textarea name='uwc-options-list' id='uwc-options-list' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-options-list', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-options-list', true), 'uwc-options-list'); ?><br />
         <span>Used for extracting service options for consumption in external applications (RT andFYI). Enter each service separated by columns.</span>
 
         <h3><label for='uwc-eligibility'><?php _e('Eligibility', 'services'); ?></label></h3><br />
-        <textarea name='uwc-eligibility' id='uwc-eligibility' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-eligibility', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-eligibility', true), 'uwc-eligibility'); ?><br />
         <span>Groupings of people who may obtain the service.</span>
 
         <h3><label for='uwc-ordering'><?php _e('How to Order:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-ordering' id='uwc-ordering' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-ordering', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-ordering', true), 'uwc-ordering'); ?><br />
         <span>Contact information (email, phone or web link) to use to obtain the service.</span>
 
         <h3><label for='uwc-availability'><?php _e('Availabiliy:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-availability' id='uwc-availability' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-availability', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-availability', true), 'uwc-availability'); ?><br />
         <span>State when and where service is available. Include restrictions of time, location or capacity that limit access to the service.</span>
 
         <h3><label for='uwc-price'><?php _e('Price:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-price' id='uwc-price' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-price', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-price', true), 'uwc-price'); ?><br />
         <span>The amount paid by the customer to obtain and use the service. If no charge, state "no charge".</span>
 
         <h3><label for='uwc-additional-info'><?php _e('Additional Information:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-additional-info' id='uwc-additional-info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-additional-info', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-additional-info', true), 'uwc-additional-info'); ?><br />
         <span>Link for more information, other data not captured elsewhere in record.</span>
 
         <h3><label for='uwc-level-descr'><?php _e('Service Level Description', 'services'); ?></label></h3><br />
-        <textarea name='uwc-level-descr' id='uwc-level-descr' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-level-descr', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-level-descr', true), 'uwc-level-desc'); ?><br />
         <span>A summary of what the customer can expect if they were to obtain the service. This might include commitments about reliability, quality, typical time to respond to service requests, or uptime.</span>
 
         <h3><label for='uwc-support-info'><?php _e('Support Information', 'services'); ?></label></h3><br />
-        <textarea name='uwc-support-info' id='uwc-support-info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-support-info', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-support-info', true), 'uwc-support-info'); ?><br />
         <span>Contact information for getting help witht he service. This should include the contacts' hours of availability. If during certain hours the contact information is different, include the additional contact information and the respective hours of availabilty.</span>
 
         <h3><label for='uwc-customer-ref'><?php _e('Customer References:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-customer-ref' id='uwc-customer-ref' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-customer-ref', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-customer-ref', true), 'uwc-customer-ref'); ?><br />
         <span>List of contacts for current customers of the service who have agreed to discuss the service with prospective customers.</span>
 
         <h3><label for='uwc-more-info'><?php _e('Contact for More Information:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-more-info' id='uwc-more-info' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-more-info', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-more-info', true), 'uwc-more-info'); ?><br />
         <span>Contact (phone and/or email address) to whom questions about service may be directed. This may or may not differ from the contacts listed.</span>
 
         <h3><label for='uwc-service-rep'><?php _e('Maintainance:', 'services'); ?></label></h3><br />
@@ -104,20 +104,21 @@ function service_content($object, $box) {
         <span>Format: 03/03/2015<br />Scheduled date for next review of the catalog entry for accuracy by the service representative.</span>
 
         <h3><label for='uwc-keywords'><?php _e('Keywords:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-keywords' id='uwc-keywords' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-keywords', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-keywords', true), 'uwc-keywords'); ?><br />
         <span>Search terms customers might use to find the service catalog entry. Each keyword should be separated by a comma.</span>
 
         <h3><label for='uwc-cost'><?php _e('Cost', 'services'); ?></label></h3><br />
-        <textarea name='uwc-cost' id='uwc-cost' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-cost', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-cost', true), 'uwc-cost'); ?><br />
         <span>Placeholder for unit measures and total resource allocation required to deliver the service.</span>
 
         <h3><label for='uwc-extra-notes'><?php _e('Notes:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-extra-notes' id='uwc-extra-notes' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-extra-notes', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-extra-notes', true), 'uwc-extra-notes'); ?><br />
         <span>Placeholder for information not captured elsewhere.</span>
 
         <h3><label for='uwc-teams'><?php _e('Internal Teams:', 'services'); ?></label></h3><br />
-        <textarea name='uwc-teams' id='uwc-teams' cols='90' rows='10'><?php echo get_post_meta($object->ID, 'uwc-teams', true); ?></textarea><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-teams', true), 'uwc-teams'); ?><br />
         <span>A list of internal UW Technology teams that are involved in providing this service.</span>
+
 <?php }
 
 add_action('save_post', 'save_service_form', 10, 2);
