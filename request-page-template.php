@@ -221,7 +221,7 @@ get_header(); ?>
                             $submit_url = site_url() . '/myrequest/' . $sn_num . '/'; ?>
                             <form role='form' action="<?php $submit_url; ?>" method='post'>
                             <div class='form-group' style='margin-bottom:1em;'>
-                                <label for='exampleInputPassword1'>Respond to UW-IT:</label>
+                                <label for='exampleInputPassword1'>Respond to Support Staff:</label>
                                 <textarea name='comments' class='form-control' rows='3' style='resize:vertical;'></textarea>
                             </div>
                             <button type='submit' class='btn btn-primary'>Submit</button>
@@ -277,7 +277,7 @@ get_header(); ?>
                             //support staff
                             } else {
                                 echo "<div class='media-body support-comments'>";
-                                $display_user = "UW-IT SUPPORT STAFF";
+                                $display_user = "SUPPORT STAFF";
                             }
                             echo "<div class='comment-timestamp'><strong class='user_name'>$display_user</strong> <span class='create-date'>$comment->sys_created_on</span></div>";
                             echo "<pre>";
