@@ -12,7 +12,7 @@ get_header(); ?>
                 global $post;
                 $id = $post->ID;?>
 
-                <h1><?php the_title(); ?></h1>
+                <h1 class='entry-title'><?php the_title(); ?></h1>
                 <?php if (get_post_meta($id, 'uwc-description', true)) { ?>
                   <div class='attr-wrap'>
                     <h2 class='service-attr'>Service Description</h2>
@@ -68,15 +68,14 @@ get_header(); ?>
                 </div>
                 <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-last-review', true)) { ?>
+                <hr id="fold" />
                 <div class='superattr-wrap'>
-                  <h2 class='service-attr'>Maintainance</h2>
+                  <h2 class='service-attr belowf'>Maintenance</h2>
                   <div class='subattr-wrap'>
-                    <h3 class='service-subattr'>Last Review Date</h3>
-                    <p class='attr-text'><?php echo get_post_meta($id, 'uwc-last-review', true); ?></p>
+                    <p class='attr-text'>Last Review Date: <?php echo get_post_meta($id, 'uwc-last-review', true); ?></p>
                   </div>
                   <div class='subattr-wrap'>
-                    <h3 class='service-subattr'>Next Review Date</h3>
-                    <p class='attr-text'><?php echo get_post_meta($id, 'uwc-next-review', true); ?></p>
+                    <p class='attr-text'>Next Review Date: <?php echo get_post_meta($id, 'uwc-next-review', true); ?></p>
                   </div>
                 </div>
                 <?php } ?>
