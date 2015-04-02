@@ -41,6 +41,7 @@ get_header(); ?>
         }?>
         </span>
       </h2>
+      <p><?php the_content(); ?></p>
 
 
 			<?php
