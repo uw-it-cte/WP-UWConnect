@@ -147,7 +147,7 @@ get_header(); ?>
                       $display_user = "UW-IT SUPPORT STAFF";
                   }
                   echo "<div class='comment-timestamp'><strong class='user_name'>$display_user</strong> <span class='create-date'>$comment->sys_created_on</span></div>";
-                  echo "<pre>";
+                  echo "<pre style='white-space:pre-wrap'>";
                   echo stripslashes($comment->value);
                   echo "</pre>";
                   echo "</div>";
