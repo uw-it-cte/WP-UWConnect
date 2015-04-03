@@ -19,7 +19,7 @@ get_header(); ?>
 
 <div id="main-content" class="main-content row">
     <div id="content" class="it_container" role="main">
-    <div id="secondary sidebar-offcanvas" class="col-lg-2 col-md-2 hidden-sm hidden-xs" role="complementary">
+    <div id="secondary" class="col-lg-2 col-md-2 hidden-sm hidden-xs" role="complementary">
           <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
           <?php dynamic_sidebar('servicenow-sidebar'); ?>
         </div>
