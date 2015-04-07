@@ -193,6 +193,21 @@ function options_setup() {
 }
 register_activation_hook(__FILE__, 'options_setup');
 
+function create_service_home_page() {
+    if (!get_page_by_name('servicehome')) {
+      $post = array(
+            'comment_status' => 'open',
+            'ping_status' =>  'closed',
+            'post_name' => 'servicehome',
+            'post_status' => 'publish',
+            'post_title' => 'Service Catalog',
+            'post_type' => 'page',
+      );
+      $newvalue = wp_insert_post( $post, false );
+    }
+}
+register_activation_hook(__FILE__, 'create_service_home_page');
+
 function create_incident_page() {
     if (!get_page_by_name('incident') && get_option('uwc_SERVSTAT') == 'on') {
       $post = array(
@@ -264,10 +279,6 @@ function flush_rewrite() {
 }
 register_activation_hook(__FILE__, 'flush_rewrite');
 
-
-
-
-
 function request_page_template( $template ) {
 
   if ( is_page( 'myrequest' ) ) {
@@ -297,6 +308,14 @@ function request_page_template( $template ) {
   if ( is_page( 'servicestatus' ) ) {
     if ( basename( get_page_template() ) == "page.php" ) {
       $new_template = dirname(__FILE__) . '/servicestatus-page-template.php';
+      if ( '' != $new_template ) {
+        return $new_template ;
+      }
+    }
+  }
+  if ( is_page( 'servicehome' ) ) {
+    if ( basename( get_page_template() ) == "page.php" ) {
+      $new_template = dirname(__FILE__) . '/service-home.php';
       if ( '' != $new_template ) {
         return $new_template ;
       }
