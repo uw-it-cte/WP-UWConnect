@@ -42,8 +42,6 @@ get_header(); ?>
 
 <?php while ( have_posts() ) : the_post(); ?>
 
-
-
 <div id="main-content" class="row main-content">
 		<div id="content" class="site-content it_container" role="main">
     <div id="secondary" class="col-lg-2 col-md-2 hidden-sm hidden-xs" role="complementary">

@@ -22,6 +22,8 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+include('services.php');
+
 function uw_connect_script_setup() {
     wp_register_style( 'uwconnect_font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
     wp_register_style( 'uwconnect_bootstrap', plugin_dir_url(__FILE__) . 'styles/bootstrap-3.1.1/css/bootstrap-3.1.1.min.css' );
@@ -192,7 +194,6 @@ function options_setup() {
 register_activation_hook(__FILE__, 'options_setup');
 
 function create_incident_page() {
-
     if (!get_page_by_name('incident') && get_option('uwc_SERVSTAT') == 'on') {
       $post = array(
             'comment_status' => 'open',
@@ -262,6 +263,9 @@ function flush_rewrite() {
   flush_rewrite_rules();
 }
 register_activation_hook(__FILE__, 'flush_rewrite');
+
+
+
 
 
 function request_page_template( $template ) {
