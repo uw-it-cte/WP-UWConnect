@@ -1,6 +1,16 @@
 <?php define( 'DONOTCACHEPAGE', True );
 get_header();
+global $wp_query;
 $term = $wp_query->queried_object;
+query_posts(
+  array_merge(
+    $wp_query->query,
+    array(
+    'order' => 'ASC',
+    'orderby'=>'title',
+    )
+  )
+);
 ?>
     <div id='main-content' class='row main-content'>
         <div id='content' class='site-content it_container' role='main'>
