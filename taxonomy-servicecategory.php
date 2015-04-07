@@ -9,7 +9,7 @@ $term = $wp_query->queried_object;
                     <?php dynamic_sidebar('Service-Catalog-Sidebar'); ?>
                 </div> <!-- #sidebar -->
             </div> <!-- #secondary -->
-            <div id='primary' class='col-xs-12 col-sm-12 col-md-10 col-lg-10 itsm-primary'>
+            <div id='primary' class='col-xs-12 col-sm-12 col-md-10 col-lg-10'>
                 <h2><?php echo $term->name; ?>  Services</h2>
                 <ul class='service-list'>
                 <?php while (have_posts()) : the_post();

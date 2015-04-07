@@ -163,6 +163,7 @@
 
 .attr-wrap {
     margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 .subattr-wrap {
@@ -178,8 +179,8 @@
 
 .service-list {
     list-style-type: none;
-    margin-left: 5px;
-    padding: 0px;
+    margin-left: 10px;
+    padding: 3px;
 }
 
 .service {
