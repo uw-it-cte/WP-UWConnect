@@ -40,6 +40,9 @@ if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
 
 get_header(); ?>
 
+<?php while ( have_posts() ) : the_post(); ?>
+
+
 
 <div id="main-content" class="row main-content">
 		<div id="content" class="site-content it_container" role="main">
@@ -52,6 +55,7 @@ get_header(); ?>
     
 
 			<?php
+            the_content();
             if(isset($user)) {
                 if( isset( $response ) ) {
                     $status = json_decode($response['body'], true);
@@ -297,4 +301,5 @@ get_header(); ?>
 </div><!-- #main-content -->
 
 <?php
+  endwhile;
 get_footer();

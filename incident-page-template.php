@@ -15,6 +15,7 @@ if( $sn_num == '' ) {
     wp_redirect( $new_url );
 }
 get_header(); ?>
+<?php while ( have_posts() ) : the_post(); ?>
 
 <div id="main-content" class="row main-content">
   <div id="content" class="site-content it_container" role="main">
@@ -57,6 +58,7 @@ get_header(); ?>
                 $comment_json = get_SN($comment_url, $args);
                 $comments = $comment_json->records;
                     echo "<h2 style='margin-top:0;'>$record->short_description&nbsp;&nbsp;<span style='color:#999;'>($record->number)</span></h2>";
+                    the_content();
                     echo "<h3 class='assistive-text'>Details:</h3>";
                     echo "<table class='table'>";
                 if( !empty( $record->caller_id ) ) {
@@ -161,5 +163,6 @@ get_header(); ?>
 </div><!-- #main-content -->
 
 <?php
+endwhile;
 get_footer();
 
