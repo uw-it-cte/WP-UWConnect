@@ -95,10 +95,10 @@ function service_content($object, $box) {
         <h3><label for='uwc-service-rep'><?php _e('Maintainance:', 'services'); ?></label></h3><br />
         <h4><label for='uwc-service-rep'><?php _e('Service Representative:', 'services'); ?></label></h4><br />
         <input type='text' name='uwc-service-rep' id='uwc-service-rep' value='<?php echo esc_attr(get_post_meta($object->ID, 'uwc-service-rep', true)); ?>' size='70' /><br />
-        <span>Peron assigned to the Service Representative role. See Roles and Responsibilities.</span>
+        <span>Person assigned to the Service Representative role. See Roles and Responsibilities.</span>
         <h4><label for='uwc-last-review'><?php _e('Last Review Date:', 'services'); ?></label></h4><br />
         <input type='text' name='uwc-last-review' id='uwc-last-review' value='<?php echo esc_attr(get_post_meta($object->ID, 'uwc-last-review', true)); ?>' size='70' /><br />
-        <span>Format: 03/03/2015<br />Last date the service representative verified the data int eh service catalog entry for accuracy.</span>
+        <span>Format: 03/03/2015<br />Last date the service representative verified the data in the service catalog entry for accuracy.</span>
         <h4><label for='uwc-next-review'><?php _e('Next Review Date:', 'services'); ?></label></h4><br />
         <input type='text' name='uwc-next-review' id='uwc-next-review' value='<?php echo esc_attr(get_post_meta($object->ID, 'uwc-next-review', true)); ?>' size='70' /><br />
         <span>Format: 03/03/2015<br />Scheduled date for next review of the catalog entry for accuracy by the service representative.</span>
