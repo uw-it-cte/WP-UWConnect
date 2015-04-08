@@ -238,9 +238,9 @@ function taxonomy_list_shortcode($atts) {
     $taxonomy = get_taxonomy($tax);
     $output = '<h4 class="tax-head">' . $taxonomy->labels->name . '</h4><ul>';
     $siteurl = site_url();
-    $url = $siteurl . '/' . $tax .  '/' . $term->slug;
+    $url = $siteurl . '/' . $tax;
     foreach ($terms as $term) {
-        $output .= '<a href="' . $url . '"><li>' . $term->name . '</li></a>';
+        $output .= '<a href="' . $url . '/' . $term->slug .'"><li>' . $term->name . '</li></a>';
     }
     $output .= '</ul>';
     return $output;
