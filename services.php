@@ -28,8 +28,9 @@ function service_post_type() {
     );
     register_post_type('service', $args);
 }
-
-add_action('init', 'service_post_type');
+if (get_option('uwc_SERVCAT') == 'on') {
+    add_action('init', 'service_post_type');
+}
 
 add_action('add_meta_boxes', 'service_info');
 
@@ -238,9 +239,9 @@ function taxonomy_list_shortcode($atts) {
     $taxonomy = get_taxonomy($tax);
     $output = '<h4 class="tax-head">' . $taxonomy->labels->name . '</h4><ul>';
     $siteurl = site_url();
-    $url = $siteurl . '/' . $tax;
     foreach ($terms as $term) {
-        $output .= '<a href="' . $url . '/' . $term->slug .'"><li>' . $term->name . '</li></a>';
+        $url = $siteurl . '/' . $tax .  '/' . $term->slug;
+        $output .= '<a href="' . $url . '"><li>' . $term->name . '</li></a>';
     }
     $output .= '</ul>';
     return $output;
