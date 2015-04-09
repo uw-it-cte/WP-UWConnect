@@ -65,6 +65,8 @@ function uw_connect_options() {
   $data_myreq = 'uwc_MYREQ';
   $servstat = 'uwc_SERVSTAT';
   $data_servstat = 'uwc_SERVSTAT';
+  $servcat = 'uwc_SERVCAT';
+  $data_servcat = 'uwc_SERVCAT';
 
   // Read in existing option value from database
   $url_val = get_option( $url );
@@ -72,6 +74,16 @@ function uw_connect_options() {
   $pass_val = get_option( $pass );
   $myreq_val = get_option( $myreq );
   $servstat_val = get_option( $servstat );
+  $servcat_val = get_option( $servcat );
+  if ($myreq_val == '') {
+      update_option( $myreq, 'off' );
+  }
+  if ($servstat_val == '') {
+      update_option( $servstat, 'off' );
+  }
+  if ($servcat_val == '' ) {
+      update_option( $servcat, 'off' );
+  }
 
   // See if the user has posted us some information
   // If they did, this hidden field will be set to 'Y'
@@ -82,9 +94,11 @@ function uw_connect_options() {
       $pass_val = $_POST[ $data_pass ];
       $myreq_val = $_POST[ $data_myreq ];
       $servstat_val = $_POST[ $data_servstat ];
+      $servcat_val = $_POST[ $data_servcat ];
 
       $prevmyreq = get_option( $myreq );
       $prevservstat = get_option( $servstat );
+      $prevservcat = get_option( $servcat );
 
       // Save the posted value in the database
       update_option( $url, $url_val );
@@ -92,8 +106,9 @@ function uw_connect_options() {
       update_option( $pass, $pass_val );
       update_option( $myreq, $myreq_val );
       update_option( $servstat, $servstat_val );
+      update_option( $servcat, $servcat_val );
 
-      if ( $myreq_val == 'on' && $prevmyreq == 'off') {
+      if ( $myreq_val == 'on' ) {
           if (!get_page_by_name('myrequest')) {
               create_request_page();
           }
@@ -108,7 +123,7 @@ function uw_connect_options() {
       } else {
       }
 
-      if ( $servstat_val == 'on' && $prevservstat == 'off' ) {
+      if ( $servstat_val == 'on' ) {
           if (!get_page_by_name('incident')) {
               create_incident_page();
           }
@@ -122,6 +137,17 @@ function uw_connect_options() {
           wp_delete_post( $incpage->ID, true );
       } else {
       }
+
+      if ( $servcat_val == 'on' ) {
+          if (!get_page_by_name('servicehome')) {
+              create_service_home_page();
+          }
+      } else if ( $servcat_val == 'off' && $prevservcat == 'on' ) {
+          $shpage = get_page_by_name('servicehome');
+          wp_delete_post( $shpage->ID, true );
+      } else {
+      }
+
       flush_rewrite_rules();
 
 ?>
@@ -152,19 +178,23 @@ function uw_connect_options() {
 
 <h2>Enable Portals</h2>
 
-<p><?php _e("ServiceNow My Requests Portal:", 'menu' );
+<p><?php _e("ServiceNow My Requests Portal: ", 'menu' );
 
 ?>
 <input type="radio" name="<?php echo $data_myreq; ?>" value="on" <?php echo ($myreq_val=='on')?'checked':'' ?>>ON
 <input type="radio" name="<?php echo $data_myreq; ?>" value="off" <?php echo ($myreq_val=='off')?'checked':''?>>OFF
 </p><hr />
 
-<p><?php _e("ServiceNow Service Status Portal:", 'menu' ); ?>
+<p><?php _e("ServiceNow Service Status Portal: ", 'menu' ); ?>
 <input type="radio" name="<?php echo $data_servstat; ?>" value="on" <?php echo ($servstat_val=='on')?'checked':'' ?>>ON
 <input type="radio" name="<?php echo $data_servstat; ?>" value="off" <?php echo ($servstat_val=='off')?'checked':'' ?>>OFF
 </p><hr />
 
-<p class="submit">
+<p><?php _e("Service Catalog: ", 'menu' ); ?>
+<input type="radio" name="<?php echo $data_servcat; ?>" value="on" <?php echo ($servcat_val=='on')?'checked':'' ?>>ON
+<input type="radio" name="<?php echo $data_servcat; ?>" value="off" <?php echo ($servcat_val=='off')?'checked':'' ?>>OFF
+
+</p><hr /><p class="submit">
 <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
 </p>
 
@@ -188,13 +218,20 @@ function add_rewrite_rules($aRules) {
 add_filter('rewrite_rules_array', 'add_rewrite_rules');
 
 function options_setup() {
-    update_option('uwc_MYREQ', 'on');
-    update_option('uwc_SERVSTAT', 'on');
+    if (!get_option('uwc_MYREQ')) {
+      update_option('uwc_MYREQ', 'off');
+    }
+    if (!get_option('uwc_SERVSTAT')) {
+      update_option('uwc_SERVSTAT', 'off');
+    }
+    if (!get_option('uwc_SERVCAT')) {
+      update_option('uwc_SERVCAT', 'off');
+    }
 }
 register_activation_hook(__FILE__, 'options_setup');
 
 function create_service_home_page() {
-    if (!get_page_by_name('servicehome')) {
+    if (!get_page_by_name('servicehome') && get_option('uwc_SERVCAT') == 'on') {
       $post = array(
             'comment_status' => 'open',
             'ping_status' =>  'closed',
