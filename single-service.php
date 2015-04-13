@@ -16,7 +16,7 @@ get_header(); ?>
                 <?php if (get_post_meta($id, 'uwc-description', true)) { ?>
                   <div class='attr-wrap'>
                     <h2 class='service-attr'>Service Description</h2>
-                    <div class='attr-text'><?php echo get_post_meta($id, 'uwc-description', true); ?></div>
+                    <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-description', true)); ?></div>
                   </div>
                 <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-options-text', true)) { ?>
@@ -34,37 +34,37 @@ get_header(); ?>
                 <?php if (get_post_meta($id, 'uwc-ordering', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>How to Order</h2>
-                  <div class='attr-text'><?php echo get_post_meta($id, 'uwc-ordering', true); ?></div>
+                  <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-ordering', true)); ?></div>
                 </div>
                 <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-availability', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Availability</h2>
-                  <div class='attr-text'><?php echo get_post_meta($id, 'uwc-availability', true); ?></div>
+                  <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-availability', true)); ?></div>
                 </div>
                 <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-price', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Price</h2>
-                  <div class='attr-text'><?php echo get_post_meta($id, 'uwc-price', true); ?></div>
+                  <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-price', true)); ?></div>
                 </div>
                 <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-additional-info', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Additional Information</h2>
-                  <div class='attr-text'><?php echo get_post_meta($id, 'uwc-additional-info', true); ?></div>
+                  <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-additional-info', true)); ?></div>
                 </div>
                 <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-support-info', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Support Information</h2>
-                  <div class='attr-text'><?php echo get_post_meta($id, 'uwc-support-info', true); ?></div>
+                  <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-support-info', true)); ?></div>
                 </div>
                 <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-customer-ref', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Contact for More Information</h2>
-                  <div class='attr-text'><?php echo get_post_meta($id, 'uwc-customer-ref', true); ?></div>
+                  <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-customer-ref', true)); ?></div>
                 </div>
                 <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-last-review', true)) { ?>
