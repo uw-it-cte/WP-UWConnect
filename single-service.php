@@ -74,9 +74,6 @@ get_header(); ?>
                   <div class='subattr-wrap'>
                     <p class='attr-text'>Last Review Date: <?php echo get_post_meta($id, 'uwc-last-review', true); ?></p>
                   </div>
-                  <div class='subattr-wrap'>
-                    <p class='attr-text'>Next Review Date: <?php echo get_post_meta($id, 'uwc-next-review', true); ?></p>
-                  </div>
                 </div>
                 <?php } ?>
                 <?php endwhile; ?>
