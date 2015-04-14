@@ -18,6 +18,8 @@ usort($posts_array, "post_title_sort");
                 </div> <!-- #sidebar -->
             </div> <!-- #secondary -->
             <div id='primary' class='col-xs-12 col-sm-12 col-md-10 col-lg-10'>
+                <?php service_breadcrumbs(); ?>
+                <div style='margin-left:25px;'>
                 <h2>AZ Services</h2>
                 <ul class='service-list'>
                 <?php
@@ -34,6 +36,7 @@ usort($posts_array, "post_title_sort");
                   </li>
                 <?php } ?>
                 </ul>
+                </div>
             </div> <!-- #primary -->
         </div> <!-- #content -->
     </div> <!-- #main-content -->
