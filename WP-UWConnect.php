@@ -147,7 +147,7 @@ function uw_connect_options() {
       } else if ( $servcat_val == 'off' && $prevservcat == 'on' ) {
           $shpage = get_page_by_name('servicehome');
           $scpage = get_page_by_name('servicecategories');
-          $servspage = get_page_by_name('services');
+          $servspage = get_page_by_name('serviceAZ');
           wp_delete_post( $shpage->ID, true );
           wp_delete_post( $scpage->ID, true );
           wp_delete_post( $servspage->ID, true );
@@ -334,11 +334,11 @@ function create_servicecategories_page() {
 register_activation_hook(__FILE__, 'create_servicecategories_page');
 
 function create_serviceAZ_page() {
-    if (!get_page_by_name('services') && get_option('uwc_SERVSTAT') == 'on') {
+    if (!get_page_by_name('servicesAZ') && get_option('uwc_SERVSTAT') == 'on') {
       $post = array(
             'comment_status' => 'open',
             'ping_status' =>  'closed',
-            'post_name' => 'services',
+            'post_name' => 'servicesAZ',
             'post_status' => 'publish',
             'post_title' => 'Services A-Z',
             'post_type' => 'page',
@@ -404,7 +404,7 @@ function request_page_template( $template ) {
       }
     }
   }
-  if ( is_page( 'services' ) ) {
+  if ( is_page( 'servicesaz' ) ) {
     if ( basename( get_page_template() ) == "page.php" ) {
       $new_template = dirname(__FILE__) . '/serviceAZ.php';
       if ( '' != $new_template ) {

@@ -9,6 +9,8 @@ get_header();
                 </div> <!-- #sidebar -->
             </div> <!-- #secondary -->
             <div id='primary' class='col-xs-12 col-sm-12 col-md-10 col-lg-10'>
+                <?php service_breadcrumbs(); ?>
+                <div style='margin-left:25px;'>
                 <?php while (have_posts()) : the_post();
                 global $post;
                 $title = $post->post_title;
@@ -17,6 +19,7 @@ get_header();
                 <?php the_content(); ?>
                 <?php endwhile; ?>
                 </ul>
+                </div>
             </div> <!-- #primary -->
         </div> <!-- #content -->
     </div> <!-- #main-content -->
