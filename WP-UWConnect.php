@@ -141,10 +141,16 @@ function uw_connect_options() {
       if ( $servcat_val == 'on' ) {
           if (!get_page_by_name('servicehome')) {
               create_service_home_page();
+              create_servicecategories_page();
+              create_serviceAZ_page();
           }
       } else if ( $servcat_val == 'off' && $prevservcat == 'on' ) {
           $shpage = get_page_by_name('servicehome');
+          $scpage = get_page_by_name('servicecategories');
+          $servspage = get_page_by_name('services');
           wp_delete_post( $shpage->ID, true );
+          wp_delete_post( $scpage->ID, true );
+          wp_delete_post( $servspage->ID, true );
       } else {
       }
 
@@ -310,6 +316,38 @@ function create_servicestatus_page() {
 }
 register_activation_hook(__FILE__, 'create_servicestatus_page');
 
+function create_servicecategories_page() {
+    if (!get_page_by_name('servicecategories') && get_option('uwc_SERVSTAT') == 'on') {
+      $post = array(
+            'comment_status' => 'open',
+            'ping_status' =>  'closed',
+            'post_name' => 'servicecategories',
+            'post_status' => 'publish',
+            'post_title' => 'Service Categories',
+            'post_type' => 'page',
+            'post_content' => '[taxtermlist tax="servicecategory"]',
+      );
+      $newvalue = wp_insert_post( $post, false );
+      update_option( 'sspage', $newvalue );
+    }
+}
+register_activation_hook(__FILE__, 'create_servicecategories_page');
+
+function create_serviceAZ_page() {
+    if (!get_page_by_name('services') && get_option('uwc_SERVSTAT') == 'on') {
+      $post = array(
+            'comment_status' => 'open',
+            'ping_status' =>  'closed',
+            'post_name' => 'services',
+            'post_status' => 'publish',
+            'post_title' => 'Services A-Z',
+            'post_type' => 'page',
+      );
+      $newvalue = wp_insert_post( $post, false );
+      update_option( 'servspage', $newvalue );
+    }
+}
+register_activation_hook(__FILE__, 'create_serviceAZ_page');
 
 function flush_rewrite() {
   flush_rewrite_rules();
@@ -353,6 +391,22 @@ function request_page_template( $template ) {
   if ( is_page( 'servicehome' ) ) {
     if ( basename( get_page_template() ) == "page.php" ) {
       $new_template = dirname(__FILE__) . '/service-home.php';
+      if ( '' != $new_template ) {
+        return $new_template ;
+      }
+    }
+  }
+  if ( is_page( 'servicecategories' ) ) {
+    if ( basename( get_page_template() ) == "page.php" ) {
+      $new_template = dirname(__FILE__) . '/service-categories.php';
+      if ( '' != $new_template ) {
+        return $new_template ;
+      }
+    }
+  }
+  if ( is_page( 'services' ) ) {
+    if ( basename( get_page_template() ) == "page.php" ) {
+      $new_template = dirname(__FILE__) . '/serviceAZ.php';
       if ( '' != $new_template ) {
         return $new_template ;
       }
