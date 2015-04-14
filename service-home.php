@@ -1,4 +1,4 @@
-<?php define( 'DONOTCACHEPAGE', True );
+<?php
 get_header();
 ?>
     <div id='main-content' class='row main-content'>
