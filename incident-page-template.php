@@ -19,12 +19,12 @@ get_header(); ?>
 
 <div id="main-content" class="row main-content">
   <div id="content" class="site-content it_container" role="main">
-    <div id="secondary" class="col-lg-2 col-md-2 hidden-sm hidden-xs" role="complementary">
+    <div id="secondary" class="col-lg-3 col-md-3 hidden-sm hidden-xs" role="complementary">
       <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
         <?php dynamic_sidebar('servicenow-sidebar'); ?>
       </div>
     </div>
-  <div id="primary" class="col-xs-12 col-sm-12 col-md-10 col-lg-10 itsm-primary">
+  <div id="primary" class="col-xs-12 col-sm-12 col-md-9 col-lg-9 itsm-primary">
 
 <?php
               $args = array(
