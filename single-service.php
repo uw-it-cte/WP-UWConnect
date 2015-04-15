@@ -80,6 +80,7 @@ get_header(); ?>
                   </div>
                 </div>
                 </div>
+                </div>
                 <?php } ?>
                 <?php endwhile; ?>
             </div> <!-- #primary -->
