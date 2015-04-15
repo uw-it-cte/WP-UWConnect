@@ -24,11 +24,11 @@ function service_post_type() {
         'register_meta_box_cb' => 'service_info',
         'supports' => array('title'),
         'has_archive' => false,
-        'hierarchical' => true
+        'hierarchical' => true,
     );
     register_post_type('service', $args);
 }
-if (get_option('uwc_SERVCAT') == 'on' && $_POST['uwc_SERVCAT'] != 'off' || $_POST['uwc_SERVCAT'] == 'on') {
+if (get_option('uwc_SERVCAT') == 'on') {
     add_action('init', 'service_post_type');
 }
 
@@ -197,7 +197,10 @@ function category_taxonomy() {
             ),
             'show_ui' => true,
             'show_tagcloud' => true,
-            'hierarchical' => true
+            'hierarchical' => true,
+            'capabilities' => array(
+                        'assign_terms' => 'edit_pages'
+                        )
         )
     );
 }
@@ -274,21 +277,4 @@ function service_page_template($template) {
     return $template;
 }
 
-function service_breadcrumbs($post = '') {
-    $breadcrumb = '';
-    $homepage = get_page_by_name('servicehome');
-    if ( $post->post_type == 'service' ) {
-        $service_title = $post->post_title;
-    }
-    echo "<div class='breadcrumbs-container' style='margin-left:0px;'>";
-    echo "<ul class='breadcrumbs-list'>";
-    if ($service_title) {
-        echo "<li><a title='" . $homepage->post_title . "' href='" . get_site_url() . "/" . $homepage->post_name . "'>" . $homepage->post_title . "</a></li>";
-        echo "<li class='current'><a title='" . $post->post_title . "' href='" . get_site_url() . "/" . $homepage->post_name . "/" . $post->post_name . "'>" . $post->post_title . "</a></li>";
-    } else {
-        echo "<li class='current'><a title='" . $homepage->post_title . "' href='" . get_site_url() . "/" . $homepage->post_name . "'>" . $homepage->post_title . "</a></li>";
-    }
-    echo "</ul>";
-    echo "</div>";
-}
 ?>
