@@ -1,14 +1,14 @@
 <?php
+define( 'DONOTCACHEPAGE', True );
 get_header();
-$posts_array = get_posts(array('post_type' => 'service'));
-function post_title_sort($a, $b) {
-    if ($a->post_title == $b->post_title) {
-        return 0;
-    }
-    return ($a->post_title < $b->post_title) ? -1 : 1;
-}
+$args = array('post_type' => 'service',
+              'posts_per_page' => -1,
+              'post_status' => 'publish',
+              'orderby' => 'title',
+              'order' => 'ASC',
+);
+$posts_query = new WP_Query($args);
 
-usort($posts_array, "post_title_sort");
 ?>
     <div id='main-content' class='row main-content'>
         <div id='content' class='site-content it_container' role='main'>
@@ -23,18 +23,21 @@ usort($posts_array, "post_title_sort");
                 <h2>Services A-Z</h2>
                 <ul class='service-list'>
                 <?php
-                foreach ($posts_array as $post) {
-                  $id = $post->ID;
-                  $shortdesc = get_post_meta($id, 'uwc-short-description', true);
-                  $perm = get_post_permalink($id);
-                  ?>
-                  <a href="<?php echo $perm ?>" class='service-link'>
-                  <li class='service'><?php the_title(); ?></a>
-                    <ul class='service-short-desc'>
-                      <li><?php echo $shortdesc ?></li>
-                    </ul>
-                  </li>
-                <?php } ?>
+                if( $posts_query->have_posts() ) {
+                  while ($posts_query->have_posts()) : $posts_query->the_post();
+                    $id = $post->ID;
+                    $shortdesc = get_post_meta($id, 'uwc-short-description', true);
+                    $perm = get_post_permalink($id);
+                    ?>
+                    <a href="<?php echo $perm ?>" class='service-link'>
+                    <li class='service'><?php the_title(); ?></a>
+                      <ul class='service-short-desc'>
+                        <li><?php echo $shortdesc ?></li>
+                      </ul>
+                    </li>
+                  <?php 
+                  endwhile;
+                } ?>
                 </ul>
                 </div>
             </div> <!-- #primary -->
