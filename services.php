@@ -24,7 +24,7 @@ function service_post_type() {
         'register_meta_box_cb' => 'service_info',
         'supports' => array('title'),
         'has_archive' => false,
-        'hierarchical' => true
+        'hierarchical' => true,
     );
     register_post_type('service', $args);
 }
@@ -197,7 +197,10 @@ function category_taxonomy() {
             ),
             'show_ui' => true,
             'show_tagcloud' => true,
-            'hierarchical' => true
+            'hierarchical' => true,
+            'capabilities' => array(
+                        'assign_terms' => 'edit_pages'
+                        )
         )
     );
 }

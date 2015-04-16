@@ -19,12 +19,12 @@ get_header(); ?>
 
 <div id="main-content" class="main-content row">
     <div id="content" class="it_container" role="main">
-    <div id="secondary" class="col-lg-2 col-md-2 hidden-sm hidden-xs" role="complementary">
+    <div id="secondary" class="col-lg-3 col-md-3 hidden-sm hidden-xs" role="complementary">
           <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
           <?php dynamic_sidebar('servicenow-sidebar'); ?>
         </div>
     </div>
-    <div id="primary" class="col-xs-12 col-sm-12 col-md-10 col-lg-10 itsm-primary">
+    <div id="primary" class="col-xs-12 col-sm-12 col-md-9 col-lg-9 itsm-primary">
         <div class="user-logout row">
           <span class="glyphicon glyphicon-user"></span>&nbsp;<?php echo $user; ?> &nbsp;&nbsp;&nbsp;<a href="<?php echo home_url('/user_logout'); ?>" class="buttonesque" style="vertical-align:text-bottom;">LOGOUT</a>
         </div>
