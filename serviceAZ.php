@@ -20,7 +20,7 @@ usort($posts_array, "post_title_sort");
             <div id='primary' class='col-xs-12 col-sm-12 col-md-9 col-lg-9'>
                 <?php service_breadcrumbs(); ?>
                 <div style='margin-left:25px;'>
-                <h2>AZ Services</h2>
+                <h2>Services A-Z</h2>
                 <ul class='service-list'>
                 <?php
                 foreach ($posts_array as $post) {
