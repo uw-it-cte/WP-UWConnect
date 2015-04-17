@@ -2,16 +2,20 @@
 get_header(); ?>
     <div id='main-content' class='row main-content'>
         <div id='content' class='site-content it_container' role='main'>
-            <div id='secondary' class='col-lg-2 col-md-2 hidden-sm hidden-xs' role='complementary'>
+            <div id='secondary' class='col-lg-3 col-md-3 hidden-sm hidden-xs' role='complementary'>
                 <div id='sidebar' role='navigation' aria-label='Sidebar Menu'>
                     <?php dynamic_sidebar('Service-Catalog-Sidebar'); ?>
                 </div> <!-- #sidebar -->
             </div> <!-- #secondary -->
-            <div id='primary' class='col-xs-12 col-sm-12 col-md-10 col-lg-10 itsm-primary'>
+            <div id='primary' class='col-xs-12 col-sm-12 col-md-9 col-lg-9'>
                 <?php while (have_posts()) : the_post();
                 global $post;
-                $id = $post->ID;?>
+                $id = $post->ID;
 
+                service_breadcrumbs($post);
+                ?>
+
+                <div style='margin-left:25px;'>
                 <h1 class='entry-title'><?php the_title(); ?></h1>
                 <?php if (get_post_meta($id, 'uwc-description', true)) { ?>
                   <div class='attr-wrap'>
@@ -74,6 +78,8 @@ get_header(); ?>
                   <div class='subattr-wrap'>
                     <p class='attr-text'>Last Review Date: <?php echo get_post_meta($id, 'uwc-last-review', true); ?></p>
                   </div>
+                </div>
+                </div>
                 </div>
                 <?php } ?>
                 <?php endwhile; ?>
