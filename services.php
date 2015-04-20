@@ -244,8 +244,8 @@ function taxonomy_list_shortcode($atts) {
     $siteurl = site_url();
     foreach ($terms as $term) {
         $url = $siteurl . '/' . $tax .  '/' . $term->slug;
-        $output .= '<a href="' . $url . '"><li>' . $term->name . '</li></a>';
-        $output .= '<p>' . $term->description . '</p>';
+        $output .= '<p><a href="' . $url . '"><li>' . $term->name . '</li></a>';
+        $output .= $term->description . '</p>';
     }
     $output .= '</ul>';
     return $output;
