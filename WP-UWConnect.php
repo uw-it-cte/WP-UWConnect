@@ -139,15 +139,13 @@ function uw_connect_options() {
       }
 
       if ( $servcat_val == 'on' ) {
-          if (!get_page_by_name('servicehome')) {
-              create_service_home_page();
-              create_servicecategories_page();
-              create_serviceAZ_page();
-          }
+          create_service_home_page();
+          create_servicecategories_page();
+          create_serviceAZ_page();
       } else if ( $servcat_val == 'off' && $prevservcat == 'on' ) {
           $shpage = get_page_by_name('servicehome');
           $scpage = get_page_by_name('servicecategories');
-          $servspage = get_page_by_name('serviceAZ');
+          $servspage = get_page_by_name('servicesaz');
           wp_delete_post( $shpage->ID, true );
           wp_delete_post( $scpage->ID, true );
           wp_delete_post( $servspage->ID, true );
@@ -317,7 +315,7 @@ function create_servicestatus_page() {
 register_activation_hook(__FILE__, 'create_servicestatus_page');
 
 function create_servicecategories_page() {
-    if (!get_page_by_name('servicecategories') && get_option('uwc_SERVSTAT') == 'on') {
+    if (!get_page_by_name('servicecategories') && get_option('uwc_SERVCAT') == 'on') {
       $post = array(
             'comment_status' => 'open',
             'ping_status' =>  'closed',
@@ -334,11 +332,11 @@ function create_servicecategories_page() {
 register_activation_hook(__FILE__, 'create_servicecategories_page');
 
 function create_serviceAZ_page() {
-    if (!get_page_by_name('servicesAZ') && get_option('uwc_SERVSTAT') == 'on') {
+    if (!get_page_by_name('servicesaz') && get_option('uwc_SERVCAT') == 'on') {
       $post = array(
             'comment_status' => 'open',
             'ping_status' =>  'closed',
-            'post_name' => 'servicesAZ',
+            'post_name' => 'servicesaz',
             'post_status' => 'publish',
             'post_title' => 'Services A-Z',
             'post_type' => 'page',
