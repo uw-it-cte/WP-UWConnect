@@ -78,7 +78,7 @@ function service_content($object, $box) {
         <span>Link for more information, other data not captured elsewhere in record.</span>
 
         <h3><label for='uwc-level-descr'><?php _e('Service Level Description', 'services'); ?></label></h3><br />
-        <?php wp_editor(get_post_meta($object->ID, 'uwc-level-descr', true), 'uwc-level-desc'); ?><br />
+        <?php wp_editor(get_post_meta($object->ID, 'uwc-level-descr', true), 'uwc-level-descr'); ?><br />
         <span>A summary of what the customer can expect if they were to obtain the service. This might include commitments about reliability, quality, typical time to respond to service requests, or uptime.</span>
 
         <h3><label for='uwc-support-info'><?php _e('Support Information', 'services'); ?></label></h3><br />

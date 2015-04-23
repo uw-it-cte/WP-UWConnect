@@ -53,6 +53,12 @@ get_header(); ?>
                   <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-price', true)); ?></div>
                 </div>
                 <?php } ?>
+                <?php if (get_post_meta($id, 'uwc-level-descr', true)) { ?>
+                <div class='attr-wrap'>
+                  <h2 class='service-attr'>Service Level Description</h2>
+                  <div class='attr-text'><?php echo wpautop(get_post_meta($id, 'uwc-level-descr', true)); ?></div>
+                </div>
+                <?php } ?>
                 <?php if (get_post_meta($id, 'uwc-additional-info', true)) { ?>
                 <div class='attr-wrap'>
                   <h2 class='service-attr'>Additional Information</h2>
