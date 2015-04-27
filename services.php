@@ -28,7 +28,11 @@ function service_post_type() {
     );
     register_post_type('service', $args);
 }
-if ((get_option('uwc_SERVCAT') == 'on' && $_POST['uwc_SERVCAT'] != 'off') || $_POST['uwc_SERVCAT'] == 'on') {
+if (isset($_POST['uwc_SERVCAT'])) {
+    if ((get_option('uwc_SERVCAT') == 'on' && $_POST['uwc_SERVCAT'] != 'off') || $_POST['uwc_SERVCAT'] == 'on') {
+        add_action('init', 'service_post_type');
+    }
+} else if (get_option('uwc_SERVCAT') == 'on') {
     add_action('init', 'service_post_type');
 }
 
