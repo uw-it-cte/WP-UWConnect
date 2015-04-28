@@ -286,7 +286,7 @@ function service_page_template($template) {
 function service_breadcrumbs($post = '') {
     $breadcrumb = '';
     $service_title;
-    $homepage = get_page_by_name('servicehome');
+    $homepage = get_page_by_name('services');
     if ( !empty($post) && $post->post_type == 'service' ) {
         $service_title = $post->post_title;
     }
