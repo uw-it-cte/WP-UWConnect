@@ -39,6 +39,9 @@ $posts_query = new WP_Query($args);
                   endwhile;
                 } ?>
                 </ul>
+                <?php if (current_user_can('edit_posts')) {
+                    edit_post_link('Edit', '<p>', '</p>');
+                } ?>
                 </div>
             </div> <!-- #primary -->
         </div> <!-- #content -->

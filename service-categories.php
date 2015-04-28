@@ -19,6 +19,9 @@ get_header();
                 <?php the_content(); ?>
                 <?php endwhile; ?>
                 </ul>
+                <?php if (current_user_can('edit_posts')) {
+                    edit_post_link('Edit', '<p>', '</p>');
+                } ?>
                 </div>
             </div> <!-- #primary -->
         </div> <!-- #content -->

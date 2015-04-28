@@ -85,6 +85,9 @@ get_header(); ?>
                     <p class='attr-text'>Last Review Date: <?php echo get_post_meta($id, 'uwc-last-review', true); ?></p>
                   </div>
                 </div>
+                <?php if (current_user_can('edit_posts')) {
+                    edit_post_link('Edit', '<p>', '</p>');
+                } ?>
                 </div>
                 </div>
                 <?php } ?>
