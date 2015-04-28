@@ -289,7 +289,7 @@ function service_breadcrumbs($post = '') {
     echo "<ul class='breadcrumbs-list'>";
     if (isset($service_title)) {
         echo "<li><a title='" . $homepage->post_title . "' href='" . get_site_url() . "/" . $homepage->post_name . "'>" . $homepage->post_title . "</a></li>";
-        echo "<li class='current'><a title='" . $post->post_title . "' href='" . get_permalink() . "'>" . $pOST->post_title . "</a></li>";
+        echo "<li class='current'><a title='" . $post->post_title . "' href='" . get_permalink() . "'>" . $post->post_title . "</a></li>";
     } else {
         echo "<li class='current'><a title='" . $homepage->post_title . "' href='" . get_site_url() . "/" . $homepage->post_name . "'>" . $homepage->post_title . "</a></li>";
     }
