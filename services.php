@@ -284,13 +284,14 @@ function service_page_template($template) {
 
 function service_breadcrumbs($post = '') {
     $breadcrumb = '';
+    $service_title;
     $homepage = get_page_by_name('servicehome');
-    if ( $post->post_type == 'service' ) {
+    if ( !empty($post) && $post->post_type == 'service' ) {
         $service_title = $post->post_title;
     }
     echo "<div class='breadcrumbs-container' style='margin-left:0px;'>";
     echo "<ul class='breadcrumbs-list'>";
-    if ($service_title) {
+    if (isset($service_title)) {
         echo "<li><a title='" . $homepage->post_title . "' href='" . get_site_url() . "/" . $homepage->post_name . "'>" . $homepage->post_title . "</a></li>";
         echo "<li class='current'><a title='" . $post->post_title . "' href='" . get_permalink() . "'>" . $post->post_title . "</a></li>";
     } else {
