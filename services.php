@@ -244,12 +244,13 @@ function taxonomy_list_shortcode($atts) {
     $tax = $atts['tax'];
     $terms = get_terms($tax);
     $taxonomy = get_taxonomy($tax);
-    $output = '<h4 class="tax-head">' . $taxonomy->labels->name . '</h4><ul>';
+    #$output = '<h4 class="tax-head">' . $taxonomy->labels->name . '</h4>';
+    $output = '<ul style="list-style-type:none; padding-left:0px; margin-left:15px;">';
     $siteurl = site_url();
     foreach ($terms as $term) {
         $url = $siteurl . '/' . $tax .  '/' . $term->slug;
-        $output .= '<p><a href="' . $url . '"><li>' . $term->name . '</li></a>';
-        $output .= $term->description . '</p>';
+        $output .= '<a href="' . $url . '"><li style="font-size:14pt;">' . $term->name . '</li></a>';
+        $output .= '<p style="margin-left:25px;">' . $term->description . '</p>';
     }
     $output .= '</ul>';
     return $output;
