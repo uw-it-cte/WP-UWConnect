@@ -286,17 +286,18 @@ function service_page_template($template) {
 function service_breadcrumbs($post = '') {
     $breadcrumb = '';
     $service_title;
-    $homepage = get_page_by_name('services');
+    $homepagetitle = 'Service Catalog';
+    $homepageslug = 'services';
     if ( !empty($post) && $post->post_type == 'service' ) {
         $service_title = $post->post_title;
     }
     echo "<div class='breadcrumbs-container' style='margin-left:0px;'>";
     echo "<ul class='breadcrumbs-list'>";
     if (isset($service_title)) {
-        echo "<li><a title='" . $homepage->post_title . "' href='" . get_site_url() . "/" . $homepage->post_name . "'>" . $homepage->post_title . "</a></li>";
+        echo "<li><a title='" . $homepagetitle . "' href='" . get_site_url() . "/" . $homepageslug . "'>" . $homepagetitle . "</a></li>";
         echo "<li class='current'><a title='" . $post->post_title . "' href='" . get_permalink() . "'>" . $post->post_title . "</a></li>";
     } else {
-        echo "<li class='current'><a title='" . $homepage->post_title . "' href='" . get_site_url() . "/" . $homepage->post_name . "'>" . $homepage->post_title . "</a></li>";
+        echo "<li class='current'><a title='" . $homepagetitle . "' href='" . get_site_url() . "/" . $homepageslug . "'>" . $homepagetitle . "</a></li>";
     }
     echo "</ul>";
     echo "</div>";
