@@ -23,7 +23,7 @@ if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
         'comment' => $comments,
     );
     $comments_json = json_encode( $comments_json );
-    $comments_url = SN_URL . '/comment.do';
+    $comments_url = get_option('uwc_SN_URL') . '/comment.do';
     // If a POST and have comments - create a comment in SN
     if( get_option('uwc_SN_USER') && get_option('uwc_SN_PASS') && get_option('uwc_SN_URL') ) {
         $args = array(
@@ -35,11 +35,9 @@ if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
         );
     }
     $response = wp_remote_post( $comments_url, $args );
-        wp_redirect( $_SERVER['REQUEST_URI'] ); exit;
+    wp_redirect( $_SERVER['REQUEST_URI'] ); exit;
 }
-
 get_header(); ?>
-
 <?php while ( have_posts() ) : the_post(); ?>
 
 <div id="main-content" class="row main-content">
@@ -95,37 +93,40 @@ get_header(); ?>
                             $url = '/incident.do?JSONv2&displayvalue=true&sysparm_query=number=' . $sn_num . '^caller_id.user_name=' . $user . '^ORwatch_listLIKE' . $user_id;
                             $sn_type = 'incident (INC)';
                             $urlwl = '/incident.do?JSONv2&sysparm_query=number='. $sn_num . '^caller_id.user_name=' . $user . '^ORwatch_listLIKE' . $user_id;
-                        } else {
+                         } else if ($sn_type == 'RIT') {
+			    $sn_type='item (RITM)';
+
+				$url = '/sc_req_item.do?JSONv2&displayvalue=true&sysparm_query=number='.$sn_num.'^sys_created_by=' . $user . '^ORwatch_listLIKE' . $user_id. '^ORrequest.requested_for.user_name=' . $user;
+				$urlwl = '/sc_req_item.do?JSONv2&sysparm_query=number='.$sn_num.'^sys_created_by=' . $user . '^ORwatch_listLIKE' . $user_id. '^ORrequest.requested_for.user_name=' . $user;
+ 
+			 } else {
                             echo "Unrecognized type";
                             $error_flag = True;
                         }
                         $ticket_json = get_SN($url, $args);
                         $record = $ticket_json->records[0];
-
-
-                        $ticket_jsonwl = get_SN($urlwl, $args);
+			$ticket_jsonwl = get_SN($urlwl, $args);
                         $recordwl = $ticket_jsonwl->records[0];
                         //array of sys_id's of users in watch list
                         $watch_list = explode(',', $recordwl->watch_list);
-
                         //We already have the logged in user's netid - is the logged in user the caller?
-                        if( $record->u_caller == $name || $record->caller_id == $name ) {
+                        if( $record->u_caller == $name || $record->caller_id == $name || $record->sys_opened_by == $user) {
                             $caller_nid = $user;
                         } else {
                             if ($sn_type == 'request (REQ)') {
                                 $caller_url = '/sys_user_list.do?JSONv2&sysparm_query=name%3D' . urlencode($record->u_caller);
                             } else if ($sn_type == 'incident (INC)') {
                                 $caller_url = '/sys_user_list.do?JSONv2&sysparm_query=name%3D' . urlencode($record->caller_id);
-                            }
+                            } else if ($sn_type == 'item (RITM)') {
+				$caller_url = '/sys_user_list.do?JSONv2&sysparm_query=name%3D' . urlencode($record->opened_by);
+			    }				
                             $caller_json = get_SN($caller_url, $args);
                             $caller_nid = $caller_json->records[0]->user_name;
                         }
-
                         // Get the comments
                         $comment_url = '/sys_journal_field.do?displayvalue=true&JSONv2&sysparm_cation=getRecords&sysparm_query=active=true^element=comments^element_id=' . $record->sys_id;
                         $comment_json = get_SN($comment_url, $args);
                         $comments = $comment_json->records;
-
                         if ($sn_num !== $record->number) {
                             echo "<div class='alert alert-danger'>$sn_num is not one of your current requests.</div>";
                             $error_flag = True;
@@ -154,17 +155,49 @@ get_header(); ?>
                             "Resolved" => 'class="label label-default"',
                             "Closed" => 'class="label label-default"',
                         );
-
+			 $item_stages = array(
+                                "Approval" => 'class="label label-success"',
+                                "Internal Review" => 'class="label label-success"',
+                                "Work in Progress" => 'class="label label-success"',
+                                "Fulfillment" => 'class="label label-success"',
+                                "Complete" => 'class="label label-default"',
+				"Completed" => 'class="label label-default"',
+                                "Request Review" => 'class="label label-success"',
+                                "Waiting for Approval" => 'class="label label-success"',
+                                "waiting_for_approval" => 'class="label label-success"',
+                                "Configuration" => 'class="label label-success"',
+                                "CIO Approval" => 'class="label label-success"',
+                                "Backordered" => 'class="label label-warning"',
+                                "Request Cancelled" => 'class="label label-default"',
+                                "Delivery" => 'class="label label-success"',
+                                "Dept. Head Approval" => 'label label-success"',
+                                "Catalog item removed" => 'class="label label-warning"',
+                                "Gift Requested" => 'class="label label-success"',
+                                "Procurement" => 'class="label label-success"',
+                                "Awaiting Delivery" => 'class="label label-success"',
+                                "Completed" => 'class="label label-default"',
+                                "Event Planning" => 'class="label label-success"',
+                                "Deployment" => 'class="label label-success"',
+                        );
                         if ($record->state != "Resolved" && $record->state != "Awaiting User Info" && $record->state != "Closed") {
                             $record->state = "Active";
                         }
 
-
                         echo "<tr><td>Status:</td><td class='request_status'>";
-                                if (array_key_exists($record->state, $states)) {
-                                    $class = $states[$record->state];
-                                    echo "<span $class>$record->state</span>";
-                                }
+                                if ($sn_type !== 'item (RITM)') {
+					
+					if (array_key_exists($record->state, $states)) {
+                                 	   	$class = $states[$record->state];
+                                    		echo "<span $class>$record->state</span>";
+                                	}
+				}
+				else {
+					if (array_key_exists($record->stage, $item_stages)) {
+					     $class = $item_stages[$record->stage];
+					     echo "<span $class>$record->stage</span>";
+					}
+					   
+				}
                                 if ( in_array($user_id, $watch_list) && $user_id != $recordwl->u_caller) {
                                     echo " <span class='label label-warning'>Watching</span>";
                                 }
@@ -216,10 +249,11 @@ get_header(); ?>
                         echo "</div>";
                         echo "</td></tr>";
                         echo "</table>";
+			if ($sn_type !== 'item (RITM)') {
                         echo "<h3 style='margin-top:2em;'>Description:</h3><div><pre>" . stripslashes($record->description) . " </pre></div>";
-
+}
                         //Set up comment box
-                        if(!$error_flag && $record->state != "Closed") {
+                        if(!$error_flag && $record->state != "Closed" ) {
                             $submit_url = site_url() . '/myrequest/' . $sn_num . '/'; ?>
                             <form role='form' action="<?php $submit_url; ?>" method='post'>
                             <div class='form-group' style='margin-bottom:1em;'>
@@ -228,15 +262,15 @@ get_header(); ?>
                             </div>
                             <button type='submit' class='btn btn-primary'>Submit</button>
                             <input type="hidden" name="submitted" id="submitted" value="true" />
-                        </form>
+                        </form><p></p>
                         <?php 
-                        } else if ($record->state == "Closed") {
+                        } else if ($record->state == "Closed" || $record->active==FALSE) {
                           echo "<p class='alert alert-error'>This record has been closed. If you wish to revisit this issue, you can reference the issue number above in a new request to <a href='mailto:help@uw.edu'>help@uw.edu</a>.";
                         } else {
                           echo "<h3>Status 403: Unauthorized</h3>";
                           echo "<p>Please log in to your UW NETID in order to view your Requests and Incidents</p>";
                         } 
-
+			if (sizeof($comments) > 0) {
                         echo "<h3 style='margin-top:2em;'>Additional comments:</h3>";
 
                         usort( $comments, 'sortByCreatedOnDesc' ); //comments sorted chronologically descending
@@ -289,6 +323,7 @@ get_header(); ?>
                             echo "</li>";
                         }
                         echo "</ol>";
+			}
                         } //end if else to see if incident/request number doesn't match
                       }
 
