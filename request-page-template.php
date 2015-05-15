@@ -23,7 +23,7 @@ if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
         'comment' => $comments,
     );
     $comments_json = json_encode( $comments_json );
-    $comments_url = SN_URL . '/comment.do';
+    $comments_url = get_option('uwc_SN_URL') . '/comment.do';
     // If a POST and have comments - create a comment in SN
     if( get_option('uwc_SN_USER') && get_option('uwc_SN_PASS') && get_option('uwc_SN_URL') ) {
         $args = array(
