@@ -1,21 +1,21 @@
 <?php
 
 define( 'DONOTCACHEPAGE', True );
-if(isset( $_SERVER['REMOTE_USER'])) {
+if ( isset( $_SERVER['REMOTE_USER'] ) ) {
     $user = $_SERVER['REMOTE_USER'];
-} else if(isset($_SERVER['REDIRECT_REMOTE_USER'])) {
+} else if ( isset($_SERVER['REDIRECT_REMOTE_USER'] ) ) {
     $user = $_SERVER['REDIRECT_REMOTE_USER'];
-} else if(isset($_SERVER['PHP_AUTH_USER'])) {
+} else if ( isset( $_SERVER['PHP_AUTH_USER'] ) ) {
     $user = $_SERVER['PHP_AUTH_USER'];
 }
 $error_flag = False;
-$sn_num = get_query_var('ticketID');
-if( $sn_num == '' ) {
+$sn_num = get_query_var( 'ticketID' );
+if ( $sn_num == '' ) {
     $new_url = site_url() . '/myrequests/';
     wp_redirect( $new_url );
 }
 //Handle submitting comments
-if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
+if ( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
     $comments = $_POST['comments'];
     $comments_json = array(
         'actor' => $user,
@@ -23,12 +23,12 @@ if( isset( $_POST['submitted'] ) && isset( $_POST['comments'] ) ) {
         'comment' => $comments,
     );
     $comments_json = json_encode( $comments_json );
-    $comments_url = get_option('uwc_SN_URL') . '/comment.do';
+    $comments_url = get_option( 'uwc_SN_URL' ) . '/comment.do';
     // If a POST and have comments - create a comment in SN
-    if( get_option('uwc_SN_USER') && get_option('uwc_SN_PASS') && get_option('uwc_SN_URL') ) {
+    if ( get_option( 'uwc_SN_USER' ) && get_option( 'uwc_SN_PASS' ) && get_option( 'uwc_SN_URL' ) ) {
         $args = array(
             'headers' => array(
-            'Authorization' => 'Basic ' . base64_encode( get_option('uwc_SN_USER') . ':' . get_option('uwc_SN_PASS') ),
+            'Authorization' => 'Basic ' . base64_encode( get_option( 'uwc_SN_USER' ) . ':' . get_option( 'uwc_SN_PASS' ) ),
             'Content-Type' => 'application/json',
             ),
         'body' => $comments_json,
@@ -46,7 +46,7 @@ get_header(); ?>
 		<div id="content" class="site-content it_container" role="main">
     <div id="secondary" class="col-lg-3 col-md-3 hidden-sm hidden-xs" role="complementary">
       <div class="" id="sidebar" role="navigation" aria-label="Sidebar Menu">
-        <?php dynamic_sidebar('servicenow-sidebar'); ?>
+        <?php dynamic_sidebar( 'servicenow-sidebar' ); ?>
       </div>
     </div>
 	<div id="primary" class="col-xs-12 col-sm-12 col-md-9 col-lg-9 itsm-primary">
@@ -54,8 +54,8 @@ get_header(); ?>
 
 			<?php
             the_content();
-            if(isset($user)) {
-                if( isset( $response ) ) {
+            if ( isset( $user ) ) {
+                if ( isset( $response ) ) {
                     $status = json_decode($response['body'], true);
                     if( $status['Error']['Status'] !== '200' ) {
                         echo '<div class="alert alert-warning" style="margin-top:2em;">';
