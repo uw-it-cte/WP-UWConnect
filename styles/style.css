@@ -40,6 +40,11 @@
 .request-list-status { margin-left: 0.5em; overflow: visible !important; }
 
 .request-list-status span { width:auto;display:inline-block;line-height:15px;color:#fff; margin-top: -20px; }
+
+.request-comment-form {
+    padding: 10px 0px 10px 0px;
+}
+
 .caller-comments, .caller-comments pre {
     color: #888;
     border: none;

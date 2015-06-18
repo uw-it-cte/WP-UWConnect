@@ -12,9 +12,9 @@ if ( isset( $_SERVER['REMOTE_USER'] ) ) {
 } else if ( isset( $_SERVER['PHP_AUTH_USER'] ) ) {
     $user = $_SERVER['PHP_AUTH_USER'];
 }
+get_header();
 
-get_header(); ?>
-
+ ?>
 <?php while ( have_posts() ) : the_post(); ?>
 
 <div id="main-content" class="main-content row">
@@ -76,6 +76,30 @@ get_header(); ?>
                             "Resolved" => 'label label-default',
                             "Closed" => 'label label-default',
                         );
+			
+			$item_stages = array(
+				"Approval" => 'label label-success',
+				"Internal Review" => 'label label-success',
+				"Work in Progress" => 'label label-success',
+				"Fulfillment" => 'label label-success',
+				"Complete" => 'label label-default',
+				"Request Review" => 'label label-success',
+				"Waiting for Approval" => 'label label-success',
+				"waiting_for_approval" => 'lavel label-success',
+				"Configuration" => 'label label-success',
+				"CIO Approval" => 'label label-success',
+				"Backordered" => 'label label-warning',
+				"Request Cancelled" => 'label label-default',
+				"Delivery" => 'label label-success',
+				"Dept. Head Approval" => 'label label-success',
+				"Catalog item removed" => 'label label-warning',
+				"Gift Requested" => 'label label-success',
+				"Procurement" => 'label label-success',
+				"Awaiting Delivery" => 'label label-success',
+				"Completed" => 'label label-default',
+				"Event Planning" => 'label label-success',
+				"Deployment" => 'label label-success',
+			);
 
                         // Requests
                         $req_url = '/u_simple_requests_list.do?JSONv2&displayvalue=true&sysparm_query=state!=14^u_caller.user_name=' . $user . '^ORwatch_listLIKE' . $user_id;
@@ -102,9 +126,23 @@ get_header(); ?>
                             $inc_urlwl = '/incident.do?JSONv2&sysparm_action=getRecords&sysparm_query=active=true^state!=14^caller_id.user_name=' . $user. '^ORwatch_listLIKE' . $user_id;
                             $inc_jsonwl = get_SN($inc_urlwl, $args);
                         }
+			$item_url = '/sc_req_item.do?JSONv2&displayvalue=true&sysparm_action=getRecords&sysparm_query=active=true^state!=14^sys_created_by=' . $user . '^ORwatch_listLIKE' . $user_id. '^ORrequest.requested_for.user_name=' . $user;
+                        $item_json = get_SN($item_url, $args);
+			$has_items = FALSE;
+			if ( !empty( $item_json->records) ) {
+				$has_items = TRUE;
+			}
+
+			//Items
+			if ($has_items) {
+
+
+			  $item_urlwl = '/sc_req_item.do?JSON&sysparm_action=getRecords&sysparm_query=active=true^state!=14^sys_created_by=' . $user. '^ORwatch_listLIKE' . $user_id. '^ORrequest.requested_for.user_name='. $user;
+		$item_jsonwl = get_SN($item_urlwl, $args);
+		}
                 ?>
 
-                    <?php if( $has_req || $has_inc ) { ?>
+                    <?php if( $has_req || $has_inc || $has_items) { ?>
                     <h2 id="incident_header" class="assistive-text">Incidents</h2>
                     
                     <div class="request-list request-list-header row">
@@ -174,9 +212,74 @@ get_header(); ?>
                     </ol>
                     <?php } ?>
 
-                    <?php if( $has_req || $has_inc ) { ?>
+                    <?php if( $has_req || $has_inc || $has_items ) { ?>
                     <h2 id="request_header" class="assistive-text">Requests</h2>
                     <?php } ?>
+			 <?php if( $has_items ) { ?>
+                    <ol class="request-list" style="list-style-type:none; padding-left:0px;" aria-labelledby="request_header">
+                    <?php
+                    //Dispaly Requests
+                    usort($item_json->records, 'sortByNumberDesc'); //order tickets by number descending
+                    usort($item_jsonwl->records, 'sortByNumberDesc'); //match ordering in watch list
+                    $req_count = 0;
+			    foreach ( $item_json->records as $record ) {
+                            if ($record->active == TRUE) {
+                                $record->state = "Active";
+                            }
+                            $detail_url = site_url() . '/myrequest/' . $record->number . '/';
+                            if ($record->state == "Resolved" || $record->state == "Closed"|| $record->active =="false") {
+                                echo "<li class='row resolved_ticket'><a href='$detail_url'>";
+                            }
+                            else {
+                                echo "<li class='row'><a href='$detail_url'>";
+                            }
+                    ?>
+                            <span class="request-list-number hidden-xs whole_row_link col-lg-2 col-md-2 col-sm-2" aria-labelledby="col_head_num">
+                                <?php
+                                echo "$record->number";
+                                ?>
+                            </span>
+                            <span class="request-list-service hidden-sm hidden-xs whole_row_link col-lg-3 col-md-3" aria-labelledby="col_head_ser">
+                                <?php
+                                echo "$record->cmdb_ci";
+                                ?>
+                            </span>
+                            <span class="request-list-description whole_row_link col-lg-4 col-md-6 col-sm-6 col-xs-4" aria-labelledby="col_head_des">
+                                <?php
+                                echo "$record->short_description";
+                                ?>
+                            </span>
+                            <span class="request-list-status whole_row_link col-lg-2 col-md-2 col-sm-2 col-xs-2" aria-labelledby="col_head_sta">
+                                <?php
+					
+                                    //Get and display state of the request
+
+
+                                    if (array_key_exists($record->stage, $item_stages)) {
+                                        $class = $item_stages[$record->stage];
+                                        echo "<span class='$class'>$record->stage</span>";
+                                    }
+                                    //if logged in user is in the watch list and not the caller then display watching tag
+                                               
+					 if ( strpos($item_jsonwl->records[$req_count]->watch_list, $user_id) !== FALSE && $item_jsonwl->records[$req_count]->u_caller != $user_id) {
+                                        echo " <span class='label label-warning'>Watching</span>";
+                                    }
+                                    $req_count++;
+
+                                ?>
+                            </span>
+                        </a></li>
+                    <?php
+                    }
+                    ?>
+                    </ol>
+                    <?php } ?>
+
+
+
+
+
+
 
                     <?php if( $has_req ) { ?>
                     <ol class="request-list" style="list-style-type:none; padding-left:0px;" aria-labelledby="request_header">
@@ -235,7 +338,7 @@ get_header(); ?>
                     </ol>
                     <?php } ?>
                     
-                    <?php if( !$has_req && !$has_inc ) { ?>
+                    <?php if( !$has_req && !$has_inc && !$has_items) { ?>
                         <p>You have no current requests with UW-IT.</p>
                     <?php } ?>
 
